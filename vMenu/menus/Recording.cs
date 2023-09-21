@@ -1,17 +1,11 @@
-using CitizenFX.Core;
-
-using MenuAPI;
-
-using static CitizenFX.Core.Native.API;
-using static vMenuClient.CommonFunctions;
-using static vMenuShared.ConfigManager;
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
     public class Recording
     {
         // Variables
-        private Menu menu;
+        private UIMenu menu;
 
         private void CreateMenu()
         {
@@ -19,19 +13,19 @@ namespace vMenuClient.menus
             AddTextEntry("ERROR_UPLOAD", "Are you sure you want to upload this photo to Cfx.re forum?"); // Replace the warning message text for uploading
 
             // Create the menu.
-            menu = new Menu("Recording", "Recording Options");
+            menu = new UIMenu("Recording", "Recording Options");
 
-            var takePic = new MenuItem("Take Photo", "Takes a photo and saves it to the Pause Menu gallery.");
-            var openPmGallery = new MenuItem("Open Gallery", "Opens the Pause Menu gallery.");
-            var startRec = new MenuItem("Start Recording", "Start a new game recording using GTA V's built in recording.");
-            var stopRec = new MenuItem("Stop Recording", "Stop and save your current recording.");
-            var openEditor = new MenuItem("Rockstar Editor", "Open the rockstar editor, note you might want to quit the session first before doing this to prevent some issues.");
+            var takePic = new UIMenuItem("Take Photo", "Takes a photo and saves it to the Pause Menu gallery.");
+            var openPmGallery = new UIMenuItem("Open Gallery", "Opens the Pause Menu gallery.");
+            var startRec = new UIMenuItem("Start Recording", "Start a new game recording using GTA V's built in recording.");
+            var stopRec = new UIMenuItem("Stop Recording", "Stop and save your current recording.");
+            var openEditor = new UIMenuItem("Rockstar Editor", "Open the rockstar editor, note you might want to quit the session first before doing this to prevent some issues.");
 
-            menu.AddMenuItem(takePic);
-            menu.AddMenuItem(openPmGallery);
-            menu.AddMenuItem(startRec);
-            menu.AddMenuItem(stopRec);
-            menu.AddMenuItem(openEditor);
+            menu.AddItem(takePic);
+            menu.AddItem(openPmGallery);
+            menu.AddItem(startRec);
+            menu.AddItem(stopRec);
+            menu.AddItem(openEditor);
 
             menu.OnItemSelect += async (sender, item, index) =>
             {
@@ -91,7 +85,7 @@ namespace vMenuClient.menus
         /// Create the menu if it doesn't exist, and then returns it.
         /// </summary>
         /// <returns>The Menu</returns>
-        public Menu GetMenu()
+        public UIMenu GetMenu()
         {
             if (menu == null)
             {

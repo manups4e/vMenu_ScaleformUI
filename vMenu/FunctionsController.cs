@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CitizenFX.Core;
 using CitizenFX.Core.UI;
 
-using MenuAPI;
-
-using Newtonsoft.Json;
+using ScaleformUI.Menu;
 
 using vMenuClient.data;
-using vMenuClient.menus;
 
-using static CitizenFX.Core.Native.API;
 using static CitizenFX.Core.UI.Screen;
-using static vMenuClient.CommonFunctions;
 using static vMenuClient.data.PedModels;
-using static vMenuShared.ConfigManager;
-using static vMenuShared.PermissionsManager;
 
 namespace vMenuClient
 {
@@ -425,28 +417,28 @@ namespace vMenuClient
                         // Get the license plate type index.
 
                         // Set the license plate index list item to the correct index.
-                        if (IsAllowed(Permission.VOChangePlate) && MainMenu.VehicleOptionsMenu.GetMenu().GetMenuItems().Find(mi => mi is MenuListItem li && li.ListItems.Any(liText => liText == GetLabelText("CMOD_PLA_0"))) is MenuListItem listItem)
+                        if (IsAllowed(Permission.VOChangePlate) && MainMenu.VehicleOptionsMenu.GetMenu().MenuItems.Find(mi => mi is UIMenuListItem li && li.Items.Any(liText => (string)liText == GetLabelText("CMOD_PLA_0"))) is UIMenuListItem listItem)
                         {
                             // Set the license plate style.
                             switch (veh.Mods.LicensePlateStyle)
                             {
                                 case LicensePlateStyle.BlueOnWhite1:
-                                    listItem.ListIndex = 0;
+                                    listItem.Index = 0;
                                     break;
                                 case LicensePlateStyle.BlueOnWhite2:
-                                    listItem.ListIndex = 1;
+                                    listItem.Index = 1;
                                     break;
                                 case LicensePlateStyle.BlueOnWhite3:
-                                    listItem.ListIndex = 2;
+                                    listItem.Index = 2;
                                     break;
                                 case LicensePlateStyle.YellowOnBlue:
-                                    listItem.ListIndex = 3;
+                                    listItem.Index = 3;
                                     break;
                                 case LicensePlateStyle.YellowOnBlack:
-                                    listItem.ListIndex = 4;
+                                    listItem.Index = 4;
                                     break;
                                 case LicensePlateStyle.NorthYankton:
-                                    listItem.ListIndex = 5;
+                                    listItem.Index = 5;
                                     break;
                                 default:
                                     break;
@@ -551,7 +543,7 @@ namespace vMenuClient
                     }
                 }
 
-                var subMenus = new List<Menu>()
+                var subMenus = new List<UIMenu>()
                     {
                         MainMenu.VehicleOptionsMenu.DeleteConfirmMenu,
                         MainMenu.VehicleOptionsMenu.VehicleColorsMenu,
@@ -673,17 +665,17 @@ namespace vMenuClient
                 if (IsAllowed(Permission.WOSetWeather))
                 {
                     MainMenu.WeatherOptionsMenu.snowEnabled.Checked = EventManager.IsSnowEnabled;
-                    weatherMenu.GetMenuItems().ForEach(it =>
+                    weatherMenu.MenuItems.ForEach(it =>
                     {
                         if (it.ItemData is string weatherType)
                         {
                             if (weatherType == EventManager.GetServerWeather)
                             {
-                                it.RightIcon = MenuItem.Icon.TICK;
+                                it.SetRightBadge(BadgeIcon.TICK);
                             }
                             else
                             {
-                                it.RightIcon = MenuItem.Icon.NONE;
+                                it.SetRightBadge(BadgeIcon.NONE);
                             }
                         }
                     });
@@ -1031,7 +1023,7 @@ namespace vMenuClient
                 {
                     SetBigmapActive(false, false);
                 }
-                if (Game.IsControlJustReleased(0, Control.MultiplayerInfo) && Game.IsControlEnabled(0, Control.MultiplayerInfo) && MainMenu.MiscSettingsMenu.KbRadarKeys && !MenuController.IsAnyMenuOpen() && !IsPauseMenuActive())
+                if (Game.IsControlJustReleased(0, Control.MultiplayerInfo) && Game.IsControlEnabled(0, Control.MultiplayerInfo) && MainMenu.MiscSettingsMenu.KbRadarKeys && !MenuHandler.IsAnyMenuOpen && !IsPauseMenuActive())
                 {
                     var radarExpanded = IsBigmapActive();
 
@@ -1059,7 +1051,7 @@ namespace vMenuClient
         {
             if (MainMenu.MiscSettingsMenu.KbRecordKeys)
             {
-                if (!IsPauseMenuActive() && IsScreenFadedIn() && !IsPlayerSwitchInProgress() && !MenuController.IsAnyMenuOpen())
+                if (!IsPauseMenuActive() && IsScreenFadedIn() && !IsPlayerSwitchInProgress() && !MenuHandler.IsAnyMenuOpen)
                 {
                     if (Game.CurrentInputMode == InputMode.MouseAndKeyboard)
                     {
@@ -1552,19 +1544,19 @@ namespace vMenuClient
                 if (MainMenu.MpPedCustomizationMenu.editPedBtn != null && MainMenu.MpPedCustomizationMenu.editPedBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.editPedBtn.Enabled = false;
-                    MainMenu.MpPedCustomizationMenu.editPedBtn.LeftIcon = MenuItem.Icon.LOCK;
+                    MainMenu.MpPedCustomizationMenu.editPedBtn.SetLeftBadge(BadgeIcon.LOCK);
                     MainMenu.MpPedCustomizationMenu.editPedBtn.Description += " ~r~You need to get out of your vehicle before you can use this.";
                 }
                 if (MainMenu.MpPedCustomizationMenu.createMaleBtn != null && MainMenu.MpPedCustomizationMenu.createMaleBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.createMaleBtn.Enabled = false;
-                    MainMenu.MpPedCustomizationMenu.createMaleBtn.LeftIcon = MenuItem.Icon.LOCK;
+                    MainMenu.MpPedCustomizationMenu.createMaleBtn.SetLeftBadge(BadgeIcon.LOCK);
                     MainMenu.MpPedCustomizationMenu.createMaleBtn.Description += " ~r~You need to get out of your vehicle before you can use this.";
                 }
                 if (MainMenu.MpPedCustomizationMenu.createFemaleBtn != null && MainMenu.MpPedCustomizationMenu.createFemaleBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.createFemaleBtn.Enabled = false;
-                    MainMenu.MpPedCustomizationMenu.createFemaleBtn.LeftIcon = MenuItem.Icon.LOCK;
+                    MainMenu.MpPedCustomizationMenu.createFemaleBtn.SetLeftBadge(BadgeIcon.LOCK);
                     MainMenu.MpPedCustomizationMenu.createFemaleBtn.Description += " ~r~You need to get out of your vehicle before you can use this.";
                 }
             }
@@ -1573,19 +1565,19 @@ namespace vMenuClient
                 if (MainMenu.MpPedCustomizationMenu.editPedBtn != null && !MainMenu.MpPedCustomizationMenu.editPedBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.editPedBtn.Enabled = true;
-                    MainMenu.MpPedCustomizationMenu.editPedBtn.LeftIcon = MenuItem.Icon.NONE;
+                    MainMenu.MpPedCustomizationMenu.editPedBtn.SetLeftBadge(BadgeIcon.NONE);
                     MainMenu.MpPedCustomizationMenu.editPedBtn.Description = MainMenu.MpPedCustomizationMenu.editPedBtn.Description.Replace(" ~r~You need to get out of your vehicle before you can use this.", "");
                 }
                 if (MainMenu.MpPedCustomizationMenu.createMaleBtn != null && !MainMenu.MpPedCustomizationMenu.createMaleBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.createMaleBtn.Enabled = true;
-                    MainMenu.MpPedCustomizationMenu.createMaleBtn.LeftIcon = MenuItem.Icon.NONE;
+                    MainMenu.MpPedCustomizationMenu.createMaleBtn.SetLeftBadge(BadgeIcon.NONE);
                     MainMenu.MpPedCustomizationMenu.createMaleBtn.Description = MainMenu.MpPedCustomizationMenu.createMaleBtn.Description.Replace(" ~r~You need to get out of your vehicle before you can use this.", "");
                 }
                 if (MainMenu.MpPedCustomizationMenu.createFemaleBtn != null && !MainMenu.MpPedCustomizationMenu.createFemaleBtn.Enabled)
                 {
                     MainMenu.MpPedCustomizationMenu.createFemaleBtn.Enabled = true;
-                    MainMenu.MpPedCustomizationMenu.createFemaleBtn.LeftIcon = MenuItem.Icon.NONE;
+                    MainMenu.MpPedCustomizationMenu.createFemaleBtn.SetLeftBadge(BadgeIcon.NONE);
                     MainMenu.MpPedCustomizationMenu.createFemaleBtn.Description = MainMenu.MpPedCustomizationMenu.createFemaleBtn.Description.Replace(" ~r~You need to get out of your vehicle before you can use this.", "");
                 }
             }
@@ -1605,8 +1597,8 @@ namespace vMenuClient
                 {
                     await Delay(0);
 
-                    var index = GetCameraIndex(MenuController.GetCurrentMenu());
-                    if (MenuController.GetCurrentMenu() == MainMenu.MpPedCustomizationMenu.propsMenu && MenuController.GetCurrentMenu().CurrentIndex == 3 && !reverseCamera)
+                    var index = GetCameraIndex((UIMenu)MenuHandler.CurrentMenu);
+                    if ((UIMenu)MenuHandler.CurrentMenu == MainMenu.MpPedCustomizationMenu.propsMenu && ((UIMenu)MenuHandler.CurrentMenu).CurrentSelection == 3 && !reverseCamera)
                     {
                         TaskPlayAnim(Game.PlayerPed.Handle, "anim@random@shop_clothes@watches", "BASE", 8f, -8f, -1, 1, 0, false, false, false);
                     }
@@ -1760,7 +1752,7 @@ namespace vMenuClient
             }
         }
 
-        private int GetCameraIndex(Menu menu)
+        private int GetCameraIndex(UIMenu menu)
         {
             if (menu != null)
             {
@@ -1770,7 +1762,7 @@ namespace vMenuClient
                 }
                 else if (menu == MainMenu.MpPedCustomizationMenu.clothesMenu)
                 {
-                    return menu.CurrentIndex switch
+                    return menu.CurrentSelection switch
                     {
                         // masks
                         0 => 1,
@@ -1797,7 +1789,7 @@ namespace vMenuClient
                 }
                 else if (menu == MainMenu.MpPedCustomizationMenu.propsMenu)
                 {
-                    return menu.CurrentIndex switch
+                    return menu.CurrentSelection switch
                     {
                         // 0 = hats & helmets
                         // 1 = glasses
@@ -1815,7 +1807,7 @@ namespace vMenuClient
                 }
                 else if (menu == MainMenu.MpPedCustomizationMenu.appearanceMenu)
                 {
-                    return menu.CurrentIndex switch
+                    return menu.CurrentSelection switch
                     {
                         // 0 = hair style
                         // 1 = hair color
@@ -1862,7 +1854,7 @@ namespace vMenuClient
                 }
                 else if (menu == MainMenu.MpPedCustomizationMenu.tattoosMenu)
                 {
-                    return menu.CurrentIndex switch
+                    return menu.CurrentSelection switch
                     {
                         // 0 = head
                         0 => 1,
@@ -1886,10 +1878,10 @@ namespace vMenuClient
                 }
                 else if (menu == MainMenu.MpPedCustomizationMenu.faceShapeMenu)
                 {
-                    var item = menu.GetCurrentMenuItem();
+                    var item = menu.MenuItems[menu.CurrentSelection];
                     if (item != null)
                     {
-                        if (item.GetType() == typeof(MenuSliderItem))
+                        if (item.GetType() == typeof(UIMenuSliderItem))
                         {
                             return 1;
                         }
@@ -2504,7 +2496,7 @@ namespace vMenuClient
 
         private async Task FlaresAndBombsTick()
         {
-            if (!MenuController.IsAnyMenuOpen() && !MainMenu.DontOpenMenus && !Game.IsPaused && Fading.IsFadedIn && !IsPlayerSwitchInProgress())
+            if (!MenuHandler.IsAnyMenuOpen && !MainMenu.DontOpenMenus && !Game.IsPaused && Fading.IsFadedIn && !IsPlayerSwitchInProgress())
             {
                 if (flaresAllowed && CanShootFlares())
                 {
@@ -2531,7 +2523,7 @@ namespace vMenuClient
         /// <returns></returns>
         private async Task AnimationsAndInteractions()
         {
-            if (!(MenuController.IsAnyMenuOpen() || MainMenu.DontOpenMenus || !Fading.IsFadedIn || Game.IsPaused || IsPlayerSwitchInProgress() || Game.PlayerPed.IsDead))
+            if (!(MenuHandler.IsAnyMenuOpen || MainMenu.DontOpenMenus || !Fading.IsFadedIn || Game.IsPaused || IsPlayerSwitchInProgress() || Game.PlayerPed.IsDead))
             {
                 // snowballs
                 if (EventManager.IsSnowEnabled && IsAllowed(Permission.WPSnowball))
@@ -2552,7 +2544,7 @@ namespace vMenuClient
                 if (Game.IsControlPressed(0, Control.SwitchVisor))
                 {
                     var timer = GetGameTimer();
-                    while (!(MenuController.IsAnyMenuOpen() || MainMenu.DontOpenMenus || !Fading.IsFadedIn || Game.IsPaused || IsPlayerSwitchInProgress() || Game.PlayerPed.IsDead) && Game.IsControlPressed(0, Control.SwitchVisor))
+                    while (!(MenuHandler.IsAnyMenuOpen || MainMenu.DontOpenMenus || !Fading.IsFadedIn || Game.IsPaused || IsPlayerSwitchInProgress() || Game.PlayerPed.IsDead) && Game.IsControlPressed(0, Control.SwitchVisor))
                     {
                         await Delay(0);
                         var veh = GetVehicle();

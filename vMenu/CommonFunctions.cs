@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CitizenFX.Core;
-
-using MenuAPI;
-
-using Newtonsoft.Json;
+using ScaleformUI.Menu;
 
 using vMenuClient.data;
-using vMenuClient.menus;
 
-using static CitizenFX.Core.Native.API;
 using static CitizenFX.Core.UI.Screen;
-using static vMenuShared.PermissionsManager;
 
 namespace vMenuClient
 {
@@ -61,7 +54,6 @@ namespace vMenuClient
         #endregion
 
         #region menu position
-        public static bool RightAlignMenus() => UserDefaults.MiscRightAlignMenu;
         #endregion
 
         #region Toggle vehicle alarm
@@ -809,7 +801,7 @@ namespace vMenuClient
                         {
                             if (int.TryParse(banDurationHours, out var banHoursInt))
                             {
-                                if ((double)banHoursInt > 0.0)
+                                if (banHoursInt > 0.0)
                                 {
                                     TriggerServerEvent("vMenu:TempBanPlayer", player.ServerId, (double)banHoursInt, banReason);
                                 }
@@ -2487,7 +2479,7 @@ namespace vMenuClient
         /// <param name="title"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public static MenuItem GetSpacerMenuItem(string title, string description = null)
+        public static UIMenuItem GetSpacerMenuItem(string title, string description = null)
         {
             var output = "~h~";
             var length = title.Length;
@@ -2498,7 +2490,7 @@ namespace vMenuClient
                 output += " ";
             }
             output += title;
-            var item = new MenuItem(output, description ?? "")
+            var item = new UIMenuItem(output, description ?? "")
             {
                 Enabled = false
             };
@@ -2525,9 +2517,9 @@ namespace vMenuClient
         /// Returns the currently opened menu, if no menu is open, it'll return null.
         /// </summary>
         /// <returns></returns>
-        public static Menu GetOpenMenu()
+        public static UIMenu GetOpenMenu()
         {
-            return MenuController.GetCurrentMenu();
+            return (UIMenu)MenuHandler.CurrentMenu;
         }
         #endregion
 

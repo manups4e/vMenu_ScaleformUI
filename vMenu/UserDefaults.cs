@@ -1,11 +1,5 @@
 ﻿using System.Collections.Generic;
-
-using Newtonsoft.Json;
-
-using vMenuClient.menus;
-
-using static CitizenFX.Core.Native.API;
-using static vMenuClient.CommonFunctions;
+using System.Drawing;
 
 namespace vMenuClient
 {
@@ -282,10 +276,10 @@ namespace vMenuClient
             set { SetSavedSettingsBool("miscShowTime", value); }
         }
 
-        public static bool MiscRightAlignMenu
+        public static PointF MiscMenuPosition
         {
-            get { return GetSettingsBool("miscRightAlignMenu"); }
-            set { SetSavedSettingsBool("miscRightAlignMenu", value); }
+            get { return GetSavedSettingsPointF("miscMenuPosition"); }
+            set { SetSavedSettingsPointF("miscMenuPosition", value); }
         }
 
         public static bool MiscDisablePrivateMessages
@@ -447,6 +441,22 @@ namespace vMenuClient
             }
         }
 
+        private static void SetSavedSettingsPointF(string kvpString, PointF position)
+        {
+            SetResourceKvp(SETTINGS_PREFIX + kvpString, $"{position.X},{position.Y}");
+        }
+
+        private static PointF GetSavedSettingsPointF(string kvpString)
+        {
+            var s = GetResourceKvpString(SETTINGS_PREFIX + kvpString);
+            if (string.IsNullOrWhiteSpace(s))
+                return PointF.Empty;
+            var split = s.Split(',');
+            float.TryParse(split[0], out var x);
+            float.TryParse(split[1], out var y);
+            return new PointF(x, y);
+        }
+
         /// <summary>
         /// Sets the new saved value for the specified setting.
         /// </summary>
@@ -572,8 +582,8 @@ namespace vMenuClient
                 MiscShowTime = MainMenu.MiscSettingsMenu.DrawTimeOnScreen;
                 prefs.Add("miscShowTime", MiscShowTime);
 
-                MiscRightAlignMenu = MainMenu.MiscSettingsMenu.MiscRightAlignMenu;
-                prefs.Add("miscRightAlignMenu", MiscRightAlignMenu);
+                MiscMenuPosition = MainMenu.MiscSettingsMenu.MiscMenuPosition;
+                prefs.Add("miscMenuPosition", MiscMenuPosition);
 
                 MiscDisablePrivateMessages = MainMenu.MiscSettingsMenu.MiscDisablePrivateMessages;
                 prefs.Add("miscDisablePrivateMessages", MiscDisablePrivateMessages);

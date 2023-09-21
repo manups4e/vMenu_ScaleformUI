@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using CitizenFX.Core;
-
-using static CitizenFX.Core.Native.API;
-using static CitizenFX.Core.UI.Screen;
-
 namespace vMenuClient
 {
     #region Error Templates
@@ -277,37 +272,12 @@ namespace vMenuClient
         public static void Custom(string message, int duration) => Custom(message, duration, true);
         public static void Custom(string message, int duration, bool sound)
         {
-            var array = CommonFunctions.StringToArray(message);
-            if (IsHelpMessageBeingDisplayed())
-            {
-                ClearAllHelpMessages();
-            }
-            BeginTextCommandDisplayHelp("CELL_EMAIL_BCON");
-            foreach (var s in array)
-            {
-                AddTextComponentSubstringPlayerName(s);
-            }
-            EndTextCommandDisplayHelp(0, false, sound, duration);
+            ScaleformUI.Notifications.ShowHelpNotification(message, duration);
         }
 
         public static void CustomLooped(Label label)
         {
-            if (GetLabelText(labels[label].Key) == "NULL")
-            {
-                AddTextEntry(labels[label].Key, labels[label].Value);
-            }
-            //string[] array = CommonFunctions.StringToArray(message);
-            //if (IsHelpMessageBeingDisplayed())
-            //{
-            //    ClearAllHelpMessages();
-            //}
-            //BeginTextCommandDisplayHelp("CELL_EMAIL_BCON");
-            //foreach (string s in array)
-            //{
-            //    AddTextComponentSubstringPlayerName(s);
-            //}
-            DisplayHelpTextThisFrame(labels[label].Key, true);
-            //EndTextCommandDisplayHelp(0, true, false, -1);
+            ScaleformUI.Notifications.ShowHelpNotification(labels[label].Key);
         }
     }
 }

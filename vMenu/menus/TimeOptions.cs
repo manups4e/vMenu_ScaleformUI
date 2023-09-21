@@ -1,19 +1,14 @@
 using System.Collections.Generic;
 
-using CitizenFX.Core;
-
-using MenuAPI;
-
-using static vMenuClient.CommonFunctions;
-using static vMenuShared.PermissionsManager;
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
     public class TimeOptions
     {
         // Variables
-        private Menu menu;
-        public MenuItem freezeTimeToggle;
+        private UIMenu menu;
+        public UIMenuItem freezeTimeToggle;
 
         /// <summary>
         /// Creates the menu.
@@ -21,45 +16,45 @@ namespace vMenuClient.menus
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new Menu(Game.Player.Name, "Time Options");
+            menu = new UIMenu(Game.Player.Name, "Time Options");
 
             // Create all menu items.
-            freezeTimeToggle = new MenuItem("Freeze/Unfreeze Time", "Enable or disable time freezing.");
-            var earlymorning = new MenuItem("Early Morning", "Set the time to 06:00.")
+            freezeTimeToggle = new UIMenuItem("Freeze/Unfreeze Time", "Enable or disable time freezing.");
+            var earlymorning = new UIMenuItem("Early Morning", "Set the time to 06:00.")
             {
                 Label = "06:00"
             };
-            var morning = new MenuItem("Morning", "Set the time to 09:00.")
+            var morning = new UIMenuItem("Morning", "Set the time to 09:00.")
             {
                 Label = "09:00"
             };
-            var noon = new MenuItem("Noon", "Set the time to 12:00.")
+            var noon = new UIMenuItem("Noon", "Set the time to 12:00.")
             {
                 Label = "12:00"
             };
-            var earlyafternoon = new MenuItem("Early Afternoon", "Set the time to 15:00.")
+            var earlyafternoon = new UIMenuItem("Early Afternoon", "Set the time to 15:00.")
             {
                 Label = "15:00"
             };
-            var afternoon = new MenuItem("Afternoon", "Set the time to 18:00.")
+            var afternoon = new UIMenuItem("Afternoon", "Set the time to 18:00.")
             {
                 Label = "18:00"
             };
-            var evening = new MenuItem("Evening", "Set the time to 21:00.")
+            var evening = new UIMenuItem("Evening", "Set the time to 21:00.")
             {
                 Label = "21:00"
             };
-            var midnight = new MenuItem("Midnight", "Set the time to 00:00.")
+            var midnight = new UIMenuItem("Midnight", "Set the time to 00:00.")
             {
                 Label = "00:00"
             };
-            var night = new MenuItem("Night", "Set the time to 03:00.")
+            var night = new UIMenuItem("Night", "Set the time to 03:00.")
             {
                 Label = "03:00"
             };
 
-            var hours = new List<string>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
-            var minutes = new List<string>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+            var hours = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+            var minutes = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
             for (var i = 10; i < 60; i++)
             {
                 if (i < 24)
@@ -68,26 +63,26 @@ namespace vMenuClient.menus
                 }
                 minutes.Add(i.ToString());
             }
-            var manualHour = new MenuListItem("Set Custom Hour", hours, 0);
-            var manualMinute = new MenuListItem("Set Custom Minute", minutes, 0);
+            var manualHour = new UIMenuListItem("Set Custom Hour", hours, 0);
+            var manualMinute = new UIMenuListItem("Set Custom Minute", minutes, 0);
 
             // Add all menu items to the menu.
             if (IsAllowed(Permission.TOFreezeTime))
             {
-                menu.AddMenuItem(freezeTimeToggle);
+                menu.AddItem(freezeTimeToggle);
             }
             if (IsAllowed(Permission.TOSetTime))
             {
-                menu.AddMenuItem(earlymorning);
-                menu.AddMenuItem(morning);
-                menu.AddMenuItem(noon);
-                menu.AddMenuItem(earlyafternoon);
-                menu.AddMenuItem(afternoon);
-                menu.AddMenuItem(evening);
-                menu.AddMenuItem(midnight);
-                menu.AddMenuItem(night);
-                menu.AddMenuItem(manualHour);
-                menu.AddMenuItem(manualMinute);
+                menu.AddItem(earlymorning);
+                menu.AddItem(morning);
+                menu.AddItem(noon);
+                menu.AddItem(earlyafternoon);
+                menu.AddItem(afternoon);
+                menu.AddItem(evening);
+                menu.AddItem(midnight);
+                menu.AddItem(night);
+                menu.AddItem(manualHour);
+                menu.AddItem(manualMinute);
             }
 
             // Handle button presses.
@@ -122,17 +117,17 @@ namespace vMenuClient.menus
 
             };
 
-            menu.OnListItemSelect += (sender, item, listIndex, itemIndex) =>
+            menu.OnListSelect += (sender, item, itemIndex) =>
             {
                 var newHour = EventManager.GetServerHours;
                 var newMinute = EventManager.GetServerMinutes;
                 if (item == manualHour)
                 {
-                    newHour = item.ListIndex;
+                    newHour = item.Index;
                 }
                 else if (item == manualMinute)
                 {
-                    newMinute = item.ListIndex;
+                    newMinute = item.Index;
                 }
 
                 Subtitle.Info($"Time set to ~y~{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}~s~:~y~" +
@@ -145,7 +140,7 @@ namespace vMenuClient.menus
         /// Create the menu if it doesn't exist, and then returns it.
         /// </summary>
         /// <returns>The Menu</returns>
-        public Menu GetMenu()
+        public UIMenu GetMenu()
         {
             if (menu == null)
             {

@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using CitizenFX.Core;
-
-using MenuAPI;
-
-using Newtonsoft.Json;
-
-using static vMenuClient.CommonFunctions;
-using static vMenuShared.PermissionsManager;
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
     public class BannedPlayers
     {
         // Variables
-        private Menu menu;
+        private UIMenu menu;
 
         /// <summary>
         /// Struct used to store bans.
@@ -34,47 +27,24 @@ namespace vMenuClient.menus
 
         public List<BanRecord> banlist = new();
 
-        readonly Menu bannedPlayer = new("Banned Player", "Ban Record: ");
+        readonly UIMenu bannedPlayer = new("Banned Player", "Ban Record: ");
 
         /// <summary>
         /// Creates the menu.
         /// </summary>
         private void CreateMenu()
         {
-            menu = new Menu(Game.Player.Name, "Banned Players Management");
+            menu = new UIMenu(Game.Player.Name, "Banned Players Management");
 
-            menu.InstructionalButtons.Add(Control.Jump, "Filter Options");
-            menu.ButtonPressHandlers.Add(new Menu.ButtonPressHandler(Control.Jump, Menu.ControlPressCheckType.JUST_RELEASED, new Action<Menu, Control>(async (a, b) =>
-            {
-                if (banlist.Count > 1)
-                {
-                    var filterText = await GetUserInput("Filter username or ban id (leave this empty to reset the filter)");
-                    if (string.IsNullOrEmpty(filterText))
-                    {
-                        Subtitle.Custom("Filters have been cleared.");
-                        menu.ResetFilter();
-                        UpdateBans();
-                    }
-                    else
-                    {
-                        menu.FilterMenuItems(item => item.ItemData is BanRecord br && (br.playerName.ToLower().Contains(filterText.ToLower()) || br.uuid.ToLower().Contains(filterText.ToLower())));
-                        Subtitle.Custom("Filter has been applied.");
-                    }
-                }
-                else
-                {
-                    Notify.Error("At least 2 players need to be banned in order to use the filter function.");
-                }
-
-                Log($"Button pressed: {a} {b}");
-            }), true));
-
-            bannedPlayer.AddMenuItem(new MenuItem("Player Name"));
-            bannedPlayer.AddMenuItem(new MenuItem("Banned By"));
-            bannedPlayer.AddMenuItem(new MenuItem("Banned Until"));
-            bannedPlayer.AddMenuItem(new MenuItem("Player Identifiers"));
-            bannedPlayer.AddMenuItem(new MenuItem("Banned For"));
-            bannedPlayer.AddMenuItem(new MenuItem("~r~Unban", "~r~Warning, unbanning the player can NOT be undone. You will NOT be able to ban them again until they re-join the server. Are you absolutely sure you want to unban this player? ~s~Tip: Tempbanned players will automatically get unbanned if they log on to the server after their ban date has expired."));
+            menu.InstructionalButtons.Add(new ScaleformUI.Scaleforms.InstructionalButton(Control.Jump, "Filter Options"));
+            //menu.OnMenuClose += Menu_OnMenuClose;
+            //menu.OnMenuOpen += Menu_OnMenuOpen;
+            bannedPlayer.AddItem(new UIMenuItem("Player Name"));
+            bannedPlayer.AddItem(new UIMenuItem("Banned By"));
+            bannedPlayer.AddItem(new UIMenuItem("Banned Until"));
+            bannedPlayer.AddItem(new UIMenuItem("Player Identifiers"));
+            bannedPlayer.AddItem(new UIMenuItem("Banned For"));
+            bannedPlayer.AddItem(new UIMenuItem("~r~Unban", "~r~Warning, unbanning the player can NOT be undone. You will NOT be able to ban them again until they re-join the server. Are you absolutely sure you want to unban this player? ~s~Tip: Tempbanned players will automatically get unbanned if they log on to the server after their ban date has expired."));
 
             // should be enough for now to cover all possible identifiers.
             var colors = new List<string>() { "~r~", "~g~", "~b~", "~o~", "~y~", "~p~", "~s~", "~t~", };
@@ -82,13 +52,13 @@ namespace vMenuClient.menus
             bannedPlayer.OnMenuClose += (sender) =>
             {
                 BaseScript.TriggerServerEvent("vMenu:RequestBanList", Game.Player.Handle);
-                bannedPlayer.GetMenuItems()[5].Label = "";
+                bannedPlayer.MenuItems[5].Label = "";
                 UpdateBans();
             };
 
-            bannedPlayer.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
+            bannedPlayer.OnIndexChange += (a, b) =>
             {
-                bannedPlayer.GetMenuItems()[5].Label = "";
+                bannedPlayer.MenuItems[5].Label = "";
             };
 
             bannedPlayer.OnItemSelect += (sender, item, index) =>
@@ -100,7 +70,7 @@ namespace vMenuClient.menus
                         if (banlist.Contains(currentRecord))
                         {
                             UnbanPlayer(banlist.IndexOf(currentRecord));
-                            bannedPlayer.GetMenuItems()[5].Label = "";
+                            bannedPlayer.MenuItems[5].Label = "";
                             bannedPlayer.GoBack();
                         }
                         else
@@ -115,7 +85,7 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    bannedPlayer.GetMenuItems()[5].Label = "";
+                    bannedPlayer.MenuItems[5].Label = "";
                 }
 
             };
@@ -124,12 +94,12 @@ namespace vMenuClient.menus
             {
                 currentRecord = item.ItemData;
 
-                bannedPlayer.MenuSubtitle = "Ban Record: ~y~" + currentRecord.playerName;
-                var nameItem = bannedPlayer.GetMenuItems()[0];
-                var bannedByItem = bannedPlayer.GetMenuItems()[1];
-                var bannedUntilItem = bannedPlayer.GetMenuItems()[2];
-                var playerIdentifiersItem = bannedPlayer.GetMenuItems()[3];
-                var banReasonItem = bannedPlayer.GetMenuItems()[4];
+                bannedPlayer.Subtitle = "Ban Record: ~y~" + currentRecord.playerName;
+                var nameItem = bannedPlayer.MenuItems[0];
+                var bannedByItem = bannedPlayer.MenuItems[1];
+                var bannedUntilItem = bannedPlayer.MenuItems[2];
+                var playerIdentifiersItem = bannedPlayer.MenuItems[3];
+                var banReasonItem = bannedPlayer.MenuItems[4];
                 nameItem.Label = currentRecord.playerName;
                 nameItem.Description = "Player name: ~y~" + currentRecord.playerName;
                 bannedByItem.Label = currentRecord.bannedBy;
@@ -164,40 +134,75 @@ namespace vMenuClient.menus
                 }
                 banReasonItem.Description = "Banned for: " + currentRecord.banReason;
 
-                var unbanPlayerBtn = bannedPlayer.GetMenuItems()[5];
+                var unbanPlayerBtn = bannedPlayer.MenuItems[5];
                 unbanPlayerBtn.Label = "";
                 if (!IsAllowed(Permission.OPUnban))
                 {
                     unbanPlayerBtn.Enabled = false;
                     unbanPlayerBtn.Description = "You are not allowed to unban players. You are only allowed to view their ban record.";
-                    unbanPlayerBtn.LeftIcon = MenuItem.Icon.LOCK;
+                    unbanPlayerBtn.SetLeftBadge(BadgeIcon.LOCK);
+                }
+            };
+        }
+
+        // SCALEFORMUI HAS NO "ITEM FILTER" FEATURE FOR THE MOMENT
+        /*
+        private void Menu_OnMenuOpen(UIMenu menu, dynamic data = null)
+        {
+            MainMenu.Instance.AddTick(BannedPlayersTick);
+        }
+
+        private void Menu_OnMenuClose(UIMenu menu)
+        {
+            MainMenu.Instance.RemoveTick(BannedPlayersTick);
+        }
+
+        private async Task BannedPlayersTick()
+        {
+            if (Game.IsControlJustReleased(0, Control.Jump))
+            {
+                if (banlist.Count > 1)
+                {
+                    var filterText = await GetUserInput("Filter username or ban id (leave this empty to reset the filter)");
+                    if (string.IsNullOrEmpty(filterText))
+                    {
+                        Subtitle.Custom("Filters have been cleared.");
+                        menu.Clear();
+                        menu.ResetFilter();
+                        UpdateBans();
+                    }
+                    else
+                    {
+                        menu.FilterMenuItems(item => item.ItemData is BanRecord br && (br.playerName.ToLower().Contains(filterText.ToLower()) || br.uuid.ToLower().Contains(filterText.ToLower())));
+                        Subtitle.Custom("Filter has been applied.");
+                    }
+                }
+                else
+                {
+                    Notify.Error("At least 2 players need to be banned in order to use the filter function.");
                 }
 
-                bannedPlayer.RefreshIndex();
-            };
-            MenuController.AddMenu(bannedPlayer);
-
+                Log($"Button pressed: {a} {b}");
+            }
         }
+        */
 
         /// <summary>
         /// Updates the ban list menu.
         /// </summary>
         public void UpdateBans()
         {
-            menu.ResetFilter();
-            menu.ClearMenuItems();
+            //menu.ResetFilter();
+            menu.Clear();
 
             foreach (var ban in banlist)
             {
-                var recordBtn = new MenuItem(ban.playerName, $"~y~{ban.playerName}~s~ was banned by ~y~{ban.bannedBy}~s~ until ~y~{ban.bannedUntil}~s~ for ~y~{ban.banReason}~s~.")
-                {
-                    Label = "→→→",
-                    ItemData = ban
-                };
-                menu.AddMenuItem(recordBtn);
-                MenuController.BindMenuItem(menu, bannedPlayer, recordBtn);
+                var recordBtn = new UIMenuItem(ban.playerName, $"~y~{ban.playerName}~s~ was banned by ~y~{ban.bannedBy}~s~ until ~y~{ban.bannedUntil}~s~ for ~y~{ban.banReason}~s~.");
+                recordBtn.SetRightLabel("→→→");
+                recordBtn.ItemData = ban;
+                menu.AddItem(recordBtn);
+                recordBtn.Activated += async (a, b) => await a.SwitchTo(bannedPlayer, 0, true);
             }
-            menu.RefreshIndex();
         }
 
         /// <summary>
@@ -215,7 +220,7 @@ namespace vMenuClient.menus
         /// Create the menu if it doesn't exist, and then returns it.
         /// </summary>
         /// <returns>The Menu</returns>
-        public Menu GetMenu()
+        public UIMenu GetMenu()
         {
             if (menu == null)
             {
