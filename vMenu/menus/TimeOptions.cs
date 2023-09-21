@@ -20,38 +20,22 @@ namespace vMenuClient.menus
 
             // Create all menu items.
             freezeTimeToggle = new UIMenuItem("Freeze/Unfreeze Time", "Enable or disable time freezing.");
-            var earlymorning = new UIMenuItem("Early Morning", "Set the time to 06:00.")
-            {
-                Label = "06:00"
-            };
-            var morning = new UIMenuItem("Morning", "Set the time to 09:00.")
-            {
-                Label = "09:00"
-            };
-            var noon = new UIMenuItem("Noon", "Set the time to 12:00.")
-            {
-                Label = "12:00"
-            };
-            var earlyafternoon = new UIMenuItem("Early Afternoon", "Set the time to 15:00.")
-            {
-                Label = "15:00"
-            };
-            var afternoon = new UIMenuItem("Afternoon", "Set the time to 18:00.")
-            {
-                Label = "18:00"
-            };
-            var evening = new UIMenuItem("Evening", "Set the time to 21:00.")
-            {
-                Label = "21:00"
-            };
-            var midnight = new UIMenuItem("Midnight", "Set the time to 00:00.")
-            {
-                Label = "00:00"
-            };
-            var night = new UIMenuItem("Night", "Set the time to 03:00.")
-            {
-                Label = "03:00"
-            };
+            var earlymorning = new UIMenuItem("Early Morning", "Set the time to 06:00.");
+            earlymorning.SetRightLabel("06:00");
+            var morning = new UIMenuItem("Morning", "Set the time to 09:00.");
+            morning.SetRightLabel("09:00");
+            var noon = new UIMenuItem("Noon", "Set the time to 12:00.");
+            noon.SetRightLabel("12:00");
+            var earlyafternoon = new UIMenuItem("Early Afternoon", "Set the time to 15:00.");
+            earlyafternoon.SetRightLabel("15:00");
+            var afternoon = new UIMenuItem("Afternoon", "Set the time to 18:00.");
+            afternoon.SetRightLabel("18:00");
+            var evening = new UIMenuItem("Evening", "Set the time to 21:00.");
+            evening.SetRightLabel("21:00");
+            var midnight = new UIMenuItem("Midnight", "Set the time to 00:00.");
+            midnight.SetRightLabel("00:00");
+            var night = new UIMenuItem("Night", "Set the time to 03:00.");
+            night.SetRightLabel("03:00");
 
             var hours = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
             var minutes = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };

@@ -274,7 +274,8 @@ namespace vMenuClient.menus
             // Teleportation options
             if (IsAllowed(Permission.MSTeleportToWp) || IsAllowed(Permission.MSTeleportLocations) || IsAllowed(Permission.MSTeleportToCoord))
             {
-                var teleportOptionsMenuBtn = new UIMenuItem("Teleport Options", "Various teleport options.") { Label = "→→→" };
+                var teleportOptionsMenuBtn = new UIMenuItem("Teleport Options", "Various teleport options.");
+                teleportOptionsMenuBtn.SetRightLabel("→→→");
                 menu.AddItem(teleportOptionsMenuBtn);
                 teleportOptionsMenuBtn.Activated += async (a, b) => await a.SwitchTo(teleportOptionsMenu, 0, true);
 
@@ -407,7 +408,8 @@ namespace vMenuClient.menus
 
             #region dev tools menu
 
-            var devToolsBtn = new UIMenuItem("Developer Tools", "Various development/debug tools.") { Label = "→→→" };
+            var devToolsBtn = new UIMenuItem("Developer Tools", "Various development/debug tools.");
+            devToolsBtn.SetRightLabel("→→→");
             menu.AddItem(devToolsBtn);
             devToolsBtn.Activated += async (a, b) => await a.SwitchTo(developerToolsMenu, 0, true);
 
@@ -529,7 +531,8 @@ namespace vMenuClient.menus
 
             if (IsAllowed(Permission.MSEntitySpawner))
             {
-                var entSpawnerMenuBtn = new UIMenuItem("Entity Spawner", "Spawn and move entities") { Label = "→→→" };
+                var entSpawnerMenuBtn = new UIMenuItem("Entity Spawner", "Spawn and move entities");
+                entSpawnerMenuBtn.SetRightLabel("→→→");
                 developerToolsMenu.AddItem(entSpawnerMenuBtn);
                 entSpawnerMenuBtn.Activated += async (a, b) => await a.SwitchTo(entitySpawnerMenu, 0, true);
 

@@ -28,7 +28,8 @@ namespace vMenuClient.menus
             menu = new UIMenu(GetSafePlayerName(Game.Player.Name), "Personal Vehicle Options");
 
             // menu items
-            var setVehice = new UIMenuItem("Set Vehicle", "Sets your current vehicle as your personal vehicle. If you already have a personal vehicle set then this will override your selection.") { Label = "Current Vehicle: None" };
+            var setVehicle = new UIMenuItem("Set Vehicle", "Sets your current vehicle as your personal vehicle. If you already have a personal vehicle set then this will override your selection.");
+            setVehicle.SetRightLabel("Current Vehicle: None");
             var toggleEngine = new UIMenuItem("Toggle Engine", "Toggles the engine on or off, even when you're not inside of the vehicle. This does not work if someone else is currently using your vehicle.");
             var toggleLights = new UIMenuListItem("Set Vehicle Lights", new List<dynamic>() { "Force On", "Force Off", "Reset" }, 0, "This will enable or disable your vehicle headlights, the engine of your vehicle needs to be running for this to work.");
             var toggleStance = new UIMenuListItem("Vehicle Stance", new List<dynamic>() { "Default", "Lowered" }, 0, "Select stance for your Personal Vehicle.");
@@ -36,10 +37,8 @@ namespace vMenuClient.menus
             //MenuItem
             var lockDoors = new UIMenuItem("Lock Vehicle Doors", "This will lock all your vehicle doors for all players. Anyone already inside will always be able to leave the vehicle, even if the doors are locked.");
             var unlockDoors = new UIMenuItem("Unlock Vehicle Doors", "This will unlock all your vehicle doors for all players.");
-            var doorsMenuBtn = new UIMenuItem("Vehicle Doors", "Open, close, remove and restore vehicle doors here.")
-            {
-                Label = "→→→"
-            };
+            var doorsMenuBtn = new UIMenuItem("Vehicle Doors", "Open, close, remove and restore vehicle doors here.");
+            doorsMenuBtn.SetRightLabel("→→→");
             var soundHorn = new UIMenuItem("Sound Horn", "Sounds the horn of the vehicle.");
             var toggleAlarm = new UIMenuItem("Toggle Alarm Sound", "Toggles the vehicle alarm sound on or off. This does not set an alarm. It only toggles the current sounding status of the alarm.");
             var enableBlip = new UIMenuCheckboxItem("Add Blip For Personal Vehicle", UIMenuCheckboxStyle.Cross, EnableVehicleBlip, "Enables or disables the blip that gets added when you mark a vehicle as your personal vehicle.");
@@ -49,7 +48,7 @@ namespace vMenuClient.menus
             doorsMenuBtn.Activated += async (a, b) => await a.SwitchTo(VehicleDoorsMenu, 0, true);
 
             // This is always allowed if this submenu is created/allowed.
-            menu.AddItem(setVehice);
+            menu.AddItem(setVehicle);
 
             // Add conditional features.
 
@@ -227,7 +226,7 @@ namespace vMenuClient.menus
             // Handle button presses.
             menu.OnItemSelect += (sender, item, index) =>
             {
-                if (item == setVehice)
+                if (item == setVehicle)
                 {
                     if (Game.PlayerPed.IsInVehicle())
                     {
@@ -253,7 +252,7 @@ namespace vMenuClient.menus
                                 {
                                     name = veh.DisplayName;
                                 }
-                                item.Label = $"Current Vehicle: {name}";
+                                item.SetRightLabel($"Current Vehicle: {name}");
                             }
                             else
                             {

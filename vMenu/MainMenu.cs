@@ -435,6 +435,10 @@ namespace vMenuClient
 
             // Create the main menu.
             Menu = new UIMenu(Game.Player.Name, "Main Menu", UserDefaults.MiscMenuPosition, true);
+            Menu.MaxItemsOnScreen = 7; // To decide max items on screen at time, default 7
+            Menu.BuildingAnimation = MenuBuildingAnimation.LEFT_RIGHT;
+            Menu.AnimationType = MenuAnimationType.BACK_INOUT;
+            Menu.Enabled3DAnimations = true;
             PlayerSubmenu = new UIMenu(Game.Player.Name, "Player Related Options", true);
             VehicleSubmenu = new UIMenu(Game.Player.Name, "Vehicle Related Options", true);
             WorldSubmenu = new UIMenu(Game.Player.Name, "World Options", true);

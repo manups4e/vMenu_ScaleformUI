@@ -64,10 +64,8 @@ namespace vMenuClient.menus
 
             var vehicleAutoPilot = new UIMenu("Auto Pilot", "Vehicle auto pilot options.");
 
-            var vehicleAutoPilotBtn = new UIMenuItem("Vehicle Auto Pilot Menu", "Manage vehicle auto pilot options.")
-            {
-                Label = "→→→"
-            };
+            var vehicleAutoPilotBtn = new UIMenuItem("Vehicle Auto Pilot Menu", "Manage vehicle auto pilot options.");
+            vehicleAutoPilotBtn.SetRightLabel("→→→");
 
             var drivingStyles = new List<dynamic>() { "Normal", "Rushed", "Avoid highways", "Drive in reverse", "Custom" };
             var drivingStyle = new UIMenuListItem("Driving Style", drivingStyles, 0, "Set the driving style that is used for the Drive to Waypoint and Drive Around Randomly functions.");
@@ -157,7 +155,8 @@ namespace vMenuClient.menus
                 var startDrivingRandomly = new UIMenuItem("Drive Around Randomly", "Make your player ped drive your vehicle randomly around the map.");
                 var stopDriving = new UIMenuItem("Stop Driving", "The player ped will find a suitable place to stop the vehicle. The task will be stopped once the vehicle has reached the suitable stop location.");
                 var forceStopDriving = new UIMenuItem("Force Stop Driving", "This will stop the driving task immediately without finding a suitable place to stop.");
-                var customDrivingStyle = new UIMenuItem("Custom Driving Style", "Select a custom driving style. Make sure to also enable it by selecting the 'Custom' driving style in the driving styles list.") { Label = "→→→" };
+                var customDrivingStyle = new UIMenuItem("Custom Driving Style", "Select a custom driving style. Make sure to also enable it by selecting the 'Custom' driving style in the driving styles list.");
+                customDrivingStyle.SetRightLabel("→→→");
                 vehicleAutoPilot.AddItem(customDrivingStyle);
                 customDrivingStyle.Activated += async (a, b) => await a.SwitchTo(CustomDrivingStyleMenu, 0, true);
                 var knownNames = new Dictionary<int, string>()

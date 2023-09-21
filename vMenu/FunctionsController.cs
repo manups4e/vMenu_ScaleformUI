@@ -1378,7 +1378,7 @@ namespace vMenuClient
                 var minutes = GetClockMinutes();
                 var hoursString = hours < 10 ? "0" + hours.ToString() : hours.ToString();
                 var minutesString = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
-                MainMenu.TimeOptionsMenu.freezeTimeToggle.Label = $"(Current Time {hoursString}:{minutesString})";
+                MainMenu.TimeOptionsMenu.freezeTimeToggle.SetRightLabel($"(Current Time {hoursString}:{minutesString})");
             }
             // This only needs to be updated once every 2 seconds so we can delay it.
             await Delay(2000);

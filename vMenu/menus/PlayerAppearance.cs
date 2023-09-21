@@ -189,9 +189,9 @@ namespace vMenuClient.menus
                 }
                 else if (item == replaceSavedPed)
                 {
-                    if (item.Label == "Are you sure?")
+                    if (item.RightLabel == "Are you sure?")
                     {
-                        item.Label = "";
+                        item.SetRightLabel("");
                         var success = await SavePed(savedPed.Key.Substring(4), overrideExistingPed: true);
                         if (!success)
                         {
@@ -205,12 +205,12 @@ namespace vMenuClient.menus
                     }
                     else
                     {
-                        item.Label = "Are you sure?";
+                        item.SetRightLabel("Are you sure?");
                     }
                 }
                 else if (item == deleteSavedPed)
                 {
-                    if (item.Label == "Are you sure?")
+                    if (item.RightLabel == "Are you sure?")
                     {
                         DeleteResourceKvp(savedPed.Key);
                         Notify.Success("Your saved ped has been deleted.");
@@ -218,7 +218,7 @@ namespace vMenuClient.menus
                     }
                     else
                     {
-                        item.Label = "Are you sure?";
+                        item.SetRightLabel("Are you sure?");
                     }
                 }
             };
@@ -227,7 +227,7 @@ namespace vMenuClient.menus
             {
                 foreach (var item in selectedSavedPedMenu.MenuItems)
                 {
-                    item.Label = "";
+                    item.SetRightLabel("");
                 }
             }
 

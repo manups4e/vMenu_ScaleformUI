@@ -78,7 +78,8 @@ namespace vMenuClient.menus
 
 
             var saveLoadout = new UIMenuItem("Save Loadout", "Save your current weapons into a new loadout slot.");
-            var savedLoadoutsMenuBtn = new UIMenuItem("Manage Loadouts", "Manage saved weapon loadouts.") { Label = "→→→" };
+            var savedLoadoutsMenuBtn = new UIMenuItem("Manage Loadouts", "Manage saved weapon loadouts.");
+            savedLoadoutsMenuBtn.SetRightLabel("→→→");
             var enableDefaultLoadouts = new UIMenuCheckboxItem("Restore Default Loadout On Respawn", WeaponLoadoutsSetLoadoutOnRespawn, "If you've set a loadout as default loadout, then your loadout will be equipped automatically whenever you (re)spawn.");
 
             menu.AddItem(saveLoadout);
@@ -104,7 +105,8 @@ namespace vMenuClient.menus
 
                 foreach (var sw in SavedWeapons)
                 {
-                    var btn = new UIMenuItem(sw.Key.Replace("vmenu_string_saved_weapon_loadout_", ""), "Click to manage this loadout.") { Label = "→→→" };
+                    var btn = new UIMenuItem(sw.Key.Replace("vmenu_string_saved_weapon_loadout_", ""), "Click to manage this loadout.");
+                    btn.SetRightLabel("→→→");
                     SavedLoadoutsMenu.AddItem(btn);
                     btn.Activated += async (a, b) => await a.SwitchTo(ManageLoadoutMenu, 0, true);
                 }
@@ -207,30 +209,30 @@ namespace vMenuClient.menus
                     }
                     else if (item == replaceLoadout) // replace
                     {
-                        if (replaceLoadout.Label == "Are you sure?")
+                        if (replaceLoadout.RightLabel == "Are you sure?")
                         {
-                            replaceLoadout.Label = "";
+                            replaceLoadout.SetRightLabel("");
                             SaveWeaponLoadout(SelectedSavedLoadoutName);
                             Log("save weapons called from replace loadout");
                             Notify.Success("Your saved loadout has been replaced with your current weapons.");
                         }
                         else
                         {
-                            replaceLoadout.Label = "Are you sure?";
+                            replaceLoadout.SetRightLabel("Are you sure?");
                         }
                     }
                     else if (item == deleteLoadout) // delete
                     {
-                        if (deleteLoadout.Label == "Are you sure?")
+                        if (deleteLoadout.RightLabel == "Are you sure?")
                         {
-                            deleteLoadout.Label = "";
+                            deleteLoadout.SetRightLabel("");
                             DeleteResourceKvp(SelectedSavedLoadoutName);
                             ManageLoadoutMenu.GoBack();
                             Notify.Success("Your saved loadout has been deleted.");
                         }
                         else
                         {
-                            deleteLoadout.Label = "Are you sure?";
+                            deleteLoadout.SetRightLabel("Are you sure?");
                         }
                     }
                 }
@@ -239,14 +241,14 @@ namespace vMenuClient.menus
             // Reset the 'are you sure' states.
             ManageLoadoutMenu.OnMenuClose += (sender) =>
             {
-                deleteLoadout.Label = "";
-                renameLoadout.Label = "";
+                deleteLoadout.SetRightLabel("");
+                renameLoadout.SetRightLabel("");
             };
             // Reset the 'are you sure' states.
             ManageLoadoutMenu.OnIndexChange += (sender, newIndex) =>
             {
-                deleteLoadout.Label = "";
-                renameLoadout.Label = "";
+                deleteLoadout.SetRightLabel("");
+                renameLoadout.SetRightLabel("");
             };
 
             // Refresh the spawned weapons menu whenever this menu is opened.

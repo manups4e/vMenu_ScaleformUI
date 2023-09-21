@@ -107,7 +107,7 @@ namespace vMenuClient.menus
                         GiveWeaponToPed(Game.PlayerPed.Handle, weapon.Value, maxAmmo, false, true);
                     }
                 };
-                addonWeaponsBtn.Label = "→→→";
+                addonWeaponsBtn.SetRightLabel("→→→");
             }
             else
             {
@@ -124,7 +124,8 @@ namespace vMenuClient.menus
             {
                 // main parachute options menu setup
                 var parachuteMenu = new UIMenu("Parachute Options", "Parachute Options");
-                var parachuteBtn = new UIMenuItem("Parachute Options", "All parachute related options can be changed here.") { Label = "→→→" };
+                var parachuteBtn = new UIMenuItem("Parachute Options", "All parachute related options can be changed here.");
+                parachuteBtn.SetRightLabel("→→→");
 
                 menu.AddItem(parachuteBtn);
 
@@ -273,7 +274,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region Create Weapon Category Submenus
-            var spacer = GetSpacerMenuItem("↓ Weapon Categories ↓");
+            var spacer = new UIMenuSeparatorItem("↓ Weapon Categories ↓", true);
             menu.AddItem(spacer);
 
             var handGuns = new UIMenu("Weapons", "Handguns");
@@ -302,28 +303,28 @@ namespace vMenuClient.menus
             #endregion
 
             #region Setup weapon category buttons and submenus.
-            handGunsBtn.Label = "→→→";
+            handGunsBtn.SetRightLabel("→→→");
             menu.AddItem(handGunsBtn);
 
-            riflesBtn.Label = "→→→";
+            riflesBtn.SetRightLabel("→→→");
             menu.AddItem(riflesBtn);
 
-            shotgunsBtn.Label = "→→→";
+            shotgunsBtn.SetRightLabel("→→→");
             menu.AddItem(shotgunsBtn);
 
-            smgsBtn.Label = "→→→";
+            smgsBtn.SetRightLabel("→→→");
             menu.AddItem(smgsBtn);
 
-            throwablesBtn.Label = "→→→";
+            throwablesBtn.SetRightLabel("→→→");
             menu.AddItem(throwablesBtn);
 
-            meleeBtn.Label = "→→→";
+            meleeBtn.SetRightLabel("→→→");
             menu.AddItem(meleeBtn);
 
-            heavyBtn.Label = "→→→";
+            heavyBtn.SetRightLabel("→→→");
             menu.AddItem(heavyBtn);
 
-            snipersBtn.Label = "→→→";
+            snipersBtn.SetRightLabel("→→→");
             menu.AddItem(snipersBtn);
             #endregion
 

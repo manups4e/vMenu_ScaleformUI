@@ -68,10 +68,8 @@ namespace vMenuClient.menus
                 };
             }
 
-            var unavailableModels = new UIMenuItem("Unavailable Saved Vehicles", "These vehicles are currently unavailable because the models are not present in the game. These vehicles are most likely not being streamed from the server.")
-            {
-                Label = "→→→"
-            };
+            var unavailableModels = new UIMenuItem("Unavailable Saved Vehicles", "These vehicles are currently unavailable because the models are not present in the game. These vehicles are most likely not being streamed from the server.");
+            unavailableModels.SetRightLabel("→→→");
 
             menu.AddItem(unavailableModels);
             unavailableModels.Activated += async (a, b) => await a.SwitchTo(unavailableVehiclesMenu, 0, true);
@@ -87,15 +85,15 @@ namespace vMenuClient.menus
 
             selectedVehicleMenu.OnMenuOpen += (sender, data) =>
             {
-                spawnVehicle.Label = "(" + GetDisplayNameFromVehicleModel(currentlySelectedVehicle.Value.model).ToLower() + ")";
+                spawnVehicle.SetRightLabel("(" + GetDisplayNameFromVehicleModel(currentlySelectedVehicle.Value.model).ToLower() + ")");
             };
 
             selectedVehicleMenu.OnMenuClose += (sender) =>
             {
                 deleteButtonPressedCount = 0;
-                deleteVehicle.Label = "";
+                deleteVehicle.SetRightLabel("");
                 replaceButtonPressedCount = 0;
-                replaceVehicle.Label = "";
+                replaceVehicle.SetRightLabel("");
             };
 
             selectedVehicleMenu.OnItemSelect += async (sender, item, index) =>
@@ -145,13 +143,13 @@ namespace vMenuClient.menus
                         if (replaceButtonPressedCount == 0)
                         {
                             replaceButtonPressedCount = 1;
-                            item.Label = "Press again to confirm.";
+                            item.SetRightLabel("Press again to confirm.");
                             Notify.Alert("Are you sure you want to replace this vehicle? Press the button again to confirm.");
                         }
                         else
                         {
                             replaceButtonPressedCount = 0;
-                            item.Label = "";
+                            item.SetRightLabel("");
                             SaveVehicle(currentlySelectedVehicle.Key.Substring(4));
                             selectedVehicleMenu.GoBack();
                             Notify.Success("Your saved vehicle has been replaced with your current vehicle.");
@@ -167,13 +165,13 @@ namespace vMenuClient.menus
                     if (deleteButtonPressedCount == 0)
                     {
                         deleteButtonPressedCount = 1;
-                        item.Label = "Press again to confirm.";
+                        item.SetRightLabel("Press again to confirm.");
                         Notify.Alert("Are you sure you want to delete this vehicle? Press the button again to confirm.");
                     }
                     else
                     {
                         deleteButtonPressedCount = 0;
-                        item.Label = "";
+                        item.SetRightLabel("");
                         DeleteResourceKvp(currentlySelectedVehicle.Key);
                         UpdateMenuAvailableCategories();
                         selectedVehicleMenu.GoBack();
@@ -183,12 +181,12 @@ namespace vMenuClient.menus
                 if (item != deleteVehicle) // if any other button is pressed, restore the delete vehicle button pressed count.
                 {
                     deleteButtonPressedCount = 0;
-                    deleteVehicle.Label = "";
+                    deleteVehicle.SetRightLabel("");
                 }
                 if (item != replaceVehicle)
                 {
                     replaceButtonPressedCount = 0;
-                    replaceVehicle.Label = "";
+                    replaceVehicle.SetRightLabel("");
                 }
             };
             //unavailableVehiclesMenu.InstructionalButtons.Add(Control.FrontendDelete, "Delete Vehicle!");
@@ -204,7 +202,7 @@ namespace vMenuClient.menus
                         var item = m.MenuItems.Find(i => i.Index == index);
                         if (item != null && item.ItemData is KeyValuePair<string, VehicleInfo> sd)
                         {
-                            if (item.Label == "~r~Are you sure?")
+                            if (item.RightLabel == "~r~Are you sure?")
                             {
                                 Log("Unavailable saved vehicle deleted, data: " + JsonConvert.SerializeObject(sd));
                                 DeleteResourceKvp(sd.Key);
@@ -213,7 +211,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                item.Label = "~r~Are you sure?";
+                                item.SetRightLabel("~r~Are you sure?");
                             }
                         }
                         else
@@ -239,7 +237,7 @@ namespace vMenuClient.menus
                 {
                     if (i.ItemData is KeyValuePair<string, VehicleInfo> vd)
                     {
-                        i.Label = $"({vd.Value.name})";
+                        i.SetRightLabel($"({vd.Value.name})");
                     }
                 }
             }

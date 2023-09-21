@@ -52,25 +52,25 @@ namespace vMenuClient.menus
             bannedPlayer.OnMenuClose += (sender) =>
             {
                 BaseScript.TriggerServerEvent("vMenu:RequestBanList", Game.Player.Handle);
-                bannedPlayer.MenuItems[5].Label = "";
+                bannedPlayer.MenuItems[5].SetRightLabel("");
                 UpdateBans();
             };
 
             bannedPlayer.OnIndexChange += (a, b) =>
             {
-                bannedPlayer.MenuItems[5].Label = "";
+                bannedPlayer.MenuItems[5].SetRightLabel("");
             };
 
             bannedPlayer.OnItemSelect += (sender, item, index) =>
             {
                 if (index == 5 && IsAllowed(Permission.OPUnban))
                 {
-                    if (item.Label == "Are you sure?")
+                    if (item.RightLabel == "Are you sure?")
                     {
                         if (banlist.Contains(currentRecord))
                         {
                             UnbanPlayer(banlist.IndexOf(currentRecord));
-                            bannedPlayer.MenuItems[5].Label = "";
+                            bannedPlayer.MenuItems[5].SetRightLabel("");
                             bannedPlayer.GoBack();
                         }
                         else
@@ -80,12 +80,12 @@ namespace vMenuClient.menus
                     }
                     else
                     {
-                        item.Label = "Are you sure?";
+                        item.SetRightLabel("Are you sure?");
                     }
                 }
                 else
                 {
-                    bannedPlayer.MenuItems[5].Label = "";
+                    bannedPlayer.MenuItems[5].SetRightLabel("");
                 }
 
             };
@@ -100,17 +100,17 @@ namespace vMenuClient.menus
                 var bannedUntilItem = bannedPlayer.MenuItems[2];
                 var playerIdentifiersItem = bannedPlayer.MenuItems[3];
                 var banReasonItem = bannedPlayer.MenuItems[4];
-                nameItem.Label = currentRecord.playerName;
+                nameItem.SetRightLabel(currentRecord.playerName);
                 nameItem.Description = "Player name: ~y~" + currentRecord.playerName;
-                bannedByItem.Label = currentRecord.bannedBy;
+                bannedByItem.SetRightLabel(currentRecord.bannedBy);
                 bannedByItem.Description = "Player banned by: ~y~" + currentRecord.bannedBy;
                 if (currentRecord.bannedUntil.Date.Year == 3000)
                 {
-                    bannedUntilItem.Label = "Forever";
+                    bannedUntilItem.SetRightLabel("Forever");
                 }
                 else
                 {
-                    bannedUntilItem.Label = currentRecord.bannedUntil.Date.ToString();
+                    bannedUntilItem.SetRightLabel(currentRecord.bannedUntil.Date.ToString());
                 }
 
                 bannedUntilItem.Description = "This player is banned until: " + currentRecord.bannedUntil.Date.ToString();
@@ -135,7 +135,7 @@ namespace vMenuClient.menus
                 banReasonItem.Description = "Banned for: " + currentRecord.banReason;
 
                 var unbanPlayerBtn = bannedPlayer.MenuItems[5];
-                unbanPlayerBtn.Label = "";
+                unbanPlayerBtn.SetRightLabel("");
                 if (!IsAllowed(Permission.OPUnban))
                 {
                     unbanPlayerBtn.Enabled = false;

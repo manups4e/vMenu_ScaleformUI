@@ -64,7 +64,8 @@ namespace vMenuClient.menus
             #region menu items variables
             // vehicle god mode menu
             var vehGodMenu = new UIMenu("Vehicle Godmode", "Vehicle Godmode Options");
-            var vehGodMenuBtn = new UIMenuItem("God Mode Options", "Enable or disable specific damage types.") { Label = "→→→" };
+            var vehGodMenuBtn = new UIMenuItem("God Mode Options", "Enable or disable specific damage types.");
+            vehGodMenuBtn.SetRightLabel("→→→");
 
             // Create Checkboxes.
             var vehicleGod = new UIMenuCheckboxItem("Vehicle God Mode", VehicleGodMode, "Makes your vehicle not take any damage. Note, you need to go into the god menu options below to select what kind of damage you want to disable.");
@@ -933,14 +934,16 @@ namespace vMenuClient.menus
             // primary menu
             var primaryColorsMenu = new UIMenu("Vehicle Colors", "Primary Colors");
 
-            var primaryColorsBtn = new UIMenuItem("Primary Color") { Label = "→→→" };
+            var primaryColorsBtn = new UIMenuItem("Primary Color");
+            primaryColorsBtn.SetRightLabel("→→→");
             VehicleColorsMenu.AddItem(primaryColorsBtn);
             primaryColorsBtn.Activated += async (a, b) => await a.SwitchTo(primaryColorsMenu, 0, true);
 
             // secondary menu
             var secondaryColorsMenu = new UIMenu("Vehicle Colors", "Secondary Colors");
 
-            var secondaryColorsBtn = new UIMenuItem("Secondary Color") { Label = "→→→" };
+            var secondaryColorsBtn = new UIMenuItem("Secondary Color");
+            secondaryColorsBtn.SetRightLabel("→→→");
             VehicleColorsMenu.AddItem(secondaryColorsBtn);
             secondaryColorsBtn.Activated += async (a, b) => await a.SwitchTo(secondaryColorsMenu, 0, true);
 
@@ -1423,10 +1426,8 @@ namespace vMenuClient.menus
                                 Notify.Error("This vehicle does not have any liveries.");
                                 VehicleLiveriesMenu.Visible = false;
                                 menu.Visible = true;
-                                var backBtn = new UIMenuItem("No Liveries Available :(", "Click me to go back.")
-                                {
-                                    Label = "Go Back"
-                                };
+                                var backBtn = new UIMenuItem("No Liveries Available :(", "Click me to go back.");
+                                backBtn.SetRightLabel("Go Back");
                                 VehicleLiveriesMenu.AddItem(backBtn);
                                 VehicleLiveriesMenu.OnItemSelect += (sender2, item2, index2) =>
                                 {
@@ -1526,10 +1527,8 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            var backBtn = new UIMenuItem("No Extras Available :(", "Go back to the Vehicle Options menu.")
-                            {
-                                Label = "Go Back"
-                            };
+                            var backBtn = new UIMenuItem("No Extras Available :(", "Go back to the Vehicle Options menu.");
+                            backBtn.SetRightLabel("Go Back");
                             VehicleComponentsMenu.AddItem(backBtn);
                             VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
                             {

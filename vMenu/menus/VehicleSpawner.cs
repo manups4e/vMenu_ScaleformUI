@@ -40,7 +40,8 @@ namespace vMenuClient.menus
             #region addon cars menu
             // Vehicle Addons List
             var addonCarsMenu = new UIMenu("Addon Vehicles", "Spawn An Addon Vehicle");
-            var addonCarsBtn = new UIMenuItem("Addon Vehicles", "A list of addon vehicles available on this server.") { Label = "→→→" };
+            var addonCarsBtn = new UIMenuItem("Addon Vehicles", "A list of addon vehicles available on this server.");
+            addonCarsBtn.SetRightLabel("→→→");
 
             menu.AddItem(addonCarsBtn);
 
@@ -52,12 +53,14 @@ namespace vMenuClient.menus
                     {
                         addonCarsBtn.Activated += async (a, b) => await a.SwitchTo(addonCarsMenu, 0, true);
                         var unavailableCars = new UIMenu("Addon Spawner", "Unavailable Vehicles");
-                        var unavailableCarsBtn = new UIMenuItem("Unavailable Vehicles", "These addon vehicles are not currently being streamed (correctly) and are not able to be spawned.") { Label = "→→→" };
+                        var unavailableCarsBtn = new UIMenuItem("Unavailable Vehicles", "These addon vehicles are not currently being streamed (correctly) and are not able to be spawned.");
+                        unavailableCarsBtn.SetRightLabel("→→→");
 
                         for (var cat = 0; cat < 23; cat++)
                         {
                             var categoryMenu = new UIMenu("Addon Spawner", GetLabelText($"VEH_CLASS_{cat}"));
-                            var categoryBtn = new UIMenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Spawn an addon vehicle from the {GetLabelText($"VEH_CLASS_{cat}")} class.") { Label = "→→→" };
+                            var categoryBtn = new UIMenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Spawn an addon vehicle from the {GetLabelText($"VEH_CLASS_{cat}")} class.");
+                            categoryBtn.SetRightLabel("→→→");
 
                             addonCarsMenu.AddItem(categoryBtn);
 
@@ -66,7 +69,7 @@ namespace vMenuClient.menus
                                 categoryBtn.Description = "This vehicle class is disabled by the server.";
                                 categoryBtn.Enabled = false;
                                 categoryBtn.SetLeftBadge(BadgeIcon.LOCK);
-                                categoryBtn.Label = "";
+                                categoryBtn.SetRightLabel("");
                                 continue;
                             }
 
@@ -113,7 +116,7 @@ namespace vMenuClient.menus
                                 categoryBtn.Description = "There are no addon cars available in this category.";
                                 categoryBtn.Enabled = false;
                                 categoryBtn.SetLeftBadge(BadgeIcon.LOCK);
-                                categoryBtn.Label = "";
+                                categoryBtn.SetRightLabel("");
                             }
                         }
 
@@ -259,10 +262,8 @@ namespace vMenuClient.menus
                 var className = GetLabelText($"VEH_CLASS_{vehClass}");
 
                 // Create a button & a menu for it, add the menu to the menu pool and add & bind the button to the menu.
-                var btn = new UIMenuItem(className, $"Spawn a vehicle from the ~o~{className} ~s~class.")
-                {
-                    Label = "→→→"
-                };
+                var btn = new UIMenuItem(className, $"Spawn a vehicle from the ~o~{className} ~s~class.");
+                btn.SetRightLabel("→→→");
 
                 var vehicleClassMenu = new UIMenu("Vehicle Spawner", className);
 
@@ -330,9 +331,9 @@ namespace vMenuClient.menus
                                 var vehBtn = new UIMenuItem(vehName)
                                 {
                                     Enabled = true,
-                                    Label = $"({vehModelName.ToLower()})",
                                     ItemData = new float[4] { topSpeed, acceleration, maxBraking, maxTraction }
                                 };
+                                vehBtn.SetRightLabel($"({vehModelName.ToLower()})");
                                 vehicleClassMenu.AddItem(vehBtn);
                             }
                             else
@@ -340,9 +341,9 @@ namespace vMenuClient.menus
                                 var vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
                                 {
                                     Enabled = false,
-                                    Label = $"({vehModelName.ToLower()})",
                                     ItemData = new float[4] { 0f, 0f, 0f, 0f }
                                 };
+                                vehBtn.SetRightLabel($"({vehModelName.ToLower()})");
                                 vehicleClassMenu.AddItem(vehBtn);
                                 vehBtn.SetRightBadge(BadgeIcon.LOCK);
                             }
@@ -377,9 +378,10 @@ namespace vMenuClient.menus
                             var vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
                             {
                                 Enabled = false,
-                                Label = $"({vehModelName.ToLower()})",
                                 ItemData = new float[4] { 0f, 0f, 0f, 0f }
                             };
+                            vehBtn.SetRightLabel($"({vehModelName.ToLower()})");
+
                             vehicleClassMenu.AddItem(vehBtn);
                             vehBtn.SetRightBadge(BadgeIcon.LOCK);
                         }

@@ -83,12 +83,12 @@ namespace vMenuClient.menus
 
             playerMenu.OnMenuClose += (sender) =>
             {
-                ban.Label = "";
+                ban.SetRightLabel("");
             };
 
             playerMenu.OnIndexChange += (sender, newIndex) =>
             {
-                ban.Label = "";
+                ban.SetRightLabel("");
             };
 
             // handle button presses for the specific player's menu.
@@ -264,16 +264,16 @@ namespace vMenuClient.menus
                 // perm ban
                 else if (item == ban)
                 {
-                    if (ban.Label == "Are you sure?")
+                    if (ban.RightLabel == "Are you sure?")
                     {
-                        ban.Label = "";
+                        ban.SetRightLabel("");
                         _ = UpdatePlayerlist();
                         playerMenu.GoBack();
                         BanPlayer(currentPlayer, true);
                     }
                     else
                     {
-                        ban.Label = "Are you sure?";
+                        ban.SetRightLabel("Are you sure?");
                     }
                 }
             };
@@ -308,10 +308,8 @@ namespace vMenuClient.menus
 
                 foreach (var p in MainMenu.PlayersList.OrderBy(a => a.Name))
                 {
-                    var pItem = new UIMenuItem($"{GetSafePlayerName(p.Name)}", $"Click to view the options for this player. Server ID: {p.ServerId}. Local ID: {p.Handle}.")
-                    {
-                        Label = $"Server #{p.ServerId} →→→"
-                    };
+                    var pItem = new UIMenuItem($"{GetSafePlayerName(p.Name)}", $"Click to view the options for this player. Server ID: {p.ServerId}. Local ID: {p.Handle}.");
+                    pItem.SetRightLabel($"Server #{p.ServerId} →→→");
                     menu.AddItem(pItem);
                     pItem.Activated += async (a, b) => await a.SwitchTo(playerMenu, 0, true);
                 }

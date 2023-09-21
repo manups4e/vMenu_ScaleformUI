@@ -26,8 +26,8 @@ namespace vMenuClient.menus
         private readonly UIMenu manageSavedCharacterMenu = new("vMenu", "Manage MP Character");
 
         // Need to be able to disable/enable these buttons from another class.
-        internal UIMenuItem createMaleBtn = new("Create Male Character", "Create a new male character.") { Label = "→→→" };
-        internal UIMenuItem createFemaleBtn = new("Create Female Character", "Create a new female character.") { Label = "→→→" };
+        internal UIMenuItem createMaleBtn = new("Create Male Character", "Create a new male character.");
+        internal UIMenuItem createFemaleBtn = new("Create Female Character", "Create a new female character.");
         internal UIMenuItem editPedBtn = new("Edit Saved Character", "This allows you to edit everything about your saved character. The changes will be saved to this character's save file entry once you hit the save button.");
 
         public static bool DontCloseMenus { get; set; }
@@ -47,6 +47,8 @@ namespace vMenuClient.menus
         /// <param name="editPed"></param>
         private void MakeCreateCharacterMenu(bool male, bool editPed = false)
         {
+            createMaleBtn.SetRightLabel("→→→");
+            createFemaleBtn.SetRightLabel("→→→");
             isEdidtingPed = editPed;
             if (!editPed)
             {
@@ -2213,9 +2215,9 @@ namespace vMenuClient.menus
                 }
                 else if (item == delPed)
                 {
-                    if (delPed.Label == "Are you sure?")
+                    if (delPed.RightLabel == "Are you sure?")
                     {
-                        delPed.Label = "";
+                        delPed.SetRightLabel("");
                         DeleteResourceKvp("mp_ped_" + selectedSavedCharacterManageName);
                         Notify.Success("Your saved character has been deleted.");
                         manageSavedCharacterMenu.GoBack();
@@ -2223,7 +2225,7 @@ namespace vMenuClient.menus
                     }
                     else
                     {
-                        delPed.Label = "Are you sure?";
+                        delPed.SetRightLabel("Are you sure?");
                     }
                 }
                 else if (item == setAsDefaultPed)
@@ -2234,9 +2236,9 @@ namespace vMenuClient.menus
 
                 if (item != delPed)
                 {
-                    if (delPed.Label == "Are you sure?")
+                    if (delPed.RightLabel == "Are you sure?")
                     {
-                        delPed.Label = "";
+                        delPed.SetRightLabel("");
                     }
                 }
             };
@@ -2244,7 +2246,7 @@ namespace vMenuClient.menus
             // reset the "are you sure" state.
             manageSavedCharacterMenu.OnMenuClose += (sender) =>
             {
-                manageSavedCharacterMenu.MenuItems[2].Label = "";
+                manageSavedCharacterMenu.MenuItems[2].SetRightLabel("");
             };
 
             savedCharactersMenu.OnItemSelect += (sender, item, index) =>
@@ -2284,10 +2286,8 @@ namespace vMenuClient.menus
                 foreach (var item in names)
                 {
                     var tmpData = StorageManager.GetSavedMpCharacterData("mp_ped_" + item);
-                    var btn = new UIMenuItem(item, "Click to spawn, edit, clone, rename or delete this saved character.")
-                    {
-                        Label = $"({(tmpData.IsMale ? "M" : "F")}) →→→"
-                    };
+                    var btn = new UIMenuItem(item, "Click to spawn, edit, clone, rename or delete this saved character.");
+                    btn.SetRightLabel($"({(tmpData.IsMale ? "M" : "F")}) →→→");
                     if (defaultChar == "mp_ped_" + item)
                     {
                         btn.SetLeftBadge(BadgeIcon.TICK);
