@@ -1,6 +1,8 @@
-using ScaleformUI.Menu;
 using System.Collections.Generic;
 using System.Linq;
+
+using ScaleformUI.Menu;
+
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -72,7 +74,7 @@ namespace vMenuClient.menus
                             }
 
                             // Loop through all addon vehicles in this class.
-                            foreach (KeyValuePair<string, uint> veh in AddonVehicles.Where(v => GetVehicleClassFromName(v.Value) == cat))
+                            foreach (KeyValuePair<string, uint> veh in AddonVehicles.Where(v => GetVehicleClassFromName(v.Value) == cat).ToList())
                             {
                                 string localizedName = GetLabelText(GetDisplayNameFromVehicleModel(veh.Value));
 

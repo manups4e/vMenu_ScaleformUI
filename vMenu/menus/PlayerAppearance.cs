@@ -1,7 +1,8 @@
-using ScaleformUI.Menu;
-using ScaleformUI.Scaleforms;
 using System.Collections.Generic;
 using System.Linq;
+
+using ScaleformUI.Menu;
+using ScaleformUI.Scaleforms;
 
 namespace vMenuClient.menus
 {
@@ -393,12 +394,12 @@ namespace vMenuClient.menus
                     m.Clear();
                     if (!string.IsNullOrEmpty(input))
                     {
-                        m.MenuItems = itList.Where((mb) => mb.Label.ToLower().Contains(input.ToLower()) || mb.Label.ToLower().Contains(input.ToLower())).ToList();
+                        m.FilterMenuItems((mb) => mb.Label.ToLower().Contains(input.ToLower()) || mb.Label.ToLower().Contains(input.ToLower()));
                         Subtitle.Custom("Filter applied.");
                     }
                     else
                     {
-                        m.MenuItems = itList;
+                        m.ResetFilter();
                         Subtitle.Custom("Filter cleared.");
                     }
                 }

@@ -1,9 +1,12 @@
-using ScaleformUI.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using ScaleformUI.Menu;
+
 using vMenuClient.data;
+
 using static CitizenFX.Core.UI.Screen;
 
 namespace vMenuClient

@@ -1,10 +1,14 @@
-using CitizenFX.Core.UI;
-using ScaleformUI.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using CitizenFX.Core.UI;
+
+using ScaleformUI.Menu;
+
 using vMenuClient.data;
+
 using static CitizenFX.Core.UI.Screen;
 using static vMenuClient.data.PedModels;
 

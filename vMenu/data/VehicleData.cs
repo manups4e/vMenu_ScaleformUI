@@ -1312,7 +1312,7 @@ namespace vMenuClient.data
             OpenWheel = 22
             */
 
-            public static Dictionary<string, List<string>> VehicleClasses { get; } = new Dictionary<string, List<string>>()
+            public static Dictionary<string, List<string>> VehicleClasses => new()
             {
                 [GetLabelText("VEH_CLASS_0")] = Compacts,
                 [GetLabelText("VEH_CLASS_1")] = Sedans,

@@ -1,7 +1,7 @@
-﻿using ScaleformUI.Menu;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
@@ -40,19 +40,17 @@ namespace vMenuClient.menus
             ib.OnControlSelected += async (button) =>
             {
                 string filterText = await GetUserInput("Filter username or ban id (leave this empty to reset the filter)");
-                List<UIMenuItem> itList = menu.MenuItems;
-                menu.Clear();
                 if (banlist.Count > 1)
                 {
                     if (string.IsNullOrEmpty(filterText))
                     {
                         Subtitle.Custom("Filters have been cleared.");
-                        menu.MenuItems = itList;
+                        menu.ResetFilter();
                         UpdateBans();
                     }
                     else
                     {
-                        menu.MenuItems = itList.Where(item => item.ItemData is BanRecord br && (br.playerName.ToLower().Contains(filterText.ToLower()) || br.uuid.ToLower().Contains(filterText.ToLower()))).ToList();
+                        menu.FilterMenuItems(item => item.ItemData is BanRecord br && (br.playerName.ToLower().Contains(filterText.ToLower()) || br.uuid.ToLower().Contains(filterText.ToLower())));
                         Subtitle.Custom("Filter has been applied.");
                     }
                 }

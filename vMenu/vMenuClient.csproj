@@ -21,13 +21,15 @@
     <PackageReference Include="CitizenFX.Core.Client" Version="1.0.6370">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
-    
-    <PackageReference Include="ScaleformUI" Version="4.3.5" />
-    
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\dependencies\shared\Newtonsoft.Json.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+
+	  <Reference Include="Newtonsoft.Json">
+		  <HintPath>..\dependencies\shared\Newtonsoft.Json.dll</HintPath>
+		  <Private>true</Private>
+	  </Reference>
+	  <Reference Include="ScaleformUI">
+		  <HintPath>..\dependencies\client\ScaleformUI.dll</HintPath>
+		  <Private>true</Private>
+	  </Reference>
 
   </ItemGroup>
   

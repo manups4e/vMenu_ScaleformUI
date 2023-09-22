@@ -1,5 +1,6 @@
-using ScaleformUI.Menu;
 using System.Collections.Generic;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {

@@ -1,8 +1,9 @@
-using ScaleformUI.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {

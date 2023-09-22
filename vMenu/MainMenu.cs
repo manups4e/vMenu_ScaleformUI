@@ -1,15 +1,21 @@
 global using CitizenFX.Core;
+
 global using Newtonsoft.Json;
+
 global using ScaleformUI;
+
 global using vMenuClient.menus;
+
 global using static CitizenFX.Core.Native.API;
 global using static vMenuClient.CommonFunctions;
 global using static vMenuShared.ConfigManager;
 global using static vMenuShared.PermissionsManager;
-using ScaleformUI.Menu;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient
 {
