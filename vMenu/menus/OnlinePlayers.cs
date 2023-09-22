@@ -281,7 +281,8 @@ namespace vMenuClient.menus
             // handle button presses in the player list.
             menu.OnItemSelect += (sender, item, index) =>
                 {
-                    int baseId = int.Parse(item.Label.Replace(" →→→", "").Replace("Server #", ""));
+                    item.SetRightLabel(item.RightLabel.Replace("→→→", "").Replace("Server #", ""));
+                    int baseId = int.Parse(item.RightLabel);
                     IPlayer player = MainMenu.PlayersList.FirstOrDefault(p => p.ServerId == baseId);
 
                     if (player != null)
