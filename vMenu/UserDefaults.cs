@@ -396,9 +396,9 @@ namespace vMenuClient
         private static bool GetSettingsBool(string kvpString)
         {
             // Get the current value.
-            string savedValue = GetResourceKvpString($"{SETTINGS_PREFIX}{kvpString}");
+            var savedValue = GetResourceKvpString($"{SETTINGS_PREFIX}{kvpString}");
             // Check if it exists.
-            bool exists = !string.IsNullOrEmpty(savedValue);
+            var exists = !string.IsNullOrEmpty(savedValue);
             // If not, create it and save the new default value of false.
             if (!exists)
             {
@@ -448,12 +448,12 @@ namespace vMenuClient
 
         private static PointF GetSavedSettingsPointF(string kvpString)
         {
-            string s = GetResourceKvpString(SETTINGS_PREFIX + kvpString);
+            var s = GetResourceKvpString(SETTINGS_PREFIX + kvpString);
             if (string.IsNullOrWhiteSpace(s))
                 return PointF.Empty;
-            string[] split = s.Split(',');
-            float.TryParse(split[0], out float x);
-            float.TryParse(split[1], out float y);
+            var split = s.Split(',');
+            float.TryParse(split[0], out var x);
+            float.TryParse(split[1], out var y);
             return new PointF(x, y);
         }
 
@@ -469,7 +469,7 @@ namespace vMenuClient
 
         private static float GetSettingsFloat(string kvpString)
         {
-            float savedValue = GetResourceKvpFloat(SETTINGS_PREFIX + kvpString);
+            var savedValue = GetResourceKvpFloat(SETTINGS_PREFIX + kvpString);
             if (savedValue.ToString() != null) // this can still become null for some reason, so that's why we check it.
             {
                 if (savedValue.GetType() == typeof(float))
@@ -497,7 +497,7 @@ namespace vMenuClient
         private static int GetSettingsInt(string kvpString)
         {
             // Get the current value.
-            int savedValue = GetResourceKvpInt($"{SETTINGS_PREFIX}{kvpString}");
+            var savedValue = GetResourceKvpInt($"{SETTINGS_PREFIX}{kvpString}");
             return savedValue;
         }
 
@@ -513,7 +513,7 @@ namespace vMenuClient
         /// </summary>
         public static void SaveSettings()
         {
-            Dictionary<string, dynamic> prefs = new Dictionary<string, dynamic>();
+            var prefs = new Dictionary<string, dynamic>();
             if (MainMenu.PlayerOptionsMenu != null)
             {
                 EveryoneIgnorePlayer = MainMenu.PlayerOptionsMenu.PlayerIsIgnored;

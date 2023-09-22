@@ -1,5 +1,13 @@
 using System.Collections.Generic;
 
+using CitizenFX.Core;
+
+using Newtonsoft.Json;
+
+using static CitizenFX.Core.Native.API;
+using static vMenuClient.CommonFunctions;
+using static vMenuShared.PermissionsManager;
+
 namespace vMenuClient.data
 {
     public struct ValidWeapon
@@ -13,7 +21,7 @@ namespace vMenuClient.data
         {
             get
             {
-                int ammo = 0; GetMaxAmmo(Game.PlayerPed.Handle, Hash, ref ammo); return ammo;
+                var ammo = 0; GetMaxAmmo(Game.PlayerPed.Handle, Hash, ref ammo); return ammo;
             }
         }
         public int CurrentAmmo;
@@ -22,28 +30,28 @@ namespace vMenuClient.data
         {
             get
             {
-                Game.WeaponHudStats stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudAccuracy;
+                var stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudAccuracy;
             }
         }
         public readonly float Damage
         {
             get
             {
-                Game.WeaponHudStats stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudDamage;
+                var stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudDamage;
             }
         }
         public readonly float Range
         {
             get
             {
-                Game.WeaponHudStats stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudRange;
+                var stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudRange;
             }
         }
         public readonly float Speed
         {
             get
             {
-                Game.WeaponHudStats stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudSpeed;
+                var stats = new Game.WeaponHudStats(); Game.GetWeaponHudStats(Hash, ref stats); return stats.hudSpeed;
             }
         }
     }
@@ -71,18 +79,18 @@ namespace vMenuClient.data
         {
             if (_components.Count == 0)
             {
-                string addons = LoadResourceFile(GetCurrentResourceName(), "config/addons.json") ?? "{}";
+                var addons = LoadResourceFile(GetCurrentResourceName(), "config/addons.json") ?? "{}";
                 _components = weaponComponentNames;
                 try
                 {
-                    Dictionary<string, List<string>> addonsFile = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(addons);
+                    var addonsFile = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(addons);
                     if (addonsFile.ContainsKey("weapon_components"))
                     {
-                        foreach (string item in addonsFile["weapon_components"])
+                        foreach (var item in addonsFile["weapon_components"])
                         {
-                            string name = item;
-                            string displayName = GetLabelText(name) ?? name;
-                            int unused = 0;
+                            var name = item;
+                            var displayName = GetLabelText(name) ?? name;
+                            var unused = 0;
                             if (GetWeaponComponentHudStats((uint)GetHashKey(name), ref unused))
                             {
                                 _components.Add(name, displayName);
@@ -101,15 +109,15 @@ namespace vMenuClient.data
         private static void CreateWeaponsList()
         {
             _weaponsList.Clear();
-            foreach (KeyValuePair<string, string> weapon in weaponNames)
+            foreach (var weapon in weaponNames)
             {
-                string realName = weapon.Key;
-                string localizedName = weapon.Value;
+                var realName = weapon.Key;
+                var localizedName = weapon.Value;
                 if (realName != "weapon_unarmed")
                 {
-                    uint hash = (uint)GetHashKey(weapon.Key);
-                    Dictionary<string, uint> componentHashes = new Dictionary<string, uint>();
-                    foreach (string comp in GetWeaponComponents().Keys)
+                    var hash = (uint)GetHashKey(weapon.Key);
+                    var componentHashes = new Dictionary<string, uint>();
+                    foreach (var comp in GetWeaponComponents().Keys)
                     {
                         if (DoesWeaponTakeWeaponComponent(hash, (uint)GetHashKey(comp)))
                         {
@@ -119,7 +127,7 @@ namespace vMenuClient.data
                             }
                         }
                     }
-                    ValidWeapon vw = new ValidWeapon()
+                    var vw = new ValidWeapon()
                     {
                         Hash = hash,
                         SpawnName = realName,

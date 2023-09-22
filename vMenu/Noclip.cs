@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using CitizenFX.Core;
+
+using static CitizenFX.Core.Native.API;
+
 namespace vMenuClient
 {
     public class NoClip : BaseScript
@@ -106,7 +110,7 @@ namespace vMenuClient
                     DrawScaleformMovieFullscreen(Scale, 255, 255, 255, 255, 0);
                 }
 
-                int noclipEntity = Game.PlayerPed.IsInVehicle() ? Game.PlayerPed.CurrentVehicle.Handle : Game.PlayerPed.Handle;
+                var noclipEntity = Game.PlayerPed.IsInVehicle() ? Game.PlayerPed.CurrentVehicle.Handle : Game.PlayerPed.Handle;
 
                 FreezeEntityPosition(noclipEntity, true);
                 SetEntityInvincible(noclipEntity, true);
@@ -130,8 +134,8 @@ namespace vMenuClient
                     Game.DisableControlThisFrame(0, Control.VehicleRadioWheel);
                 }
 
-                float yoff = 0.0f;
-                float zoff = 0.0f;
+                var yoff = 0.0f;
+                var zoff = 0.0f;
 
                 if (Game.CurrentInputMode == InputMode.MouseAndKeyboard && UpdateOnscreenKeyboard() != 0 && !Game.IsPaused)
                 {
@@ -181,7 +185,7 @@ namespace vMenuClient
                 moveSpeed = moveSpeed / (1f / GetFrameTime()) * 60;
                 newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0f, yoff * (moveSpeed + 0.3f), zoff * (moveSpeed + 0.3f));
 
-                float heading = GetEntityHeading(noclipEntity);
+                var heading = GetEntityHeading(noclipEntity);
                 SetEntityVelocity(noclipEntity, 0f, 0f, 0f);
                 SetEntityRotation(noclipEntity, 0f, 0f, 0f, 0, false);
                 SetEntityHeading(noclipEntity, FollowCamMode ? GetGameplayCamRelativeHeading() : heading);

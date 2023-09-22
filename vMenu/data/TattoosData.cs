@@ -79,7 +79,7 @@ namespace vMenuClient.data
 
             isDataSetup = true;
 
-            foreach (Tattoo tattoo in Newtonsoft.Json.JsonConvert.DeserializeObject<List<Tattoo>>(Properties.Resources.overlays))
+            foreach (var tattoo in Newtonsoft.Json.JsonConvert.DeserializeObject<List<Tattoo>>(Properties.Resources.overlays))
             {
                 if (!string.IsNullOrEmpty(tattoo.name))
                 {

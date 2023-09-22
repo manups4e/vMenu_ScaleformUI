@@ -1,5 +1,6 @@
-using ScaleformUI.Menu;
 using System.Collections.Generic;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
@@ -44,11 +45,11 @@ namespace vMenuClient.menus
             // Create the menu.
             menu = new UIMenu(Game.Player.Name, "Voice Chat Settings");
 
-            UIMenuCheckboxItem voiceChatEnabled = new UIMenuCheckboxItem("Enable Voice Chat", EnableVoicechat, "Enable or disable voice chat.");
-            UIMenuCheckboxItem showCurrentSpeaker = new UIMenuCheckboxItem("Show Current Speaker", ShowCurrentSpeaker, "Shows who is currently talking.");
-            UIMenuCheckboxItem showVoiceStatus = new UIMenuCheckboxItem("Show Microphone Status", ShowVoiceStatus, "Shows whether your microphone is open or muted.");
+            var voiceChatEnabled = new UIMenuCheckboxItem("Enable Voice Chat", EnableVoicechat, "Enable or disable voice chat.");
+            var showCurrentSpeaker = new UIMenuCheckboxItem("Show Current Speaker", ShowCurrentSpeaker, "Shows who is currently talking.");
+            var showVoiceStatus = new UIMenuCheckboxItem("Show Microphone Status", ShowVoiceStatus, "Shows whether your microphone is open or muted.");
 
-            List<dynamic> proximity = new List<dynamic>()
+            var proximity = new List<dynamic>()
             {
                 "5 m",
                 "10 m",
@@ -60,8 +61,8 @@ namespace vMenuClient.menus
                 "2 km",
                 "Global",
             };
-            UIMenuListItem voiceChatProximity = new UIMenuListItem("Voice Chat Proximity", proximity, proximityRange.IndexOf(currentProximity), "Set the voice chat receiving proximity in meters.");
-            UIMenuListItem voiceChatChannel = new UIMenuListItem("Voice Chat Channel", channels, channels.IndexOf(currentChannel), "Set the voice chat channel.");
+            var voiceChatProximity = new UIMenuListItem("Voice Chat Proximity", proximity, proximityRange.IndexOf(currentProximity), "Set the voice chat receiving proximity in meters.");
+            var voiceChatChannel = new UIMenuListItem("Voice Chat Channel", channels, channels.IndexOf(currentChannel), "Set the voice chat channel.");
 
             if (IsAllowed(Permission.VCEnable))
             {

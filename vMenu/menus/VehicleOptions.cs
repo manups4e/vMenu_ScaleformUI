@@ -1,7 +1,9 @@
-using ScaleformUI.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using ScaleformUI.Menu;
+
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -61,50 +63,50 @@ namespace vMenuClient.menus
 
             #region menu items variables
             // vehicle god mode menu
-            UIMenu vehGodMenu = new UIMenu("Vehicle Godmode", "Vehicle Godmode Options");
-            UIMenuItem vehGodMenuBtn = new UIMenuItem("God Mode Options", "Enable or disable specific damage types.");
+            var vehGodMenu = new UIMenu("Vehicle Godmode", "Vehicle Godmode Options");
+            var vehGodMenuBtn = new UIMenuItem("God Mode Options", "Enable or disable specific damage types.");
             vehGodMenuBtn.SetRightLabel("→→→");
 
             // Create Checkboxes.
-            UIMenuCheckboxItem vehicleGod = new UIMenuCheckboxItem("Vehicle God Mode", VehicleGodMode, "Makes your vehicle not take any damage. Note, you need to go into the god menu options below to select what kind of damage you want to disable.");
-            UIMenuCheckboxItem vehicleNeverDirty = new UIMenuCheckboxItem("Keep Vehicle Clean", VehicleNeverDirty, "This will constantly clean your car if the vehicle dirt level goes above 0. Note that this only cleans ~o~dust~s~ or ~o~dirt~s~. This does not clean mud, snow or other ~r~damage decals~s~. Repair your vehicle to remove them.");
-            UIMenuCheckboxItem vehicleBikeSeatbelt = new UIMenuCheckboxItem("Bike Seatbelt", VehicleBikeSeatbelt, "Prevents you from being knocked off your bike, bicyle, ATV or similar.");
-            UIMenuCheckboxItem vehicleEngineAO = new UIMenuCheckboxItem("Engine Always On", VehicleEngineAlwaysOn, "Keeps your vehicle engine on when you exit your vehicle.");
-            UIMenuCheckboxItem vehicleNoTurbulence = new UIMenuCheckboxItem("Disable Plane Turbulence", DisablePlaneTurbulence, "Disables the turbulence for all planes.");
-            UIMenuCheckboxItem vehicleNoTurbulenceHeli = new UIMenuCheckboxItem("Disable Helicopter Turbulence", DisableHelicopterTurbulence, "Disables the turbulence for all helicopters.");
-            UIMenuCheckboxItem vehicleNoSiren = new UIMenuCheckboxItem("Disable Siren", VehicleNoSiren, "Disables your vehicle's siren. Only works if your vehicle actually has a siren.");
-            UIMenuCheckboxItem vehicleNoBikeHelmet = new UIMenuCheckboxItem("No Bike Helmet", VehicleNoBikeHelemet, "No longer auto-equip a helmet when getting on a bike or quad.");
-            UIMenuCheckboxItem vehicleFreeze = new UIMenuCheckboxItem("Freeze Vehicle", VehicleFrozen, "Freeze your vehicle's position.");
-            UIMenuCheckboxItem torqueEnabled = new UIMenuCheckboxItem("Enable Torque Multiplier", VehicleTorqueMultiplier, "Enables the torque multiplier selected from the list below.");
-            UIMenuCheckboxItem powerEnabled = new UIMenuCheckboxItem("Enable Power Multiplier", VehiclePowerMultiplier, "Enables the power multiplier selected from the list below.");
-            UIMenuCheckboxItem highbeamsOnHonk = new UIMenuCheckboxItem("Flash Highbeams On Honk", FlashHighbeamsOnHonk, "Turn on your highbeams on your vehicle when honking your horn. Does not work during the day when you have your lights turned off.");
-            UIMenuCheckboxItem showHealth = new UIMenuCheckboxItem("Show Vehicle Health", VehicleShowHealth, "Shows the vehicle health on the screen.");
-            UIMenuCheckboxItem infiniteFuel = new UIMenuCheckboxItem("Infinite Fuel", VehicleInfiniteFuel, "Enables or disables infinite fuel for this vehicle, only works if FRFuel is installed.");
+            var vehicleGod = new UIMenuCheckboxItem("Vehicle God Mode", VehicleGodMode, "Makes your vehicle not take any damage. Note, you need to go into the god menu options below to select what kind of damage you want to disable.");
+            var vehicleNeverDirty = new UIMenuCheckboxItem("Keep Vehicle Clean", VehicleNeverDirty, "This will constantly clean your car if the vehicle dirt level goes above 0. Note that this only cleans ~o~dust~s~ or ~o~dirt~s~. This does not clean mud, snow or other ~r~damage decals~s~. Repair your vehicle to remove them.");
+            var vehicleBikeSeatbelt = new UIMenuCheckboxItem("Bike Seatbelt", VehicleBikeSeatbelt, "Prevents you from being knocked off your bike, bicyle, ATV or similar.");
+            var vehicleEngineAO = new UIMenuCheckboxItem("Engine Always On", VehicleEngineAlwaysOn, "Keeps your vehicle engine on when you exit your vehicle.");
+            var vehicleNoTurbulence = new UIMenuCheckboxItem("Disable Plane Turbulence", DisablePlaneTurbulence, "Disables the turbulence for all planes.");
+            var vehicleNoTurbulenceHeli = new UIMenuCheckboxItem("Disable Helicopter Turbulence", DisableHelicopterTurbulence, "Disables the turbulence for all helicopters.");
+            var vehicleNoSiren = new UIMenuCheckboxItem("Disable Siren", VehicleNoSiren, "Disables your vehicle's siren. Only works if your vehicle actually has a siren.");
+            var vehicleNoBikeHelmet = new UIMenuCheckboxItem("No Bike Helmet", VehicleNoBikeHelemet, "No longer auto-equip a helmet when getting on a bike or quad.");
+            var vehicleFreeze = new UIMenuCheckboxItem("Freeze Vehicle", VehicleFrozen, "Freeze your vehicle's position.");
+            var torqueEnabled = new UIMenuCheckboxItem("Enable Torque Multiplier", VehicleTorqueMultiplier, "Enables the torque multiplier selected from the list below.");
+            var powerEnabled = new UIMenuCheckboxItem("Enable Power Multiplier", VehiclePowerMultiplier, "Enables the power multiplier selected from the list below.");
+            var highbeamsOnHonk = new UIMenuCheckboxItem("Flash Highbeams On Honk", FlashHighbeamsOnHonk, "Turn on your highbeams on your vehicle when honking your horn. Does not work during the day when you have your lights turned off.");
+            var showHealth = new UIMenuCheckboxItem("Show Vehicle Health", VehicleShowHealth, "Shows the vehicle health on the screen.");
+            var infiniteFuel = new UIMenuCheckboxItem("Infinite Fuel", VehicleInfiniteFuel, "Enables or disables infinite fuel for this vehicle, only works if FRFuel is installed.");
 
             // Create buttons.
-            UIMenuItem fixVehicle = new UIMenuItem("Repair Vehicle", "Repair any visual and physical damage present on your vehicle.");
-            UIMenuItem cleanVehicle = new UIMenuItem("Wash Vehicle", "Clean your vehicle.");
-            UIMenuItem toggleEngine = new UIMenuItem("Toggle Engine On/Off", "Turn your engine on/off.");
-            UIMenuItem setLicensePlateText = new UIMenuItem("Set License Plate Text", "Enter a custom license plate for your vehicle.");
-            UIMenuItem modMenuBtn = new UIMenuItem("Mod Menu", "Tune and customize your vehicle here.");
+            var fixVehicle = new UIMenuItem("Repair Vehicle", "Repair any visual and physical damage present on your vehicle.");
+            var cleanVehicle = new UIMenuItem("Wash Vehicle", "Clean your vehicle.");
+            var toggleEngine = new UIMenuItem("Toggle Engine On/Off", "Turn your engine on/off.");
+            var setLicensePlateText = new UIMenuItem("Set License Plate Text", "Enter a custom license plate for your vehicle.");
+            var modMenuBtn = new UIMenuItem("Mod Menu", "Tune and customize your vehicle here.");
             modMenuBtn.SetRightLabel("→→→");
-            UIMenuItem doorsMenuBtn = new UIMenuItem("Vehicle Doors", "Open, close, remove and restore vehicle doors here.");
+            var doorsMenuBtn = new UIMenuItem("Vehicle Doors", "Open, close, remove and restore vehicle doors here.");
             doorsMenuBtn.SetRightLabel("→→→");
-            UIMenuItem windowsMenuBtn = new UIMenuItem("Vehicle Windows", "Roll your windows up/down or remove/restore your vehicle windows here.");
+            var windowsMenuBtn = new UIMenuItem("Vehicle Windows", "Roll your windows up/down or remove/restore your vehicle windows here.");
             windowsMenuBtn.SetRightLabel("→→→");
-            UIMenuItem componentsMenuBtn = new UIMenuItem("Vehicle Extras", "Add/remove vehicle components/extras.");
+            var componentsMenuBtn = new UIMenuItem("Vehicle Extras", "Add/remove vehicle components/extras.");
             componentsMenuBtn.SetRightLabel("→→→");
-            UIMenuItem liveriesMenuBtn = new UIMenuItem("Vehicle Liveries", "Style your vehicle with fancy liveries!");
+            var liveriesMenuBtn = new UIMenuItem("Vehicle Liveries", "Style your vehicle with fancy liveries!");
             liveriesMenuBtn.SetRightLabel("→→→");
-            UIMenuItem colorsMenuBtn = new UIMenuItem("Vehicle Colors", "Style your vehicle even further by giving it some ~g~Snailsome ~s~colors!");
+            var colorsMenuBtn = new UIMenuItem("Vehicle Colors", "Style your vehicle even further by giving it some ~g~Snailsome ~s~colors!");
             colorsMenuBtn.SetRightLabel("→→→");
-            UIMenuItem underglowMenuBtn = new UIMenuItem("Vehicle Neon Kits", "Make your vehicle shine with some fancy neon underglow!");
+            var underglowMenuBtn = new UIMenuItem("Vehicle Neon Kits", "Make your vehicle shine with some fancy neon underglow!");
             underglowMenuBtn.SetRightLabel("→→→");
-            UIMenuItem vehicleInvisible = new UIMenuItem("Toggle Vehicle Visibility", "Makes your vehicle visible/invisible. ~r~Your vehicle will be made visible again as soon as you leave the vehicle. Otherwise you would not be able to get back in.");
-            UIMenuItem flipVehicle = new UIMenuItem("Flip Vehicle", "Sets your current vehicle on all 4 wheels.");
-            UIMenuItem vehicleAlarm = new UIMenuItem("Toggle Vehicle Alarm", "Starts/stops your vehicle's alarm.");
-            UIMenuItem cycleSeats = new UIMenuItem("Cycle Through Vehicle Seats", "Cycle through the available vehicle seats.");
-            List<dynamic> lights = new List<dynamic>()
+            var vehicleInvisible = new UIMenuItem("Toggle Vehicle Visibility", "Makes your vehicle visible/invisible. ~r~Your vehicle will be made visible again as soon as you leave the vehicle. Otherwise you would not be able to get back in.");
+            var flipVehicle = new UIMenuItem("Flip Vehicle", "Sets your current vehicle on all 4 wheels.");
+            var vehicleAlarm = new UIMenuItem("Toggle Vehicle Alarm", "Starts/stops your vehicle's alarm.");
+            var cycleSeats = new UIMenuItem("Cycle Through Vehicle Seats", "Cycle through the available vehicle seats.");
+            var lights = new List<dynamic>()
             {
                 "Hazard Lights",
                 "Left Indicator",
@@ -113,51 +115,51 @@ namespace vMenuClient.menus
                 //"Taxi Light", // this doesn't seem to work no matter what.
                 "Helicopter Spotlight",
             };
-            UIMenuListItem vehicleLights = new UIMenuListItem("Vehicle Lights", lights, 0, "Turn vehicle lights on/off.");
+            var vehicleLights = new UIMenuListItem("Vehicle Lights", lights, 0, "Turn vehicle lights on/off.");
 
-            List<dynamic> stationNames = new List<dynamic>();
+            var stationNames = new List<dynamic>();
 
-            foreach (string radioStationName in Enum.GetNames(typeof(RadioStation)))
+            foreach (var radioStationName in Enum.GetNames(typeof(RadioStation)))
             {
                 stationNames.Add(radioStationName);
             }
 
-            int radioIndex = UserDefaults.VehicleDefaultRadio;
+            var radioIndex = UserDefaults.VehicleDefaultRadio;
 
             if (radioIndex == (int)RadioStation.RadioOff)
             {
-                RadioStation[] stations = (RadioStation[])Enum.GetValues(typeof(RadioStation));
-                int index = Array.IndexOf(stations, RadioStation.RadioOff);
+                var stations = (RadioStation[])Enum.GetValues(typeof(RadioStation));
+                var index = Array.IndexOf(stations, RadioStation.RadioOff);
                 radioIndex = index;
             }
 
-            UIMenuListItem radioStations = new UIMenuListItem("Default radio station", stationNames, radioIndex, "Select a defalut radio station to be set when spawning new car");
+            var radioStations = new UIMenuListItem("Default radio station", stationNames, radioIndex, "Select a defalut radio station to be set when spawning new car");
 
-            List<dynamic> tiresList = new List<dynamic>() { "All Tires", "Tire #1", "Tire #2", "Tire #3", "Tire #4", "Tire #5", "Tire #6", "Tire #7", "Tire #8" };
-            UIMenuListItem vehicleTiresList = new UIMenuListItem("Fix / Destroy Tires", tiresList, 0, "Fix or destroy a specific vehicle tire, or all of them at once. Note, not all indexes are valid for all vehicles, some might not do anything on certain vehicles.");
+            var tiresList = new List<dynamic>() { "All Tires", "Tire #1", "Tire #2", "Tire #3", "Tire #4", "Tire #5", "Tire #6", "Tire #7", "Tire #8" };
+            var vehicleTiresList = new UIMenuListItem("Fix / Destroy Tires", tiresList, 0, "Fix or destroy a specific vehicle tire, or all of them at once. Note, not all indexes are valid for all vehicles, some might not do anything on certain vehicles.");
 
-            UIMenuItem destroyEngine = new UIMenuItem("Destroy Engine", "Destroys your vehicle's engine.");
+            var destroyEngine = new UIMenuItem("Destroy Engine", "Destroys your vehicle's engine.");
 
-            UIMenuItem deleteBtn = new UIMenuItem("~r~Delete Vehicle", "Delete your vehicle, this ~r~can NOT be undone~s~!");
+            var deleteBtn = new UIMenuItem("~r~Delete Vehicle", "Delete your vehicle, this ~r~can NOT be undone~s~!");
             deleteBtn.SetLeftBadge(BadgeIcon.WARNING);
             deleteBtn.SetRightLabel("→→→");
-            UIMenuItem deleteNoBtn = new UIMenuItem("NO, CANCEL", "NO, do NOT delete my vehicle and go back!");
-            UIMenuItem deleteYesBtn = new UIMenuItem("~r~YES, DELETE", "Yes I'm sure, delete my vehicle please, I understand that this cannot be undone.");
+            var deleteNoBtn = new UIMenuItem("NO, CANCEL", "NO, do NOT delete my vehicle and go back!");
+            var deleteYesBtn = new UIMenuItem("~r~YES, DELETE", "Yes I'm sure, delete my vehicle please, I understand that this cannot be undone.");
             deleteYesBtn.SetLeftBadge(BadgeIcon.WARNING);
             // Create lists.
-            List<dynamic> dirtlevel = new List<dynamic> { "No Dirt", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
-            UIMenuListItem setDirtLevel = new UIMenuListItem("Set Dirt Level", dirtlevel, 0, "Select how much dirt should be visible on your vehicle, press ~r~enter~s~ " +
+            var dirtlevel = new List<dynamic> { "No Dirt", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+            var setDirtLevel = new UIMenuListItem("Set Dirt Level", dirtlevel, 0, "Select how much dirt should be visible on your vehicle, press ~r~enter~s~ " +
                 "to apply the selected level.");
-            List<dynamic> licensePlates = new List<dynamic> { GetLabelText("CMOD_PLA_0"), GetLabelText("CMOD_PLA_1"), GetLabelText("CMOD_PLA_2"), GetLabelText("CMOD_PLA_3"),
+            var licensePlates = new List<dynamic> { GetLabelText("CMOD_PLA_0"), GetLabelText("CMOD_PLA_1"), GetLabelText("CMOD_PLA_2"), GetLabelText("CMOD_PLA_3"),
                 GetLabelText("CMOD_PLA_4"), "North Yankton" };
-            UIMenuListItem setLicensePlateType = new UIMenuListItem("License Plate Type", licensePlates, 0, "Choose a license plate type and press ~r~enter ~s~to apply " +
+            var setLicensePlateType = new UIMenuListItem("License Plate Type", licensePlates, 0, "Choose a license plate type and press ~r~enter ~s~to apply " +
                 "it to your vehicle.");
-            List<dynamic> torqueMultiplierList = new List<dynamic> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
-            UIMenuListItem torqueMultiplier = new UIMenuListItem("Set Engine Torque Multiplier", torqueMultiplierList, 0, "Set the engine torque multiplier.");
-            List<dynamic> powerMultiplierList = new List<dynamic> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
-            UIMenuListItem powerMultiplier = new UIMenuListItem("Set Engine Power Multiplier", powerMultiplierList, 0, "Set the engine power multiplier.");
-            List<dynamic> speedLimiterOptions = new List<dynamic>() { "Set", "Reset", "Custom Speed Limit" };
-            UIMenuListItem speedLimiter = new UIMenuListItem("Speed Limiter", speedLimiterOptions, 0, "Set your vehicles max speed to your ~y~current speed~s~. Resetting your vehicles max speed will set the max speed of your current vehicle back to default. Only your current vehicle is affected by this option.");
+            var torqueMultiplierList = new List<dynamic> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
+            var torqueMultiplier = new UIMenuListItem("Set Engine Torque Multiplier", torqueMultiplierList, 0, "Set the engine torque multiplier.");
+            var powerMultiplierList = new List<dynamic> { "x2", "x4", "x8", "x16", "x32", "x64", "x128", "x256", "x512", "x1024" };
+            var powerMultiplier = new UIMenuListItem("Set Engine Power Multiplier", powerMultiplierList, 0, "Set the engine power multiplier.");
+            var speedLimiterOptions = new List<dynamic>() { "Set", "Reset", "Custom Speed Limit" };
+            var speedLimiter = new UIMenuListItem("Speed Limiter", speedLimiterOptions, 0, "Set your vehicles max speed to your ~y~current speed~s~. Resetting your vehicles max speed will set the max speed of your current vehicle back to default. Only your current vehicle is affected by this option.");
             #endregion
 
             #region Submenus
@@ -203,12 +205,12 @@ namespace vMenuClient.menus
                 menu.AddItem(vehGodMenuBtn);
                 vehGodMenuBtn.Activated += async (a, b) => await a.SwitchTo(vehGodMenu, 0, true);
 
-                UIMenuCheckboxItem godInvincible = new UIMenuCheckboxItem("Invincible", VehicleGodInvincible, "Makes the car invincible. Includes fire damage, explosion damage, collision damage and more.");
-                UIMenuCheckboxItem godEngine = new UIMenuCheckboxItem("Engine Damage", VehicleGodEngine, "Disables your engine from taking any damage.");
-                UIMenuCheckboxItem godVisual = new UIMenuCheckboxItem("Visual Damage", VehicleGodVisual, "This prevents scratches and other damage decals from being applied to your vehicle. It does not prevent (body) deformation damage.");
-                UIMenuCheckboxItem godStrongWheels = new UIMenuCheckboxItem("Strong Wheels", VehicleGodStrongWheels, "Disables your wheels from being deformed and causing reduced handling. This does not make tires bulletproof.");
-                UIMenuCheckboxItem godRamp = new UIMenuCheckboxItem("Ramp Damage", VehicleGodRamp, "Disables vehicles such as the Ramp Buggy from taking damage when using the ramp.");
-                UIMenuCheckboxItem godAutoRepair = new UIMenuCheckboxItem("~r~Auto Repair", VehicleGodAutoRepair, "Automatically repairs your vehicle when it has ANY type of damage. It's recommended to keep this turned off to prevent glitchyness.");
+                var godInvincible = new UIMenuCheckboxItem("Invincible", VehicleGodInvincible, "Makes the car invincible. Includes fire damage, explosion damage, collision damage and more.");
+                var godEngine = new UIMenuCheckboxItem("Engine Damage", VehicleGodEngine, "Disables your engine from taking any damage.");
+                var godVisual = new UIMenuCheckboxItem("Visual Damage", VehicleGodVisual, "This prevents scratches and other damage decals from being applied to your vehicle. It does not prevent (body) deformation damage.");
+                var godStrongWheels = new UIMenuCheckboxItem("Strong Wheels", VehicleGodStrongWheels, "Disables your wheels from being deformed and causing reduced handling. This does not make tires bulletproof.");
+                var godRamp = new UIMenuCheckboxItem("Ramp Damage", VehicleGodRamp, "Disables vehicles such as the Ramp Buggy from taking damage when using the ramp.");
+                var godAutoRepair = new UIMenuCheckboxItem("~r~Auto Repair", VehicleGodAutoRepair, "Automatically repairs your vehicle when it has ANY type of damage. It's recommended to keep this turned off to prevent glitchyness.");
 
                 vehGodMenu.AddItem(godInvincible);
                 vehGodMenu.AddItem(godEngine);
@@ -396,7 +398,7 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     if (veh != null && veh.Exists() && GetVehicle().Driver == Game.PlayerPed)
                     {
                         SetVehicleHasBeenOwnedByPlayer(veh.Handle, false);
@@ -439,7 +441,7 @@ namespace vMenuClient.menus
                 if (GetVehicle() != null && GetVehicle().Exists())
                 {
                     // Create a vehicle object.
-                    Vehicle vehicle = GetVehicle();
+                    var vehicle = GetVehicle();
 
                     // Check if the player is the driver of the vehicle, if so, continue.
                     if (vehicle.GetPedOnSeat(VehicleSeat.Driver) == new Ped(Game.PlayerPed.Handle))
@@ -480,8 +482,8 @@ namespace vMenuClient.menus
                             if (vehicle.IsVisible)
                             {
                                 // Check the visibility of all peds inside before setting the vehicle as invisible.
-                                Dictionary<Ped, bool> visiblePeds = new Dictionary<Ped, bool>();
-                                foreach (Ped p in vehicle.Occupants)
+                                var visiblePeds = new Dictionary<Ped, bool>();
+                                foreach (var p in vehicle.Occupants)
                                 {
                                     visiblePeds.Add(p, p.IsVisible);
                                 }
@@ -490,7 +492,7 @@ namespace vMenuClient.menus
                                 vehicle.IsVisible = !vehicle.IsVisible;
 
                                 // Restore visibility for each ped.
-                                foreach (KeyValuePair<Ped, bool> pe in visiblePeds)
+                                foreach (var pe in visiblePeds)
                                 {
                                     pe.Key.IsVisible = pe.Value;
                                 }
@@ -527,7 +529,7 @@ namespace vMenuClient.menus
             menu.OnCheckboxChange += (sender, item, _checked) =>
             {
                 // Create a vehicle object.
-                Vehicle vehicle = GetVehicle();
+                var vehicle = GetVehicle();
 
                 if (item == vehicleGod) // God Mode Toggled
                 {
@@ -641,12 +643,12 @@ namespace vMenuClient.menus
             {
                 if (GetVehicle() != null && GetVehicle().Exists())
                 {
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     // If the torque multiplier changed. Change the torque multiplier to the new value.
                     if (item == torqueMultiplier)
                     {
                         // Get the selected value and remove the "x" in the string with nothing.
-                        dynamic value = torqueMultiplierList[itemIndex].ToString().Replace("x", "");
+                        var value = torqueMultiplierList[itemIndex].ToString().Replace("x", "");
                         // Convert the value to a float and set it as a public variable.
                         VehicleTorqueMultiplierAmount = float.Parse(value);
                     }
@@ -654,7 +656,7 @@ namespace vMenuClient.menus
                     else if (item == powerMultiplier)
                     {
                         // Get the selected value. Remove the "x" from the string.
-                        dynamic value = powerMultiplierList[itemIndex].ToString().Replace("x", "");
+                        var value = powerMultiplierList[itemIndex].ToString().Replace("x", "");
                         // Conver the string into a float and set it to be the value of the public variable.
                         VehiclePowerMultiplierAmount = float.Parse(value);
                         if (VehiclePowerMultiplier)
@@ -713,10 +715,10 @@ namespace vMenuClient.menus
                 {
                     if (Game.PlayerPed.IsInVehicle())
                     {
-                        Vehicle veh = GetVehicle();
+                        var veh = GetVehicle();
                         // We need to do % 4 because this seems to be some sort of flags system. For a taxi, this function returns 65, 66, etc.
                         // So % 4 takes care of that.
-                        int state = GetVehicleIndicatorLights(veh.Handle) % 4; // 0 = none, 1 = left, 2 = right, 3 = both
+                        var state = GetVehicleIndicatorLights(veh.Handle) % 4; // 0 = none, 1 = left, 2 = right, 3 = both
 
                         if (item.Index == 0) // Hazard lights
                         {
@@ -789,7 +791,7 @@ namespace vMenuClient.menus
                 {
                     if (Game.PlayerPed.IsInVehicle())
                     {
-                        Vehicle vehicle = GetVehicle();
+                        var vehicle = GetVehicle();
 
                         if (vehicle != null && vehicle.Exists())
                         {
@@ -815,10 +817,10 @@ namespace vMenuClient.menus
                             }
                             else if (item.Index == 2) // custom speed
                             {
-                                string inputSpeed = await GetUserInput("Enter a speed (in meters/sec)", "20.0", 5);
+                                var inputSpeed = await GetUserInput("Enter a speed (in meters/sec)", "20.0", 5);
                                 if (!string.IsNullOrEmpty(inputSpeed))
                                 {
-                                    if (float.TryParse(inputSpeed, out float outFloat))
+                                    if (float.TryParse(inputSpeed, out var outFloat))
                                     {
                                         //vehicle.MaxSpeed = outFloat;
                                         SetEntityMaxSpeed(vehicle.Handle, 500.01f);
@@ -833,7 +835,7 @@ namespace vMenuClient.menus
                                             Notify.Info($"Vehicle speed is now limited to ~b~{Math.Round(outFloat * 2.237f, 1)} MPH~s~.");
                                         }
                                     }
-                                    else if (int.TryParse(inputSpeed, out int outInt))
+                                    else if (int.TryParse(inputSpeed, out var outInt))
                                     {
                                         SetEntityMaxSpeed(vehicle.Handle, 500.01f);
                                         await BaseScript.Delay(0);
@@ -864,7 +866,7 @@ namespace vMenuClient.menus
                 {
                     //bool fix = item == vehicleTiresList;
 
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     if (veh != null && veh.Exists())
                     {
                         if (Game.PlayerPed == veh.Driver)
@@ -873,7 +875,7 @@ namespace vMenuClient.menus
                             {
                                 if (IsVehicleTyreBurst(veh.Handle, 0, false))
                                 {
-                                    for (int i = 0; i < 8; i++)
+                                    for (var i = 0; i < 8; i++)
                                     {
                                         SetVehicleTyreFixed(veh.Handle, i);
                                     }
@@ -881,7 +883,7 @@ namespace vMenuClient.menus
                                 }
                                 else
                                 {
-                                    for (int i = 0; i < 8; i++)
+                                    for (var i = 0; i < 8; i++)
                                     {
                                         SetVehicleTyreBurst(veh.Handle, i, false, 1f);
                                     }
@@ -890,7 +892,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                int index = item.Index - 1;
+                                var index = item.Index - 1;
                                 if (IsVehicleTyreBurst(veh.Handle, index, false))
                                 {
                                     SetVehicleTyreFixed(veh.Handle, index);
@@ -915,9 +917,9 @@ namespace vMenuClient.menus
                 }
                 else if (item == radioStations)
                 {
-                    RadioStation newStation = (RadioStation)Enum.GetValues(typeof(RadioStation)).GetValue(item.Index);
+                    var newStation = (RadioStation)Enum.GetValues(typeof(RadioStation)).GetValue(item.Index);
 
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     if (veh != null && veh.Exists())
                     {
                         veh.RadioStation = newStation;
@@ -930,62 +932,62 @@ namespace vMenuClient.menus
 
             #region Vehicle Colors Submenu Stuff
             // primary menu
-            UIMenu primaryColorsMenu = new UIMenu("Vehicle Colors", "Primary Colors");
+            var primaryColorsMenu = new UIMenu("Vehicle Colors", "Primary Colors");
 
-            UIMenuItem primaryColorsBtn = new UIMenuItem("Primary Color");
+            var primaryColorsBtn = new UIMenuItem("Primary Color");
             primaryColorsBtn.SetRightLabel("→→→");
             VehicleColorsMenu.AddItem(primaryColorsBtn);
             primaryColorsBtn.Activated += async (a, b) => await a.SwitchTo(primaryColorsMenu, 0, true);
 
             // secondary menu
-            UIMenu secondaryColorsMenu = new UIMenu("Vehicle Colors", "Secondary Colors");
+            var secondaryColorsMenu = new UIMenu("Vehicle Colors", "Secondary Colors");
 
-            UIMenuItem secondaryColorsBtn = new UIMenuItem("Secondary Color");
+            var secondaryColorsBtn = new UIMenuItem("Secondary Color");
             secondaryColorsBtn.SetRightLabel("→→→");
             VehicleColorsMenu.AddItem(secondaryColorsBtn);
             secondaryColorsBtn.Activated += async (a, b) => await a.SwitchTo(secondaryColorsMenu, 0, true);
 
             // color lists
-            List<dynamic> classic = new List<dynamic>();
-            List<dynamic> matte = new List<dynamic>();
-            List<dynamic> metals = new List<dynamic>();
-            List<dynamic> util = new List<dynamic>();
-            List<dynamic> worn = new List<dynamic>();
-            List<dynamic> chameleon = new List<dynamic>();
-            List<dynamic> wheelColors = new List<dynamic>() { "Default Alloy" };
+            var classic = new List<dynamic>();
+            var matte = new List<dynamic>();
+            var metals = new List<dynamic>();
+            var util = new List<dynamic>();
+            var worn = new List<dynamic>();
+            var chameleon = new List<dynamic>();
+            var wheelColors = new List<dynamic>() { "Default Alloy" };
 
             // Just quick and dirty solution to put this in a new enclosed section so that we can still use 'i' as a counter in the other code parts.
             {
-                int i = 0;
-                foreach (VehicleData.VehicleColor vc in VehicleData.ClassicColors)
+                var i = 0;
+                foreach (var vc in VehicleData.ClassicColors)
                 {
                     classic.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.ClassicColors.Count})");
                     i++;
                 }
 
                 i = 0;
-                foreach (VehicleData.VehicleColor vc in VehicleData.MatteColors)
+                foreach (var vc in VehicleData.MatteColors)
                 {
                     matte.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.MatteColors.Count})");
                     i++;
                 }
 
                 i = 0;
-                foreach (VehicleData.VehicleColor vc in VehicleData.MetalColors)
+                foreach (var vc in VehicleData.MetalColors)
                 {
                     metals.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.MetalColors.Count})");
                     i++;
                 }
 
                 i = 0;
-                foreach (VehicleData.VehicleColor vc in VehicleData.UtilColors)
+                foreach (var vc in VehicleData.UtilColors)
                 {
                     util.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.UtilColors.Count})");
                     i++;
                 }
 
                 i = 0;
-                foreach (VehicleData.VehicleColor vc in VehicleData.WornColors)
+                foreach (var vc in VehicleData.WornColors)
                 {
                     worn.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.WornColors.Count})");
                     i++;
@@ -994,7 +996,7 @@ namespace vMenuClient.menus
                 if (GetSettingsBool(Setting.vmenu_using_chameleon_colours))
                 {
                     i = 0;
-                    foreach (VehicleData.VehicleColor vc in VehicleData.ChameleonColors)
+                    foreach (var vc in VehicleData.ChameleonColors)
                     {
                         chameleon.Add($"{GetLabelText(vc.label)} ({i + 1}/{VehicleData.ChameleonColors.Count})");
                         i++;
@@ -1004,18 +1006,18 @@ namespace vMenuClient.menus
                 wheelColors.AddRange(classic);
             }
 
-            UIMenuListItem wheelColorsList = new UIMenuListItem("Wheel Color", wheelColors, 0);
-            UIMenuListItem dashColorList = new UIMenuListItem("Dashboard Color", classic, 0);
-            UIMenuListItem intColorList = new UIMenuListItem("Interior / Trim Color", classic, 0);
-            UIMenuSliderItem vehicleEnveffScale = new UIMenuSliderItem("Vehicle Enveff Scale", "This works on certain vehicles only, like the besra for example. It 'fades' certain paint layers.", 0, 20, 10, true);
+            var wheelColorsList = new UIMenuListItem("Wheel Color", wheelColors, 0);
+            var dashColorList = new UIMenuListItem("Dashboard Color", classic, 0);
+            var intColorList = new UIMenuListItem("Interior / Trim Color", classic, 0);
+            var vehicleEnveffScale = new UIMenuSliderItem("Vehicle Enveff Scale", "This works on certain vehicles only, like the besra for example. It 'fades' certain paint layers.", 0, 20, 10, true);
 
-            UIMenuItem chrome = new UIMenuItem("Chrome");
+            var chrome = new UIMenuItem("Chrome");
             VehicleColorsMenu.AddItem(chrome);
             VehicleColorsMenu.AddItem(vehicleEnveffScale);
 
             VehicleColorsMenu.OnItemSelect += (sender, item, index) =>
             {
-                Vehicle veh = GetVehicle();
+                var veh = GetVehicle();
                 if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
                 {
                     if (item == chrome)
@@ -1030,7 +1032,7 @@ namespace vMenuClient.menus
             };
             VehicleColorsMenu.OnSliderChange += (m, sliderItem, value) =>
             {
-                Vehicle veh = GetVehicle();
+                var veh = GetVehicle();
                 if (veh != null && veh.Driver == Game.PlayerPed && !veh.IsDead)
                 {
                     if (sliderItem == vehicleEnveffScale)
@@ -1052,16 +1054,16 @@ namespace vMenuClient.menus
 
             void HandleListIndexChanges(UIMenu sender, UIMenuListItem listItem, int newIndex)
             {
-                int itemIndex = sender.MenuItems.IndexOf(listItem);
-                Vehicle veh = GetVehicle();
+                var itemIndex = sender.MenuItems.IndexOf(listItem);
+                var veh = GetVehicle();
                 if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
                 {
-                    int primaryColor = 0;
-                    int secondaryColor = 0;
-                    int pearlColor = 0;
-                    int wheelColor = 0;
-                    int dashColor = 0;
-                    int intColor = 0;
+                    var primaryColor = 0;
+                    var secondaryColor = 0;
+                    var pearlColor = 0;
+                    var wheelColor = 0;
+                    var dashColor = 0;
+                    var intColor = 0;
 
                     GetVehicleColours(veh.Handle, ref primaryColor, ref secondaryColor);
                     GetVehicleExtraColours(veh.Handle, ref pearlColor, ref wheelColor);
@@ -1175,15 +1177,15 @@ namespace vMenuClient.menus
                 }
             }
 
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
-                UIMenuListItem pearlescentList = new UIMenuListItem("Pearlescent", classic, 0);
-                UIMenuListItem classicList = new UIMenuListItem("Classic", classic, 0);
-                UIMenuListItem metallicList = new UIMenuListItem("Metallic", classic, 0);
-                UIMenuListItem matteList = new UIMenuListItem("Matte", matte, 0);
-                UIMenuListItem metalList = new UIMenuListItem("Metals", metals, 0);
-                UIMenuListItem utilList = new UIMenuListItem("Util", util, 0);
-                UIMenuListItem wornList = new UIMenuListItem("Worn", worn, 0);
+                var pearlescentList = new UIMenuListItem("Pearlescent", classic, 0);
+                var classicList = new UIMenuListItem("Classic", classic, 0);
+                var metallicList = new UIMenuListItem("Metallic", classic, 0);
+                var matteList = new UIMenuListItem("Matte", matte, 0);
+                var metalList = new UIMenuListItem("Metals", metals, 0);
+                var utilList = new UIMenuListItem("Util", util, 0);
+                var wornList = new UIMenuListItem("Worn", worn, 0);
 
                 if (i == 0)
                 {
@@ -1196,7 +1198,7 @@ namespace vMenuClient.menus
 
                     if (GetSettingsBool(Setting.vmenu_using_chameleon_colours))
                     {
-                        UIMenuListItem chameleonList = new UIMenuListItem("Chameleon", chameleon, 0);
+                        var chameleonList = new UIMenuListItem("Chameleon", chameleon, 0);
 
                         primaryColorsMenu.AddItem(chameleonList);
                     }
@@ -1219,20 +1221,20 @@ namespace vMenuClient.menus
             #endregion
 
             #region Vehicle Doors Submenu Stuff
-            UIMenuItem openAll = new UIMenuItem("Open All Doors", "Open all vehicle doors.");
-            UIMenuItem closeAll = new UIMenuItem("Close All Doors", "Close all vehicle doors.");
-            UIMenuItem LF = new UIMenuItem("Left Front Door", "Open/close the left front door.");
-            UIMenuItem RF = new UIMenuItem("Right Front Door", "Open/close the right front door.");
-            UIMenuItem LR = new UIMenuItem("Left Rear Door", "Open/close the left rear door.");
-            UIMenuItem RR = new UIMenuItem("Right Rear Door", "Open/close the right rear door.");
-            UIMenuItem HD = new UIMenuItem("Hood", "Open/close the hood.");
-            UIMenuItem TR = new UIMenuItem("Trunk", "Open/close the trunk.");
-            UIMenuItem E1 = new UIMenuItem("Extra 1", "Open/close the extra door (#1). Note this door is not present on most vehicles.");
-            UIMenuItem E2 = new UIMenuItem("Extra 2", "Open/close the extra door (#2). Note this door is not present on most vehicles.");
-            UIMenuItem BB = new UIMenuItem("Bomb Bay", "Open/close the bomb bay. Only available on some planes.");
-            List<dynamic> doors = new List<dynamic>() { "Front Left", "Front Right", "Rear Left", "Rear Right", "Hood", "Trunk", "Extra 1", "Extra 2" };
-            UIMenuListItem removeDoorList = new UIMenuListItem("Remove Door", doors, 0, "Remove a specific vehicle door completely.");
-            UIMenuCheckboxItem deleteDoors = new UIMenuCheckboxItem("Delete Removed Doors", false, "When enabled, doors that you remove using the list above will be deleted from the world. If disabled, then the doors will just fall on the ground.");
+            var openAll = new UIMenuItem("Open All Doors", "Open all vehicle doors.");
+            var closeAll = new UIMenuItem("Close All Doors", "Close all vehicle doors.");
+            var LF = new UIMenuItem("Left Front Door", "Open/close the left front door.");
+            var RF = new UIMenuItem("Right Front Door", "Open/close the right front door.");
+            var LR = new UIMenuItem("Left Rear Door", "Open/close the left rear door.");
+            var RR = new UIMenuItem("Right Rear Door", "Open/close the right rear door.");
+            var HD = new UIMenuItem("Hood", "Open/close the hood.");
+            var TR = new UIMenuItem("Trunk", "Open/close the trunk.");
+            var E1 = new UIMenuItem("Extra 1", "Open/close the extra door (#1). Note this door is not present on most vehicles.");
+            var E2 = new UIMenuItem("Extra 2", "Open/close the extra door (#2). Note this door is not present on most vehicles.");
+            var BB = new UIMenuItem("Bomb Bay", "Open/close the bomb bay. Only available on some planes.");
+            var doors = new List<dynamic>() { "Front Left", "Front Right", "Rear Left", "Rear Right", "Hood", "Trunk", "Extra 1", "Extra 2" };
+            var removeDoorList = new UIMenuListItem("Remove Door", doors, 0, "Remove a specific vehicle door completely.");
+            var deleteDoors = new UIMenuCheckboxItem("Delete Removed Doors", false, "When enabled, doors that you remove using the list above will be deleted from the world. If disabled, then the doors will just fall on the ground.");
 
             VehicleDoorsMenu.AddItem(LF);
             VehicleDoorsMenu.AddItem(RF);
@@ -1250,7 +1252,7 @@ namespace vMenuClient.menus
 
             VehicleDoorsMenu.OnListSelect += (sender, item, index) =>
             {
-                Vehicle veh = GetVehicle();
+                var veh = GetVehicle();
                 if (veh != null && veh.Exists())
                 {
                     if (veh.Driver == Game.PlayerPed)
@@ -1275,7 +1277,7 @@ namespace vMenuClient.menus
             VehicleDoorsMenu.OnItemSelect += (sender, item, index) =>
             {
                 // Get the vehicle.
-                Vehicle veh = GetVehicle();
+                var veh = GetVehicle();
                 // If the player is in a vehicle, it's not dead and the player is the driver, continue.
                 if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
                 {
@@ -1283,7 +1285,7 @@ namespace vMenuClient.menus
                     if (index < 8)
                     {
                         // If the door is open.
-                        bool open = GetVehicleDoorAngleRatio(veh.Handle, index) > 0.1f;
+                        var open = GetVehicleDoorAngleRatio(veh.Handle, index) > 0.1f;
 
                         if (open)
                         {
@@ -1300,7 +1302,7 @@ namespace vMenuClient.menus
                     else if (item == openAll)
                     {
                         // Loop through all doors and open them.
-                        for (int door = 0; door < 8; door++)
+                        for (var door = 0; door < 8; door++)
                         {
                             SetVehicleDoorOpen(veh.Handle, door, false, false);
                         }
@@ -1322,7 +1324,7 @@ namespace vMenuClient.menus
                     // If bomb bay doors button is pressed and the vehicle has bomb bay doors.
                     else if (item == BB && veh.HasBombBay)
                     {
-                        bool bombBayOpen = AreBombBayDoorsOpen(veh.Handle);
+                        var bombBayOpen = AreBombBayDoorsOpen(veh.Handle);
                         // If open, close them.
                         if (bombBayOpen)
                         {
@@ -1344,17 +1346,17 @@ namespace vMenuClient.menus
             #endregion
 
             #region Vehicle Windows Submenu Stuff
-            UIMenuItem fwu = new UIMenuItem("~y~↑~s~ Roll Front Windows Up", "Roll both front windows up.");
-            UIMenuItem fwd = new UIMenuItem("~o~↓~s~ Roll Front Windows Down", "Roll both front windows down.");
-            UIMenuItem rwu = new UIMenuItem("~y~↑~s~ Roll Rear Windows Up", "Roll both rear windows up.");
-            UIMenuItem rwd = new UIMenuItem("~o~↓~s~ Roll Rear Windows Down", "Roll both rear windows down.");
+            var fwu = new UIMenuItem("~y~↑~s~ Roll Front Windows Up", "Roll both front windows up.");
+            var fwd = new UIMenuItem("~o~↓~s~ Roll Front Windows Down", "Roll both front windows down.");
+            var rwu = new UIMenuItem("~y~↑~s~ Roll Rear Windows Up", "Roll both rear windows up.");
+            var rwd = new UIMenuItem("~o~↓~s~ Roll Rear Windows Down", "Roll both rear windows down.");
             VehicleWindowsMenu.AddItem(fwu);
             VehicleWindowsMenu.AddItem(fwd);
             VehicleWindowsMenu.AddItem(rwu);
             VehicleWindowsMenu.AddItem(rwd);
             VehicleWindowsMenu.OnItemSelect += (sender, item, index) =>
             {
-                Vehicle veh = GetVehicle();
+                var veh = GetVehicle();
                 if (veh != null && veh.Exists() && !veh.IsDead)
                 {
                     if (item == fwu)
@@ -1388,7 +1390,7 @@ namespace vMenuClient.menus
                 if (item == liveriesMenuBtn)
                 {
                     // Get the player's vehicle.
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     // If it exists, isn't dead and the player is in the drivers seat continue.
                     if (veh != null && veh.Exists() && !veh.IsDead)
                     {
@@ -1396,18 +1398,18 @@ namespace vMenuClient.menus
                         {
                             VehicleLiveriesMenu.Clear();
                             SetVehicleModKit(veh.Handle, 0);
-                            int liveryCount = GetVehicleLiveryCount(veh.Handle);
+                            var liveryCount = GetVehicleLiveryCount(veh.Handle);
 
                             if (liveryCount > 0)
                             {
-                                List<dynamic> liveryList = new List<dynamic>();
-                                for (int i = 0; i < liveryCount; i++)
+                                var liveryList = new List<dynamic>();
+                                for (var i = 0; i < liveryCount; i++)
                                 {
-                                    string livery = GetLiveryName(veh.Handle, i);
+                                    var livery = GetLiveryName(veh.Handle, i);
                                     livery = GetLabelText(livery) != "NULL" ? GetLabelText(livery) : $"Livery #{i}";
                                     liveryList.Add(livery);
                                 }
-                                UIMenuListItem liveryListItem = new UIMenuListItem("Set Livery", liveryList, GetVehicleLivery(veh.Handle), "Choose a livery for this vehicle.");
+                                var liveryListItem = new UIMenuListItem("Set Livery", liveryList, GetVehicleLivery(veh.Handle), "Choose a livery for this vehicle.");
                                 VehicleLiveriesMenu.AddItem(liveryListItem);
                                 VehicleLiveriesMenu.OnListChange += (_menu, listItem, newIndex) =>
                                 {
@@ -1424,7 +1426,7 @@ namespace vMenuClient.menus
                                 Notify.Error("This vehicle does not have any liveries.");
                                 VehicleLiveriesMenu.Visible = false;
                                 menu.Visible = true;
-                                UIMenuItem backBtn = new UIMenuItem("No Liveries Available :(", "Click me to go back.");
+                                var backBtn = new UIMenuItem("No Liveries Available :(", "Click me to go back.");
                                 backBtn.SetRightLabel("Go Back");
                                 VehicleLiveriesMenu.AddItem(backBtn);
                                 VehicleLiveriesMenu.OnItemSelect += (sender2, item2, index2) =>
@@ -1487,14 +1489,14 @@ namespace vMenuClient.menus
                     }
 
                     // Get the vehicle.
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
 
                     // Check if the vehicle exists, it's actually a vehicle, it's not dead/broken and the player is in the drivers seat.
                     if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
                     {
                         //List<int> extraIds = new List<int>();
                         // Loop through all possible extra ID's (AFAIK: 0-14).
-                        for (int extra = 0; extra < 14; extra++)
+                        for (var extra = 0; extra < 14; extra++)
                         {
                             // If this extra exists...
                             if (veh.ExtraExists(extra))
@@ -1503,7 +1505,7 @@ namespace vMenuClient.menus
                                 //extraIds.Add(extra);
 
                                 // Create a checkbox for it.
-                                UIMenuCheckboxItem extraCheckbox = new UIMenuCheckboxItem($"Extra #{extra}", veh.IsExtraOn(extra), extra.ToString());
+                                var extraCheckbox = new UIMenuCheckboxItem($"Extra #{extra}", veh.IsExtraOn(extra), extra.ToString());
                                 // Add the checkbox to the menu.
                                 VehicleComponentsMenu.AddItem(extraCheckbox);
 
@@ -1516,7 +1518,7 @@ namespace vMenuClient.menus
 
                         if (vehicleExtras.Count > 0)
                         {
-                            UIMenuItem backBtn = new UIMenuItem("Go Back", "Go back to the Vehicle Options menu.");
+                            var backBtn = new UIMenuItem("Go Back", "Go back to the Vehicle Options menu.");
                             VehicleComponentsMenu.AddItem(backBtn);
                             VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
                             {
@@ -1525,7 +1527,7 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            UIMenuItem backBtn = new UIMenuItem("No Extras Available :(", "Go back to the Vehicle Options menu.");
+                            var backBtn = new UIMenuItem("No Extras Available :(", "Go back to the Vehicle Options menu.");
                             backBtn.SetRightLabel("Go Back");
                             VehicleComponentsMenu.AddItem(backBtn);
                             VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
@@ -1544,25 +1546,25 @@ namespace vMenuClient.menus
             {
                 // When a checkbox is checked/unchecked, get the selected checkbox item index and use that to get the component ID from the list.
                 // Then toggle that extra.
-                if (vehicleExtras.TryGetValue(item, out int extra))
+                if (vehicleExtras.TryGetValue(item, out var extra))
                 {
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     veh.ToggleExtra(extra, _checked);
                 }
             };
             #endregion
 
             #region Underglow Submenu
-            UIMenuCheckboxItem underglowFront = new UIMenuCheckboxItem("Enable Front Light", false, "Enable or disable the underglow on the front side of the vehicle. Note not all vehicles have lights.");
-            UIMenuCheckboxItem underglowBack = new UIMenuCheckboxItem("Enable Rear Light", false, "Enable or disable the underglow on the left side of the vehicle. Note not all vehicles have lights.");
-            UIMenuCheckboxItem underglowLeft = new UIMenuCheckboxItem("Enable Left Light", false, "Enable or disable the underglow on the right side of the vehicle. Note not all vehicles have lights.");
-            UIMenuCheckboxItem underglowRight = new UIMenuCheckboxItem("Enable Right Light", false, "Enable or disable the underglow on the back side of the vehicle. Note not all vehicles have lights.");
-            List<dynamic> underglowColorsList = new List<dynamic>();
-            for (int i = 0; i < 13; i++)
+            var underglowFront = new UIMenuCheckboxItem("Enable Front Light", false, "Enable or disable the underglow on the front side of the vehicle. Note not all vehicles have lights.");
+            var underglowBack = new UIMenuCheckboxItem("Enable Rear Light", false, "Enable or disable the underglow on the left side of the vehicle. Note not all vehicles have lights.");
+            var underglowLeft = new UIMenuCheckboxItem("Enable Left Light", false, "Enable or disable the underglow on the right side of the vehicle. Note not all vehicles have lights.");
+            var underglowRight = new UIMenuCheckboxItem("Enable Right Light", false, "Enable or disable the underglow on the back side of the vehicle. Note not all vehicles have lights.");
+            var underglowColorsList = new List<dynamic>();
+            for (var i = 0; i < 13; i++)
             {
                 underglowColorsList.Add(GetLabelText($"CMOD_NEONCOL_{i}"));
             }
-            UIMenuListItem underglowColor = new UIMenuListItem(GetLabelText("CMOD_NEON_1"), underglowColorsList, 0, "Select the color of the neon underglow.");
+            var underglowColor = new UIMenuListItem(GetLabelText("CMOD_NEON_1"), underglowColorsList, 0, "Select the color of the neon underglow.");
 
             VehicleUnderglowMenu.AddItem(underglowFront);
             VehicleUnderglowMenu.AddItem(underglowBack);
@@ -1576,7 +1578,7 @@ namespace vMenuClient.menus
                 #region reset checkboxes state when opening the menu.
                 if (item == underglowMenuBtn)
                 {
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     if (veh != null)
                     {
                         if (veh.Mods.HasNeonLights)
@@ -1641,7 +1643,7 @@ namespace vMenuClient.menus
             {
                 if (Game.PlayerPed.IsInVehicle())
                 {
-                    Vehicle veh = GetVehicle();
+                    var veh = GetVehicle();
                     if (veh.Mods.HasNeonLights)
                     {
                         veh.Mods.NeonLightsColor = GetColorFromIndex(underglowColor.Index);
@@ -1671,7 +1673,7 @@ namespace vMenuClient.menus
                 {
                     if (Game.PlayerPed.IsInVehicle())
                     {
-                        Vehicle veh = GetVehicle();
+                        var veh = GetVehicle();
                         if (veh.Mods.HasNeonLights)
                         {
                             veh.Mods.NeonLightsColor = GetColorFromIndex(newIndex);
@@ -1686,7 +1688,7 @@ namespace vMenuClient.menus
             {
                 menu.MenuItems.ForEach((item) =>
                 {
-                    Vehicle veh = GetVehicle(true);
+                    var veh = GetVehicle(true);
 
                     if (item == setLicensePlateType && item is UIMenuListItem listItem && veh != null && veh.Exists())
                     {
@@ -1760,7 +1762,7 @@ namespace vMenuClient.menus
             }
 
             // Get the vehicle.
-            Vehicle veh = GetVehicle();
+            var veh = GetVehicle();
 
             // Check if the vehicle exists, is still drivable/alive and it's actually a vehicle.
             if (veh != null && veh.Exists() && !veh.IsDead)
@@ -1770,28 +1772,28 @@ namespace vMenuClient.menus
                 SetVehicleModKit(veh.Handle, 0);
 
                 // Get all mods available on this vehicle.
-                VehicleMod[] mods = veh.Mods.GetAllMods();
+                var mods = veh.Mods.GetAllMods();
 
                 // Loop through all the mods.
-                foreach (VehicleMod mod in mods)
+                foreach (var mod in mods)
                 {
                     veh = GetVehicle();
 
                     // Get the proper localized mod type (suspension, armor, etc) name.
-                    string typeName = mod.LocalizedModTypeName;
+                    var typeName = mod.LocalizedModTypeName;
 
                     // Create a list to all available upgrades for this modtype.
-                    List<dynamic> modlist = new List<dynamic>();
+                    var modlist = new List<dynamic>();
 
                     // Get the current item index ({current}/{max upgrades})
-                    string currentItem = $"[1/{mod.ModCount + 1}]";
+                    var currentItem = $"[1/{mod.ModCount + 1}]";
 
                     // Add the stock value for this mod.
-                    string name = $"Stock {typeName} {currentItem}";
+                    var name = $"Stock {typeName} {currentItem}";
                     modlist.Add(name);
 
                     // Loop through all available upgrades for this specific mod type.
-                    for (int x = 0; x < mod.ModCount; x++)
+                    for (var x = 0; x < mod.ModCount; x++)
                     {
                         // Create the item index.
                         currentItem = $"[{2 + x}/{mod.ModCount + 1}]";
@@ -1802,8 +1804,8 @@ namespace vMenuClient.menus
                     }
 
                     // Create the MenuListItem for this mod type.
-                    int currIndex = GetVehicleMod(veh.Handle, (int)mod.ModType) + 1;
-                    UIMenuListItem modTypeListItem = new UIMenuListItem(
+                    var currIndex = GetVehicleMod(veh.Handle, (int)mod.ModType) + 1;
+                    var modTypeListItem = new UIMenuListItem(
                         typeName,
                         modlist,
                         currIndex,
@@ -1821,7 +1823,7 @@ namespace vMenuClient.menus
                 #region more variables and setup
                 veh = GetVehicle();
                 // Create the wheel types list & listitem and add it to the menu.
-                List<dynamic> wheelTypes = new List<dynamic>()
+                var wheelTypes = new List<dynamic>()
                 {
                     "Sports",       // 0
                     "Muscle",       // 1
@@ -1836,35 +1838,35 @@ namespace vMenuClient.menus
                     "Open Wheel",   // 10
                     "Street"        // 11
                 };
-                UIMenuListItem vehicleWheelType = new UIMenuListItem("Wheel Type", wheelTypes, MathUtil.Clamp(GetVehicleWheelType(veh.Handle), 0, 11), $"Choose a ~y~wheel type~s~ for your vehicle.");
+                var vehicleWheelType = new UIMenuListItem("Wheel Type", wheelTypes, MathUtil.Clamp(GetVehicleWheelType(veh.Handle), 0, 11), $"Choose a ~y~wheel type~s~ for your vehicle.");
                 if (!veh.Model.IsBoat && !veh.Model.IsHelicopter && !veh.Model.IsPlane && !veh.Model.IsBicycle && !veh.Model.IsTrain)
                 {
                     VehicleModMenu.AddItem(vehicleWheelType);
                 }
 
                 // Create the checkboxes for some options.
-                UIMenuCheckboxItem toggleCustomWheels = new UIMenuCheckboxItem("Toggle Custom Wheels", GetVehicleModVariation(veh.Handle, 23), "Press this to add or remove ~y~custom~s~ wheels.");
-                UIMenuCheckboxItem xenonHeadlights = new UIMenuCheckboxItem("Xenon Headlights", IsToggleModOn(veh.Handle, 22), "Enable or disable ~b~xenon ~s~headlights.");
-                UIMenuCheckboxItem turbo = new UIMenuCheckboxItem("Turbo", IsToggleModOn(veh.Handle, 18), "Enable or disable the ~y~turbo~s~ for this vehicle.");
-                UIMenuCheckboxItem bulletProofTires = new UIMenuCheckboxItem("Bullet Proof Tires", !GetVehicleTyresCanBurst(veh.Handle), "Enable or disable ~y~bullet proof tires~s~ for this vehicle.");
-                UIMenuCheckboxItem lowGripTires = new UIMenuCheckboxItem("Low Grip Tires", GetDriftTyresEnabled(veh.Handle), "Enable or disable ~y~low grip tires~s~ for this vehicle.");
+                var toggleCustomWheels = new UIMenuCheckboxItem("Toggle Custom Wheels", GetVehicleModVariation(veh.Handle, 23), "Press this to add or remove ~y~custom~s~ wheels.");
+                var xenonHeadlights = new UIMenuCheckboxItem("Xenon Headlights", IsToggleModOn(veh.Handle, 22), "Enable or disable ~b~xenon ~s~headlights.");
+                var turbo = new UIMenuCheckboxItem("Turbo", IsToggleModOn(veh.Handle, 18), "Enable or disable the ~y~turbo~s~ for this vehicle.");
+                var bulletProofTires = new UIMenuCheckboxItem("Bullet Proof Tires", !GetVehicleTyresCanBurst(veh.Handle), "Enable or disable ~y~bullet proof tires~s~ for this vehicle.");
+                var lowGripTires = new UIMenuCheckboxItem("Low Grip Tires", GetDriftTyresEnabled(veh.Handle), "Enable or disable ~y~low grip tires~s~ for this vehicle.");
 
                 // Add the checkboxes to the menu.
                 VehicleModMenu.AddItem(toggleCustomWheels);
                 VehicleModMenu.AddItem(xenonHeadlights);
-                int currentHeadlightColor = GetHeadlightsColorForVehicle(veh);
+                var currentHeadlightColor = GetHeadlightsColorForVehicle(veh);
                 if (currentHeadlightColor is < 0 or > 12)
                 {
                     currentHeadlightColor = 13;
                 }
-                UIMenuListItem headlightColor = new UIMenuListItem("Headlight Color", new List<dynamic>() { "White", "Blue", "Electric Blue", "Mint Green", "Lime Green", "Yellow", "Golden Shower", "Orange", "Red", "Pony Pink", "Hot Pink", "Purple", "Blacklight", "Default Xenon" }, currentHeadlightColor, "New in the Arena Wars GTA V update: Colored headlights. Note you must enable Xenon Headlights first.");
+                var headlightColor = new UIMenuListItem("Headlight Color", new List<dynamic>() { "White", "Blue", "Electric Blue", "Mint Green", "Lime Green", "Yellow", "Golden Shower", "Orange", "Red", "Pony Pink", "Hot Pink", "Purple", "Blacklight", "Default Xenon" }, currentHeadlightColor, "New in the Arena Wars GTA V update: Colored headlights. Note you must enable Xenon Headlights first.");
                 VehicleModMenu.AddItem(headlightColor);
                 VehicleModMenu.AddItem(turbo);
                 VehicleModMenu.AddItem(bulletProofTires);
                 VehicleModMenu.AddItem(lowGripTires);
                 // Create a list of tire smoke options.
-                List<dynamic> tireSmokes = new List<dynamic>() { "Red", "Orange", "Yellow", "Gold", "Light Green", "Dark Green", "Light Blue", "Dark Blue", "Purple", "Pink", "Black" };
-                Dictionary<string, int[]> tireSmokeColors = new Dictionary<string, int[]>()
+                var tireSmokes = new List<dynamic>() { "Red", "Orange", "Yellow", "Gold", "Light Green", "Dark Green", "Light Blue", "Dark Blue", "Purple", "Pink", "Black" };
+                var tireSmokeColors = new Dictionary<string, int[]>()
                 {
                     ["Red"] = new int[] { 244, 65, 65 },
                     ["Orange"] = new int[] { 244, 167, 66 },
@@ -1880,23 +1882,23 @@ namespace vMenuClient.menus
                 };
                 int smoker = 0, smokeg = 0, smokeb = 0;
                 GetVehicleTyreSmokeColor(veh.Handle, ref smoker, ref smokeg, ref smokeb);
-                KeyValuePair<string, int[]> item = tireSmokeColors.ToList().Find((f) => { return f.Value[0] == smoker && f.Value[1] == smokeg && f.Value[2] == smokeb; });
-                int index = tireSmokeColors.ToList().IndexOf(item);
+                var item = tireSmokeColors.ToList().Find((f) => { return f.Value[0] == smoker && f.Value[1] == smokeg && f.Value[2] == smokeb; });
+                var index = tireSmokeColors.ToList().IndexOf(item);
                 if (index < 0)
                 {
                     index = 0;
                 }
 
-                UIMenuListItem tireSmoke = new UIMenuListItem("Tire Smoke Color", tireSmokes, index, $"Choose a ~y~tire smoke color~s~ for your vehicle.");
+                var tireSmoke = new UIMenuListItem("Tire Smoke Color", tireSmokes, index, $"Choose a ~y~tire smoke color~s~ for your vehicle.");
                 VehicleModMenu.AddItem(tireSmoke);
 
                 // Create the checkbox to enable/disable the tiresmoke.
-                UIMenuCheckboxItem tireSmokeEnabled = new UIMenuCheckboxItem("Tire Smoke", IsToggleModOn(veh.Handle, 20), "Enable or disable ~y~tire smoke~s~ for your vehicle. ~h~~r~Important:~s~ When disabling tire smoke, you'll need to drive around before it takes affect.");
+                var tireSmokeEnabled = new UIMenuCheckboxItem("Tire Smoke", IsToggleModOn(veh.Handle, 20), "Enable or disable ~y~tire smoke~s~ for your vehicle. ~h~~r~Important:~s~ When disabling tire smoke, you'll need to drive around before it takes affect.");
                 VehicleModMenu.AddItem(tireSmokeEnabled);
 
                 // Create list for window tint
-                List<dynamic> windowTints = new List<dynamic>() { "Stock [1/7]", "None [2/7]", "Limo [3/7]", "Light Smoke [4/7]", "Dark Smoke [5/7]", "Pure Black [6/7]", "Green [7/7]" };
-                int currentTint = GetVehicleWindowTint(veh.Handle);
+                var windowTints = new List<dynamic>() { "Stock [1/7]", "None [2/7]", "Limo [3/7]", "Light Smoke [4/7]", "Dark Smoke [5/7]", "Pure Black [6/7]", "Green [7/7]" };
+                var currentTint = GetVehicleWindowTint(veh.Handle);
                 if (currentTint == -1)
                 {
                     currentTint = 4; // stock
@@ -1930,7 +1932,7 @@ namespace vMenuClient.menus
                         break;
                 }
 
-                UIMenuListItem windowTint = new UIMenuListItem("Window Tint", windowTints, currentTint, "Apply tint to your windows.");
+                var windowTint = new UIMenuListItem("Window Tint", windowTints, currentTint, "Apply tint to your windows.");
                 VehicleModMenu.AddItem(windowTint);
 
                 #endregion
@@ -1981,9 +1983,9 @@ namespace vMenuClient.menus
                             // Enable it.
                             ToggleVehicleMod(veh.Handle, 20, true);
                             // Get the selected color values.
-                            dynamic r = tireSmokeColors[tireSmokes[tireSmoke.Index]][0];
-                            dynamic g = tireSmokeColors[tireSmokes[tireSmoke.Index]][1];
-                            dynamic b = tireSmokeColors[tireSmokes[tireSmoke.Index]][2];
+                            var r = tireSmokeColors[tireSmokes[tireSmoke.Index]][0];
+                            var g = tireSmokeColors[tireSmokes[tireSmoke.Index]][1];
+                            var b = tireSmokeColors[tireSmokes[tireSmoke.Index]][2];
                             // Set the color.
                             SetVehicleTyreSmokeColor(veh.Handle, r, g, b);
                         }
@@ -2005,7 +2007,7 @@ namespace vMenuClient.menus
                 // Handle list selections
                 VehicleModMenu.OnListChange += (sender2, item2, newIndex) =>
                 {
-                    int itemIndex = sender2.MenuItems.IndexOf(item2);
+                    var itemIndex = sender2.MenuItems.IndexOf(item2);
                     // Get the vehicle and set the mod kit.
                     veh = GetVehicle();
                     SetVehicleModKit(veh.Handle, 0);
@@ -2014,8 +2016,8 @@ namespace vMenuClient.menus
                     // If the affected list is actually a "dynamically" generated list, continue. If it was one of the manual options, go to else.
                     if (item2.ItemData is int modType)
                     {
-                        int selectedUpgrade = item2.Index - 1;
-                        bool customWheels = GetVehicleModVariation(veh.Handle, 23);
+                        var selectedUpgrade = item2.Index - 1;
+                        var customWheels = GetVehicleModVariation(veh.Handle, 23);
 
                         SetVehicleMod(veh.Handle, modType, selectedUpgrade, customWheels);
                     }
@@ -2026,10 +2028,10 @@ namespace vMenuClient.menus
                     // Wheel types
                     else if (item2 == vehicleWheelType)
                     {
-                        int vehicleClass = GetVehicleClass(veh.Handle);
-                        bool isBikeOrOpenWheel = (newIndex == 6 && veh.Model.IsBike) || (newIndex == 10 && vehicleClass == 22);
-                        bool isNotBikeNorOpenWheel = newIndex != 6 && !veh.Model.IsBike && newIndex != 10 && vehicleClass != 22;
-                        bool isCorrectVehicleType = isBikeOrOpenWheel || isNotBikeNorOpenWheel;
+                        var vehicleClass = GetVehicleClass(veh.Handle);
+                        var isBikeOrOpenWheel = (newIndex == 6 && veh.Model.IsBike) || (newIndex == 10 && vehicleClass == 22);
+                        var isNotBikeNorOpenWheel = newIndex != 6 && !veh.Model.IsBike && newIndex != 10 && vehicleClass != 22;
+                        var isCorrectVehicleType = isBikeOrOpenWheel || isNotBikeNorOpenWheel;
                         if (!isCorrectVehicleType)
                         {
                             // Go past the index if it's not a bike.
@@ -2046,7 +2048,7 @@ namespace vMenuClient.menus
                         // Set the wheel type
                         SetVehicleWheelType(veh.Handle, item2.Index);
 
-                        bool customWheels = GetVehicleModVariation(veh.Handle, 23);
+                        var customWheels = GetVehicleModVariation(veh.Handle, 23);
 
                         // Reset the wheel mod index for front wheels
                         SetVehicleMod(veh.Handle, 23, -1, customWheels);
@@ -2064,9 +2066,9 @@ namespace vMenuClient.menus
                     else if (item2 == tireSmoke)
                     {
                         // Get the selected color values.
-                        dynamic r = tireSmokeColors[tireSmokes[newIndex]][0];
-                        dynamic g = tireSmokeColors[tireSmokes[newIndex]][1];
-                        dynamic b = tireSmokeColors[tireSmokes[newIndex]][2];
+                        var r = tireSmokeColors[tireSmokes[newIndex]][0];
+                        var g = tireSmokeColors[tireSmokes[newIndex]][1];
+                        var b = tireSmokeColors[tireSmokes[newIndex]][2];
 
                         // Set the color.
                         SetVehicleTyreSmokeColor(veh.Handle, r, g, b);
@@ -2160,7 +2162,7 @@ namespace vMenuClient.menus
             {
                 if (IsToggleModOn(vehicle.Handle, 22))
                 {
-                    int val = GetVehicleHeadlightsColour(vehicle.Handle);
+                    var val = GetVehicleHeadlightsColour(vehicle.Handle);
                     if (val is > (-1) and < 13)
                     {
                         return val;
@@ -2212,7 +2214,7 @@ namespace vMenuClient.menus
         /// <returns></returns>
         private int GetIndexFromColor()
         {
-            Vehicle veh = GetVehicle();
+            var veh = GetVehicle();
 
             if (veh == null || !veh.Exists() || !veh.Mods.HasNeonLights)
             {

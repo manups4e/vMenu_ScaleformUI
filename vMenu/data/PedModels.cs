@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using static CitizenFX.Core.Native.API;
+
 namespace vMenuClient.data
 {
     public static class PedModels

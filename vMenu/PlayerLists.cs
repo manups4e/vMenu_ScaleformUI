@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using CitizenFX.Core;
+
+using static CitizenFX.Core.Native.API;
+
 namespace vMenuClient
 {
     public interface IPlayer
@@ -52,7 +56,7 @@ namespace vMenuClient
 
         public IEnumerator<IPlayer> GetEnumerator()
         {
-            foreach (Player player in playerList)
+            foreach (var player in playerList)
             {
                 yield return new NativePlayer(player);
             }
@@ -76,7 +80,7 @@ namespace vMenuClient
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (Player player in playerList)
+            foreach (var player in playerList)
             {
                 yield return new NativePlayer(player);
             }
@@ -101,7 +105,7 @@ namespace vMenuClient
             {
                 if (Handle >= 0)
                 {
-                    int ped = GetPlayerPed(Handle);
+                    var ped = GetPlayerPed(Handle);
 
                     if (ped > 0)
                     {
@@ -134,15 +138,15 @@ namespace vMenuClient
 
         private IEnumerator<IPlayer> GetEnumeratorInternal()
         {
-            HashSet<int> nearPlayers = new HashSet<int>();
+            var nearPlayers = new HashSet<int>();
 
-            foreach (Player player in playerList)
+            foreach (var player in playerList)
             {
                 yield return new NativePlayer(player);
                 nearPlayers.Add(player.ServerId);
             }
 
-            foreach (KeyValuePair<int, InfinityPlayer> player in remotePlayerList)
+            foreach (var player in remotePlayerList)
             {
                 if (!nearPlayers.Contains(player.Value.ServerId))
                 {
@@ -171,15 +175,15 @@ namespace vMenuClient
         {
             remotePlayerList.Clear();
 
-            foreach (object playerPair in players)
+            foreach (var playerPair in players)
             {
                 if (playerPair is IDictionary<string, object> playerDict)
                 {
-                    if (playerDict.TryGetValue("n", out object nameObj) && playerDict.TryGetValue("s", out object serverIdObj))
+                    if (playerDict.TryGetValue("n", out var nameObj) && playerDict.TryGetValue("s", out var serverIdObj))
                     {
                         if (nameObj is string name)
                         {
-                            int serverId = Convert.ToInt32(serverIdObj);
+                            var serverId = Convert.ToInt32(serverIdObj);
 
                             remotePlayerList[serverId] = new InfinityPlayer(serverId, name);
                         }

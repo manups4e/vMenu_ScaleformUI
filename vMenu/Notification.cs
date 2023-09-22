@@ -38,8 +38,8 @@ namespace vMenuClient
         /// <returns>The error message.</returns>
         public static string Get(CommonErrors errorType, string placeholderValue = null)
         {
-            string outputMessage = "";
-            string placeholder = placeholderValue != null ? " " + placeholderValue : "";
+            var outputMessage = "";
+            var placeholder = placeholderValue != null ? " " + placeholderValue : "";
             outputMessage = errorType switch
             {
                 CommonErrors.NeedToBeTheDriver => "You need to be the driver of this vehicle.",
@@ -79,7 +79,7 @@ namespace vMenuClient
         public static void Custom(string message, bool blink = true, bool saveToBrief = true)
         {
             SetNotificationTextEntry("CELL_EMAIL_BCON"); // 10x ~a~
-            foreach (string s in CitizenFX.Core.UI.Screen.StringToArray(message))
+            foreach (var s in CitizenFX.Core.UI.Screen.StringToArray(message))
             {
                 AddTextComponentSubstringPlayerName(s);
             }
@@ -106,7 +106,7 @@ namespace vMenuClient
         /// <param name="placeholderValue">An optional string that will be replaced inside the error message template.</param>
         public static void Alert(CommonErrors errorMessage, bool blink = true, bool saveToBrief = true, string placeholderValue = null)
         {
-            string message = ErrorMessage.Get(errorMessage, placeholderValue);
+            var message = ErrorMessage.Get(errorMessage, placeholderValue);
             Alert(message, blink, saveToBrief);
         }
 
@@ -131,7 +131,7 @@ namespace vMenuClient
         /// <param name="placeholderValue">An optional string that will be replaced inside the error message template.</param>
         public static void Error(CommonErrors errorMessage, bool blink = true, bool saveToBrief = true, string placeholderValue = null)
         {
-            string message = ErrorMessage.Get(errorMessage, placeholderValue);
+            var message = ErrorMessage.Get(errorMessage, placeholderValue);
             Error(message, blink, saveToBrief);
         }
 
@@ -169,7 +169,7 @@ namespace vMenuClient
         public static void CustomImage(string textureDict, string textureName, string message, string title, string subtitle, bool saveToBrief, int iconType = 0)
         {
             SetNotificationTextEntry("CELL_EMAIL_BCON"); // 10x ~a~
-            foreach (string s in CitizenFX.Core.UI.Screen.StringToArray(message))
+            foreach (var s in CitizenFX.Core.UI.Screen.StringToArray(message))
             {
                 AddTextComponentSubstringPlayerName(s);
             }
@@ -195,7 +195,7 @@ namespace vMenuClient
         public static void Custom(string message, int duration = 2500, bool drawImmediately = true)
         {
             BeginTextCommandPrint("CELL_EMAIL_BCON"); // 10x ~a~
-            foreach (string s in CitizenFX.Core.UI.Screen.StringToArray(message))
+            foreach (var s in CitizenFX.Core.UI.Screen.StringToArray(message))
             {
                 AddTextComponentSubstringPlayerName(s);
             }

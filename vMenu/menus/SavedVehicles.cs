@@ -1,6 +1,7 @@
-﻿using ScaleformUI.Menu;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
@@ -22,12 +23,12 @@ namespace vMenuClient.menus
         /// </summary>
         private void CreateMenu()
         {
-            string menuTitle = "Saved Vehicles";
+            var menuTitle = "Saved Vehicles";
             #region Create menus and submenus
             // Create the menu.
             menu = new UIMenu(menuTitle, "Manage Saved Vehicles");
 
-            UIMenuItem saveVehicle = new UIMenuItem("Save Current Vehicle", "Save the vehicle you are currently sitting in.");
+            var saveVehicle = new UIMenuItem("Save Current Vehicle", "Save the vehicle you are currently sitting in.");
             menu.AddItem(saveVehicle);
             saveVehicle.SetLeftBadge(BadgeIcon.CAR);
 
@@ -46,11 +47,11 @@ namespace vMenuClient.menus
                 }
             };
 
-            for (int i = 0; i < 23; i++)
+            for (var i = 0; i < 23; i++)
             {
-                UIMenu categoryMenu = new UIMenu("Saved Vehicles", GetLabelText($"VEH_CLASS_{i}"));
+                var categoryMenu = new UIMenu("Saved Vehicles", GetLabelText($"VEH_CLASS_{i}"));
 
-                UIMenuItem categoryButton = new UIMenuItem(GetLabelText($"VEH_CLASS_{i}"), $"All saved vehicles from the {GetLabelText($"VEH_CLASS_{i}")} category.");
+                var categoryButton = new UIMenuItem(GetLabelText($"VEH_CLASS_{i}"), $"All saved vehicles from the {GetLabelText($"VEH_CLASS_{i}")} category.");
                 subMenus.Add(categoryMenu);
                 menu.AddItem(categoryButton);
                 categoryButton.SetRightLabel("→→→");
@@ -67,16 +68,16 @@ namespace vMenuClient.menus
                 };
             }
 
-            UIMenuItem unavailableModels = new UIMenuItem("Unavailable Saved Vehicles", "These vehicles are currently unavailable because the models are not present in the game. These vehicles are most likely not being streamed from the server.");
+            var unavailableModels = new UIMenuItem("Unavailable Saved Vehicles", "These vehicles are currently unavailable because the models are not present in the game. These vehicles are most likely not being streamed from the server.");
             unavailableModels.SetRightLabel("→→→");
 
             menu.AddItem(unavailableModels);
             unavailableModels.Activated += async (a, b) => await a.SwitchTo(unavailableVehiclesMenu, 0, true);
 
-            UIMenuItem spawnVehicle = new UIMenuItem("Spawn Vehicle", "Spawn this saved vehicle.");
-            UIMenuItem renameVehicle = new UIMenuItem("Rename Vehicle", "Rename your saved vehicle.");
-            UIMenuItem replaceVehicle = new UIMenuItem("~r~Replace Vehicle", "Your saved vehicle will be replaced with the vehicle you are currently sitting in. ~r~Warning: this can NOT be undone!");
-            UIMenuItem deleteVehicle = new UIMenuItem("~r~Delete Vehicle", "~r~This will delete your saved vehicle. Warning: this can NOT be undone!");
+            var spawnVehicle = new UIMenuItem("Spawn Vehicle", "Spawn this saved vehicle.");
+            var renameVehicle = new UIMenuItem("Rename Vehicle", "Rename your saved vehicle.");
+            var replaceVehicle = new UIMenuItem("~r~Replace Vehicle", "Your saved vehicle will be replaced with the vehicle you are currently sitting in. ~r~Warning: this can NOT be undone!");
+            var deleteVehicle = new UIMenuItem("~r~Delete Vehicle", "~r~This will delete your saved vehicle. Warning: this can NOT be undone!");
             selectedVehicleMenu.AddItem(spawnVehicle);
             selectedVehicleMenu.AddItem(renameVehicle);
             selectedVehicleMenu.AddItem(replaceVehicle);
@@ -110,7 +111,7 @@ namespace vMenuClient.menus
                 }
                 else if (item == renameVehicle)
                 {
-                    string newName = await GetUserInput(windowTitle: "Enter a new name for this vehicle.", maxInputLength: 30);
+                    var newName = await GetUserInput(windowTitle: "Enter a new name for this vehicle.", maxInputLength: 30);
                     if (string.IsNullOrEmpty(newName))
                     {
                         Notify.Error(CommonErrors.InvalidInput);
@@ -232,7 +233,7 @@ namespace vMenuClient.menus
 
             void ResetAreYouSure()
             {
-                foreach (UIMenuItem i in unavailableVehiclesMenu.MenuItems)
+                foreach (var i in unavailableVehiclesMenu.MenuItems)
                 {
                     if (i.ItemData is KeyValuePair<string, VehicleInfo> vd)
                     {
@@ -259,7 +260,7 @@ namespace vMenuClient.menus
                 Notify.Error("In some very strange way, you've managed to select a button, that does not exist according to this list. So your vehicle could not be loaded. :( Maybe your save files are broken?");
                 return false;
             }
-            KeyValuePair<string, VehicleInfo> vehInfo = svMenuItems[selectedItem];
+            var vehInfo = svMenuItems[selectedItem];
             selectedVehicleMenu.Subtitle = $"{vehInfo.Key.Substring(4)} ({vehInfo.Value.name})";
             currentlySelectedVehicle = vehInfo;
             MenuHandler.CloseAndClearHistory();
@@ -276,7 +277,7 @@ namespace vMenuClient.menus
             savedVehicles = GetSavedVehicles();
             svMenuItems = new Dictionary<UIMenuItem, KeyValuePair<string, VehicleInfo>>();
 
-            for (int i = 1; i < GetMenu().Size - 1; i++)
+            for (var i = 1; i < GetMenu().Size - 1; i++)
             {
                 if (savedVehicles.Any(a => GetVehicleClassFromName(a.Value.model) == i - 1 && IsModelInCdimage(a.Value.model)))
                 {
@@ -297,15 +298,15 @@ namespace vMenuClient.menus
             // Check if the items count will be changed. If there are less cars than there were before, one probably got deleted
             // so in that case we need to refresh the index of that menu just to be safe. If not, keep the index where it is for improved
             // usability of the menu.
-            foreach (UIMenu m in subMenus)
+            foreach (var m in subMenus)
             {
-                int size = m.Size;
-                int vclass = subMenus.IndexOf(m);
+                var size = m.Size;
+                var vclass = subMenus.IndexOf(m);
 
-                int count = savedVehicles.Count(a => GetVehicleClassFromName(a.Value.model) == vclass);
+                var count = savedVehicles.Count(a => GetVehicleClassFromName(a.Value.model) == vclass);
             }
 
-            foreach (UIMenu m in subMenus)
+            foreach (var m in subMenus)
             {
                 // Clear items but don't reset the index because we can guarantee that the index won't be out of bounds.
                 // this is the case because of the loop above where we reset the index if the items count changes.
@@ -315,14 +316,14 @@ namespace vMenuClient.menus
             // Always clear this index because it's useless anyway and it's safer.
             unavailableVehiclesMenu.Clear();
 
-            foreach (KeyValuePair<string, VehicleInfo> sv in savedVehicles)
+            foreach (var sv in savedVehicles)
             {
                 if (IsModelInCdimage(sv.Value.model))
                 {
-                    int vclass = GetVehicleClassFromName(sv.Value.model);
-                    UIMenu menu = subMenus[vclass];
+                    var vclass = GetVehicleClassFromName(sv.Value.model);
+                    var menu = subMenus[vclass];
 
-                    UIMenuItem savedVehicleBtn = new UIMenuItem(sv.Key.Substring(4), $"Manage this saved vehicle.")
+                    var savedVehicleBtn = new UIMenuItem(sv.Key.Substring(4), $"Manage this saved vehicle.")
                     {
                         Label = $"({sv.Value.name}) →→→"
                     };
@@ -332,7 +333,7 @@ namespace vMenuClient.menus
                 }
                 else
                 {
-                    UIMenuItem missingVehItem = new UIMenuItem(sv.Key.Substring(4), "This model could not be found in the game files. Most likely because this is an addon vehicle and it's currently not streamed by the server.")
+                    var missingVehItem = new UIMenuItem(sv.Key.Substring(4), "This model could not be found in the game files. Most likely because this is an addon vehicle and it's currently not streamed by the server.")
                     {
                         Enabled = false,
                         ItemData = sv
@@ -345,7 +346,7 @@ namespace vMenuClient.menus
                 }
             }
 
-            foreach (UIMenu m in subMenus)
+            foreach (var m in subMenus)
             {
                 m.MenuItems.Sort((A, B) =>
                 {

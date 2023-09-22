@@ -1,5 +1,6 @@
-using ScaleformUI.Menu;
 using System.Collections.Generic;
+
+using ScaleformUI.Menu;
 
 namespace vMenuClient.menus
 {
@@ -19,26 +20,26 @@ namespace vMenuClient.menus
 
             // Create all menu items.
             freezeTimeToggle = new UIMenuItem("Freeze/Unfreeze Time", "Enable or disable time freezing.");
-            UIMenuItem earlymorning = new UIMenuItem("Early Morning", "Set the time to 06:00.");
+            var earlymorning = new UIMenuItem("Early Morning", "Set the time to 06:00.");
             earlymorning.SetRightLabel("06:00");
-            UIMenuItem morning = new UIMenuItem("Morning", "Set the time to 09:00.");
+            var morning = new UIMenuItem("Morning", "Set the time to 09:00.");
             morning.SetRightLabel("09:00");
-            UIMenuItem noon = new UIMenuItem("Noon", "Set the time to 12:00.");
+            var noon = new UIMenuItem("Noon", "Set the time to 12:00.");
             noon.SetRightLabel("12:00");
-            UIMenuItem earlyafternoon = new UIMenuItem("Early Afternoon", "Set the time to 15:00.");
+            var earlyafternoon = new UIMenuItem("Early Afternoon", "Set the time to 15:00.");
             earlyafternoon.SetRightLabel("15:00");
-            UIMenuItem afternoon = new UIMenuItem("Afternoon", "Set the time to 18:00.");
+            var afternoon = new UIMenuItem("Afternoon", "Set the time to 18:00.");
             afternoon.SetRightLabel("18:00");
-            UIMenuItem evening = new UIMenuItem("Evening", "Set the time to 21:00.");
+            var evening = new UIMenuItem("Evening", "Set the time to 21:00.");
             evening.SetRightLabel("21:00");
-            UIMenuItem midnight = new UIMenuItem("Midnight", "Set the time to 00:00.");
+            var midnight = new UIMenuItem("Midnight", "Set the time to 00:00.");
             midnight.SetRightLabel("00:00");
-            UIMenuItem night = new UIMenuItem("Night", "Set the time to 03:00.");
+            var night = new UIMenuItem("Night", "Set the time to 03:00.");
             night.SetRightLabel("03:00");
 
-            List<dynamic> hours = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
-            List<dynamic> minutes = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
-            for (int i = 10; i < 60; i++)
+            var hours = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+            var minutes = new List<dynamic>() { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09" };
+            for (var i = 10; i < 60; i++)
             {
                 if (i < 24)
                 {
@@ -46,8 +47,8 @@ namespace vMenuClient.menus
                 }
                 minutes.Add(i.ToString());
             }
-            UIMenuListItem manualHour = new UIMenuListItem("Set Custom Hour", hours, 0);
-            UIMenuListItem manualMinute = new UIMenuListItem("Set Custom Minute", minutes, 0);
+            var manualHour = new UIMenuListItem("Set Custom Hour", hours, 0);
+            var manualMinute = new UIMenuListItem("Set Custom Minute", minutes, 0);
 
             // Add all menu items to the menu.
             if (IsAllowed(Permission.TOFreezeTime))
@@ -82,7 +83,7 @@ namespace vMenuClient.menus
                     // Set the time using the index and some math :)
                     // eg: index = 3 (12:00) ---> 3 * 3 (=9) + 3 [= 12] ---> 12:00
                     // eg: index = 8 (03:00) ---> 8 * 3 (=24) + 3 (=27, >23 so 27-24) [=3] ---> 03:00
-                    int newHour = 0;
+                    var newHour = 0;
                     if (IsAllowed(Permission.TOFreezeTime))
                     {
                         newHour = (index * 3) + 3 < 23 ? (index * 3) + 3 : (index * 3) + 3 - 24;
@@ -92,7 +93,7 @@ namespace vMenuClient.menus
                         newHour = ((index + 1) * 3) + 3 < 23 ? ((index + 1) * 3) + 3 : ((index + 1) * 3) + 3 - 24;
                     }
 
-                    int newMinute = 0;
+                    var newMinute = 0;
                     Subtitle.Info($"Time set to ~y~{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}~s~:~y~" +
                         $"{(newMinute < 10 ? $"0{newMinute}" : newMinute.ToString())}~s~.", prefix: "Info:");
                     UpdateServerTime(newHour, newMinute, EventManager.IsServerTimeFrozen);
@@ -102,8 +103,8 @@ namespace vMenuClient.menus
 
             menu.OnListSelect += (sender, item, itemIndex) =>
             {
-                int newHour = EventManager.GetServerHours;
-                int newMinute = EventManager.GetServerMinutes;
+                var newHour = EventManager.GetServerHours;
+                var newMinute = EventManager.GetServerMinutes;
                 if (item == manualHour)
                 {
                     newHour = item.Index;

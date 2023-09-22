@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using CitizenFX.Core;
+
 namespace vMenuClient
 {
     public class MpPedDataManager : BaseScript
