@@ -3,17 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using CitizenFX.Core;
-
-using Newtonsoft.Json;
-
-using vMenuClient.menus;
-
-using static CitizenFX.Core.Native.API;
-using static vMenuClient.CommonFunctions;
-using static vMenuShared.ConfigManager;
-using static vMenuShared.PermissionsManager;
-
 namespace vMenuClient
 {
     public class EventManager : BaseScript
@@ -99,7 +88,7 @@ namespace vMenuClient
                 }
                 if (MainMenu.WeaponLoadoutsMenu != null && MainMenu.WeaponLoadoutsMenu.WeaponLoadoutsSetLoadoutOnRespawn && IsAllowed(Permission.WLEquipOnRespawn))
                 {
-                    var saveName = GetResourceKvpString("vmenu_string_default_loadout");
+                    string saveName = GetResourceKvpString("vmenu_string_default_loadout");
                     if (!string.IsNullOrEmpty(saveName))
                     {
                         await SpawnWeaponLoadoutAsync(saveName, true, false, true);
@@ -119,16 +108,16 @@ namespace vMenuClient
             WeaponOptions.AddonWeapons = new Dictionary<string, uint>();
             PlayerAppearance.AddonPeds = new Dictionary<string, uint>();
 
-            var jsonData = LoadResourceFile(GetCurrentResourceName(), "config/addons.json") ?? "{}";
+            string jsonData = LoadResourceFile(GetCurrentResourceName(), "config/addons.json") ?? "{}";
             try
             {
                 // load new addons.
-                var addons = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(jsonData);
+                Dictionary<string, List<string>> addons = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(jsonData);
 
                 // load vehicles
                 if (addons.ContainsKey("vehicles"))
                 {
-                    foreach (var addon in addons["vehicles"])
+                    foreach (string addon in addons["vehicles"])
                     {
                         if (!VehicleSpawner.AddonVehicles.ContainsKey(addon))
                         {
@@ -144,7 +133,7 @@ namespace vMenuClient
                 // load weapons
                 if (addons.ContainsKey("weapons"))
                 {
-                    foreach (var addon in addons["weapons"])
+                    foreach (string addon in addons["weapons"])
                     {
                         if (!WeaponOptions.AddonWeapons.ContainsKey(addon))
                         {
@@ -160,7 +149,7 @@ namespace vMenuClient
                 // load peds.
                 if (addons.ContainsKey("peds"))
                 {
-                    foreach (var addon in addons["peds"])
+                    foreach (string addon in addons["peds"])
                     {
                         if (!PlayerAppearance.AddonPeds.ContainsKey(addon))
                         {
@@ -234,7 +223,7 @@ namespace vMenuClient
             SetArtificialLightsState(IsBlackoutEnabled);
             if (GetNextWeatherType() != GetHashKey(GetServerWeather))
             {
-                SetWeatherTypeOvertimePersist(GetServerWeather, (float)WeatherChangeTime);
+                SetWeatherTypeOvertimePersist(GetServerWeather, WeatherChangeTime);
                 await Delay((WeatherChangeTime * 1000) + 2000);
 
                 TriggerEvent("vMenu:WeatherChangeComplete", GetServerWeather);
@@ -305,7 +294,7 @@ namespace vMenuClient
             MainMenu.PlayersList.RequestPlayerList();
             await MainMenu.PlayersList.WaitRequested();
 
-            var player = MainMenu.PlayersList.FirstOrDefault(a => a.ServerId == int.Parse(targetPlayer));
+            IPlayer player = MainMenu.PlayersList.FirstOrDefault(a => a.ServerId == int.Parse(targetPlayer));
 
             if (player != null)
             {
@@ -334,10 +323,10 @@ namespace vMenuClient
         {
             if (NetworkDoesNetworkIdExist(vehNetId))
             {
-                var veh = NetToVeh(vehNetId);
+                int veh = NetToVeh(vehNetId);
                 if (DoesEntityExist(veh))
                 {
-                    var vehicle = new Vehicle(veh);
+                    Vehicle vehicle = new Vehicle(veh);
 
                     if (vehicle == null || !vehicle.Exists())
                     {
@@ -352,7 +341,7 @@ namespace vMenuClient
                         }
 
                         // Wait for the vehicle to come to a stop, or 10 seconds, whichever is faster.
-                        var timer = GetGameTimer();
+                        int timer = GetGameTimer();
                         while (vehicle != null && vehicle.Exists() && !vehicle.IsStopped)
                         {
                             await Delay(0);
@@ -388,7 +377,7 @@ namespace vMenuClient
         private async void UpdatePedDecors()
         {
             await Delay(1000);
-            var backup = PlayerAppearance.ClothingAnimationType;
+            int backup = PlayerAppearance.ClothingAnimationType;
             PlayerAppearance.ClothingAnimationType = -1;
             await Delay(100);
             PlayerAppearance.ClothingAnimationType = backup;

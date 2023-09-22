@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-using ScaleformUI.Menu;
-
+﻿using ScaleformUI.Menu;
+using System.Collections.Generic;
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -18,11 +16,11 @@ namespace vMenuClient.menus
 
         public static Dictionary<string, List<ValidWeapon>> GetSavedWeapons()
         {
-            var handle = StartFindKvp("vmenu_string_saved_weapon_loadout_");
-            var saves = new Dictionary<string, List<ValidWeapon>>();
+            int handle = StartFindKvp("vmenu_string_saved_weapon_loadout_");
+            Dictionary<string, List<ValidWeapon>> saves = new Dictionary<string, List<ValidWeapon>>();
             while (true)
             {
-                var kvp = FindKvp(handle);
+                string kvp = FindKvp(handle);
                 if (string.IsNullOrEmpty(kvp))
                 {
                     break;
@@ -48,11 +46,11 @@ namespace vMenuClient.menus
                 SavedWeapons.Clear();
             }
 
-            var handle = StartFindKvp("vmenu_string_saved_weapon_loadout_");
-            var saves = new List<string>();
+            int handle = StartFindKvp("vmenu_string_saved_weapon_loadout_");
+            List<string> saves = new List<string>();
             while (true)
             {
-                var kvp = FindKvp(handle);
+                string kvp = FindKvp(handle);
                 if (string.IsNullOrEmpty(kvp))
                 {
                     break;
@@ -61,7 +59,7 @@ namespace vMenuClient.menus
             }
             EndFindKvp(handle);
 
-            foreach (var save in saves)
+            foreach (string save in saves)
             {
                 SavedWeapons.Add(save, JsonConvert.DeserializeObject<List<ValidWeapon>>(GetResourceKvpString(save)));
             }
@@ -77,10 +75,10 @@ namespace vMenuClient.menus
             menu = new UIMenu(Game.Player.Name, "weapon loadouts management");
 
 
-            var saveLoadout = new UIMenuItem("Save Loadout", "Save your current weapons into a new loadout slot.");
-            var savedLoadoutsMenuBtn = new UIMenuItem("Manage Loadouts", "Manage saved weapon loadouts.");
+            UIMenuItem saveLoadout = new UIMenuItem("Save Loadout", "Save your current weapons into a new loadout slot.");
+            UIMenuItem savedLoadoutsMenuBtn = new UIMenuItem("Manage Loadouts", "Manage saved weapon loadouts.");
             savedLoadoutsMenuBtn.SetRightLabel("→→→");
-            var enableDefaultLoadouts = new UIMenuCheckboxItem("Restore Default Loadout On Respawn", WeaponLoadoutsSetLoadoutOnRespawn, "If you've set a loadout as default loadout, then your loadout will be equipped automatically whenever you (re)spawn.");
+            UIMenuCheckboxItem enableDefaultLoadouts = new UIMenuCheckboxItem("Restore Default Loadout On Respawn", WeaponLoadoutsSetLoadoutOnRespawn, "If you've set a loadout as default loadout, then your loadout will be equipped automatically whenever you (re)spawn.");
 
             menu.AddItem(saveLoadout);
             menu.AddItem(savedLoadoutsMenuBtn);
@@ -98,14 +96,14 @@ namespace vMenuClient.menus
 
             void RefreshSavedWeaponsMenu()
             {
-                var oldCount = SavedLoadoutsMenu.Size;
+                int oldCount = SavedLoadoutsMenu.Size;
                 SavedLoadoutsMenu.Clear();
 
                 RefreshSavedWeaponsList();
 
-                foreach (var sw in SavedWeapons)
+                foreach (KeyValuePair<string, List<ValidWeapon>> sw in SavedWeapons)
                 {
-                    var btn = new UIMenuItem(sw.Key.Replace("vmenu_string_saved_weapon_loadout_", ""), "Click to manage this loadout.");
+                    UIMenuItem btn = new UIMenuItem(sw.Key.Replace("vmenu_string_saved_weapon_loadout_", ""), "Click to manage this loadout.");
                     btn.SetRightLabel("→→→");
                     SavedLoadoutsMenu.AddItem(btn);
                     btn.Activated += async (a, b) => await a.SwitchTo(ManageLoadoutMenu, 0, true);
@@ -113,12 +111,12 @@ namespace vMenuClient.menus
             }
 
 
-            var spawnLoadout = new UIMenuItem("Equip Loadout", "Spawn this saved weapons loadout. This will remove all your current weapons and replace them with this saved slot.");
-            var renameLoadout = new UIMenuItem("Rename Loadout", "Rename this saved loadout.");
-            var cloneLoadout = new UIMenuItem("Clone Loadout", "Clones this saved loadout to a new slot.");
-            var setDefaultLoadout = new UIMenuItem("Set As Default Loadout", "Set this loadout to be your default loadout for whenever you (re)spawn. This will override the 'Restore Weapons' option inside the Misc Settings menu. You can toggle this option in the main Weapon Loadouts menu.");
-            var replaceLoadout = new UIMenuItem("~r~Replace Loadout", "~r~This replaces this saved slot with the weapons that you currently have in your inventory. This action can not be undone!");
-            var deleteLoadout = new UIMenuItem("~r~Delete Loadout", "~r~This will delete this saved loadout. This action can not be undone!");
+            UIMenuItem spawnLoadout = new UIMenuItem("Equip Loadout", "Spawn this saved weapons loadout. This will remove all your current weapons and replace them with this saved slot.");
+            UIMenuItem renameLoadout = new UIMenuItem("Rename Loadout", "Rename this saved loadout.");
+            UIMenuItem cloneLoadout = new UIMenuItem("Clone Loadout", "Clones this saved loadout to a new slot.");
+            UIMenuItem setDefaultLoadout = new UIMenuItem("Set As Default Loadout", "Set this loadout to be your default loadout for whenever you (re)spawn. This will override the 'Restore Weapons' option inside the Misc Settings menu. You can toggle this option in the main Weapon Loadouts menu.");
+            UIMenuItem replaceLoadout = new UIMenuItem("~r~Replace Loadout", "~r~This replaces this saved slot with the weapons that you currently have in your inventory. This action can not be undone!");
+            UIMenuItem deleteLoadout = new UIMenuItem("~r~Delete Loadout", "~r~This will delete this saved loadout. This action can not be undone!");
 
             if (IsAllowed(Permission.WLEquip))
             {
@@ -136,7 +134,7 @@ namespace vMenuClient.menus
             {
                 if (item == saveLoadout)
                 {
-                    var name = await GetUserInput("Enter a save name", 30);
+                    string name = await GetUserInput("Enter a save name", 30);
                     if (string.IsNullOrEmpty(name))
                     {
                         Notify.Error(CommonErrors.InvalidInput);
@@ -168,7 +166,7 @@ namespace vMenuClient.menus
             {
                 if (SavedWeapons.ContainsKey(SelectedSavedLoadoutName))
                 {
-                    var weapons = SavedWeapons[SelectedSavedLoadoutName];
+                    List<ValidWeapon> weapons = SavedWeapons[SelectedSavedLoadoutName];
 
                     if (item == spawnLoadout) // spawn
                     {
@@ -176,7 +174,7 @@ namespace vMenuClient.menus
                     }
                     else if (item == renameLoadout || item == cloneLoadout) // rename or clone
                     {
-                        var newName = await GetUserInput("Enter a save name", SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", ""), 30);
+                        string newName = await GetUserInput("Enter a save name", SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", ""), 30);
                         if (string.IsNullOrEmpty(newName))
                         {
                             Notify.Error(CommonErrors.InvalidInput);
@@ -273,7 +271,7 @@ namespace vMenuClient.menus
             // Reset the index whenever the ManageLoadout menu is opened. Just to prevent auto selecting the delete option for example.
             ManageLoadoutMenu.OnMenuOpen += (sender, data) =>
             {
-                var kvp = GetResourceKvpString("vmenu_string_default_loadout");
+                string kvp = GetResourceKvpString("vmenu_string_default_loadout");
                 if (string.IsNullOrEmpty(kvp) || kvp != SelectedSavedLoadoutName)
                 {
                     setDefaultLoadout.SetLeftBadge(BadgeIcon.NONE);

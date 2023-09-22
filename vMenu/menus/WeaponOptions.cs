@@ -1,8 +1,6 @@
+using ScaleformUI.Menu;
 using System.Collections.Generic;
 using System.Linq;
-
-using ScaleformUI.Menu;
-
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -36,13 +34,13 @@ namespace vMenuClient.menus
             // Create the menu.
             menu = new UIMenu(Game.Player.Name, "Weapon Options");
 
-            var getAllWeapons = new UIMenuItem("Get All Weapons", "Get all weapons.");
-            var removeAllWeapons = new UIMenuItem("Remove All Weapons", "Removes all weapons in your inventory.");
-            var unlimitedAmmo = new UIMenuCheckboxItem("Unlimited Ammo", UnlimitedAmmo, "Unlimited ammunition supply.");
-            var noReload = new UIMenuCheckboxItem("No Reload", NoReload, "Never reload.");
-            var setAmmo = new UIMenuItem("Set All Ammo Count", "Set the amount of ammo in all your weapons.");
-            var refillMaxAmmo = new UIMenuItem("Refill All Ammo", "Give all your weapons max ammo.");
-            var spawnByName = new UIMenuItem("Spawn Weapon By Name", "Enter a weapon mode name to spawn.");
+            UIMenuItem getAllWeapons = new UIMenuItem("Get All Weapons", "Get all weapons.");
+            UIMenuItem removeAllWeapons = new UIMenuItem("Remove All Weapons", "Removes all weapons in your inventory.");
+            UIMenuCheckboxItem unlimitedAmmo = new UIMenuCheckboxItem("Unlimited Ammo", UnlimitedAmmo, "Unlimited ammunition supply.");
+            UIMenuCheckboxItem noReload = new UIMenuCheckboxItem("No Reload", NoReload, "Never reload.");
+            UIMenuItem setAmmo = new UIMenuItem("Set All Ammo Count", "Set the amount of ammo in all your weapons.");
+            UIMenuItem refillMaxAmmo = new UIMenuItem("Refill All Ammo", "Give all your weapons max ammo.");
+            UIMenuItem spawnByName = new UIMenuItem("Spawn Weapon By Name", "Enter a weapon mode name to spawn.");
 
             // Add items based on permissions
             if (IsAllowed(Permission.WPGetAll))
@@ -73,18 +71,18 @@ namespace vMenuClient.menus
             #endregion
 
             #region addonweapons submenu
-            var addonWeaponsBtn = new UIMenuItem("Addon Weapons", "Equip / remove addon weapons available on this server.");
-            var addonWeaponsMenu = new UIMenu("Addon Weapons", "Equip/Remove Addon Weapons");
+            UIMenuItem addonWeaponsBtn = new UIMenuItem("Addon Weapons", "Equip / remove addon weapons available on this server.");
+            UIMenu addonWeaponsMenu = new UIMenu("Addon Weapons", "Equip/Remove Addon Weapons");
             menu.AddItem(addonWeaponsBtn);
 
             #region manage creating and accessing addon weapons menu
             if (IsAllowed(Permission.WPSpawn) && AddonWeapons != null && AddonWeapons.Count > 0)
             {
-                foreach (var weapon in AddonWeapons)
+                foreach (KeyValuePair<string, uint> weapon in AddonWeapons)
                 {
-                    var name = weapon.Key.ToString();
-                    var model = weapon.Value;
-                    var item = new UIMenuItem(name, $"Click to add/remove this weapon ({name}) to/from your inventory.");
+                    string name = weapon.Key.ToString();
+                    uint model = weapon.Value;
+                    UIMenuItem item = new UIMenuItem(name, $"Click to add/remove this weapon ({name}) to/from your inventory.");
                     addonWeaponsMenu.AddItem(item);
                     if (!IsWeaponValid(model))
                     {
@@ -95,14 +93,14 @@ namespace vMenuClient.menus
                 }
                 addonWeaponsMenu.OnItemSelect += (sender, item, index) =>
                 {
-                    var weapon = AddonWeapons.ElementAt(index);
+                    KeyValuePair<string, uint> weapon = AddonWeapons.ElementAt(index);
                     if (HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Value, false))
                     {
                         RemoveWeaponFromPed(Game.PlayerPed.Handle, weapon.Value);
                     }
                     else
                     {
-                        var maxAmmo = 200;
+                        int maxAmmo = 200;
                         GetMaxAmmo(Game.PlayerPed.Handle, weapon.Value, ref maxAmmo);
                         GiveWeaponToPed(Game.PlayerPed.Handle, weapon.Value, maxAmmo, false, true);
                     }
@@ -123,13 +121,13 @@ namespace vMenuClient.menus
             if (IsAllowed(Permission.WPParachute))
             {
                 // main parachute options menu setup
-                var parachuteMenu = new UIMenu("Parachute Options", "Parachute Options");
-                var parachuteBtn = new UIMenuItem("Parachute Options", "All parachute related options can be changed here.");
+                UIMenu parachuteMenu = new UIMenu("Parachute Options", "Parachute Options");
+                UIMenuItem parachuteBtn = new UIMenuItem("Parachute Options", "All parachute related options can be changed here.");
                 parachuteBtn.SetRightLabel("→→→");
 
                 menu.AddItem(parachuteBtn);
 
-                var chutes = new List<dynamic>()
+                List<dynamic> chutes = new List<dynamic>()
                 {
                     GetLabelText("PM_TINT0"),
                     GetLabelText("PM_TINT1"),
@@ -148,7 +146,7 @@ namespace vMenuClient.menus
                     GetLabelText("PS_CAN_4"),
                     GetLabelText("PS_CAN_5")
                 };
-                var chuteDescriptions = new List<dynamic>()
+                List<dynamic> chuteDescriptions = new List<dynamic>()
                 {
                     GetLabelText("PD_TINT0"),
                     GetLabelText("PD_TINT1"),
@@ -168,15 +166,15 @@ namespace vMenuClient.menus
                     GetLabelText("PSD_CAN_5") + " ~r~For some reason this one doesn't seem to work in FiveM."
                 };
 
-                var togglePrimary = new UIMenuItem("Toggle Primary Parachute", "Equip or remove the primary parachute");
-                var toggleReserve = new UIMenuItem("Enable Reserve Parachute", "Enables the reserve parachute. Only works if you enabled the primary parachute first. Reserve parachute can not be removed from the player once it's activated.");
-                var primaryChutes = new UIMenuListItem("Primary Chute Style", chutes, 0, $"Primary chute: {chuteDescriptions[0]}");
-                var secondaryChutes = new UIMenuListItem("Reserve Chute Style", chutes, 0, $"Reserve chute: {chuteDescriptions[0]}");
-                var unlimitedParachutes = new UIMenuCheckboxItem("Unlimited Parachutes", UnlimitedParachutes, "Enable unlimited parachutes and reserve parachutes.");
-                var autoEquipParachutes = new UIMenuCheckboxItem("Auto Equip Parachutes", AutoEquipChute, "Automatically equip a parachute and reserve parachute when entering planes/helicopters.");
+                UIMenuItem togglePrimary = new UIMenuItem("Toggle Primary Parachute", "Equip or remove the primary parachute");
+                UIMenuItem toggleReserve = new UIMenuItem("Enable Reserve Parachute", "Enables the reserve parachute. Only works if you enabled the primary parachute first. Reserve parachute can not be removed from the player once it's activated.");
+                UIMenuListItem primaryChutes = new UIMenuListItem("Primary Chute Style", chutes, 0, $"Primary chute: {chuteDescriptions[0]}");
+                UIMenuListItem secondaryChutes = new UIMenuListItem("Reserve Chute Style", chutes, 0, $"Reserve chute: {chuteDescriptions[0]}");
+                UIMenuCheckboxItem unlimitedParachutes = new UIMenuCheckboxItem("Unlimited Parachutes", UnlimitedParachutes, "Enable unlimited parachutes and reserve parachutes.");
+                UIMenuCheckboxItem autoEquipParachutes = new UIMenuCheckboxItem("Auto Equip Parachutes", AutoEquipChute, "Automatically equip a parachute and reserve parachute when entering planes/helicopters.");
 
                 // smoke color list
-                var smokeColorsList = new List<dynamic>()
+                List<dynamic> smokeColorsList = new List<dynamic>()
                 {
                     GetLabelText("PM_TINT8"), // no smoke
                     GetLabelText("PM_TINT9"), // red
@@ -185,7 +183,7 @@ namespace vMenuClient.menus
                     GetLabelText("PM_TINT12"), // blue
                     GetLabelText("PM_TINT13"), // black
                 };
-                var colors = new List<int[]>()
+                List<int[]> colors = new List<int[]>()
                 {
                     new int[3] { 255, 255, 255 },
                     new int[3] { 255, 0, 0 },
@@ -195,7 +193,7 @@ namespace vMenuClient.menus
                     new int[3] { 20, 20, 20 },
                 };
 
-                var smokeColors = new UIMenuListItem("Smoke Trail Color", smokeColorsList, 0, "Choose a smoke trail color, then press select to change it. Changing colors takes 4 seconds, you can not use your smoke while the color is being changed.");
+                UIMenuListItem smokeColors = new UIMenuListItem("Smoke Trail Color", smokeColorsList, 0, "Choose a smoke trail color, then press select to change it. Changing colors takes 4 seconds, you can not use your smoke while the color is being changed.");
 
                 parachuteMenu.AddItem(togglePrimary);
                 parachuteMenu.AddItem(toggleReserve);
@@ -240,7 +238,7 @@ namespace vMenuClient.menus
                     }
                 };
 
-                var switching = false;
+                bool switching = false;
                 async void IndexChangedEventHandler(UIMenu sender, UIMenuListItem item, int newIndex)
                 {
                     if (item == smokeColors)
@@ -250,7 +248,7 @@ namespace vMenuClient.menus
                             switching = true;
                             SetPlayerCanLeaveParachuteSmokeTrail(Game.Player.Handle, false);
                             await Delay(4000);
-                            var color = colors[newIndex];
+                            int[] color = colors[newIndex];
                             SetPlayerParachuteSmokeTrailColor(Game.Player.Handle, color[0], color[1], color[2]);
                             SetPlayerCanLeaveParachuteSmokeTrail(Game.Player.Handle, newIndex != 0);
                             switching = false;
@@ -274,32 +272,32 @@ namespace vMenuClient.menus
             #endregion
 
             #region Create Weapon Category Submenus
-            var spacer = new UIMenuSeparatorItem("↓ Weapon Categories ↓", true);
+            UIMenuSeparatorItem spacer = new UIMenuSeparatorItem("↓ Weapon Categories ↓", true);
             menu.AddItem(spacer);
 
-            var handGuns = new UIMenu("Weapons", "Handguns");
-            var handGunsBtn = new UIMenuItem("Handguns");
+            UIMenu handGuns = new UIMenu("Weapons", "Handguns");
+            UIMenuItem handGunsBtn = new UIMenuItem("Handguns");
 
-            var rifles = new UIMenu("Weapons", "Assault Rifles");
-            var riflesBtn = new UIMenuItem("Assault Rifles");
+            UIMenu rifles = new UIMenu("Weapons", "Assault Rifles");
+            UIMenuItem riflesBtn = new UIMenuItem("Assault Rifles");
 
-            var shotguns = new UIMenu("Weapons", "Shotguns");
-            var shotgunsBtn = new UIMenuItem("Shotguns");
+            UIMenu shotguns = new UIMenu("Weapons", "Shotguns");
+            UIMenuItem shotgunsBtn = new UIMenuItem("Shotguns");
 
-            var smgs = new UIMenu("Weapons", "Sub-/Light Machine Guns");
-            var smgsBtn = new UIMenuItem("Sub-/Light Machine Guns");
+            UIMenu smgs = new UIMenu("Weapons", "Sub-/Light Machine Guns");
+            UIMenuItem smgsBtn = new UIMenuItem("Sub-/Light Machine Guns");
 
-            var throwables = new UIMenu("Weapons", "Throwables");
-            var throwablesBtn = new UIMenuItem("Throwables");
+            UIMenu throwables = new UIMenu("Weapons", "Throwables");
+            UIMenuItem throwablesBtn = new UIMenuItem("Throwables");
 
-            var melee = new UIMenu("Weapons", "Melee");
-            var meleeBtn = new UIMenuItem("Melee");
+            UIMenu melee = new UIMenu("Weapons", "Melee");
+            UIMenuItem meleeBtn = new UIMenuItem("Melee");
 
-            var heavy = new UIMenu("Weapons", "Heavy Weapons");
-            var heavyBtn = new UIMenuItem("Heavy Weapons");
+            UIMenu heavy = new UIMenu("Weapons", "Heavy Weapons");
+            UIMenuItem heavyBtn = new UIMenuItem("Heavy Weapons");
 
-            var snipers = new UIMenu("Weapons", "Sniper Rifles");
-            var snipersBtn = new UIMenuItem("Sniper Rifles");
+            UIMenu snipers = new UIMenu("Weapons", "Sniper Rifles");
+            UIMenuItem snipersBtn = new UIMenuItem("Sniper Rifles");
             #endregion
 
             #region Setup weapon category buttons and submenus.
@@ -329,21 +327,21 @@ namespace vMenuClient.menus
             #endregion
 
             #region Loop through all weapons, create menus for them and add all menu items and handle events.
-            foreach (var weapon in ValidWeapons.WeaponList)
+            foreach (ValidWeapon weapon in ValidWeapons.WeaponList)
             {
-                var cat = (uint)GetWeapontypeGroup(weapon.Hash);
+                uint cat = (uint)GetWeapontypeGroup(weapon.Hash);
                 if (!string.IsNullOrEmpty(weapon.Name) && IsAllowed(weapon.Perm))
                 {
                     //Log($"[DEBUG LOG] [WEAPON-BUG] {weapon.Name} - {weapon.Perm} = {IsAllowed(weapon.Perm)} & All = {IsAllowed(Permission.WPGetAll)}");
                     #region Create menu for this weapon and add buttons
-                    var weaponMenu = new UIMenu("Weapon Options", weapon.Name);
-                    var stats = new Game.WeaponHudStats();
+                    UIMenu weaponMenu = new UIMenu("Weapon Options", weapon.Name);
+                    Game.WeaponHudStats stats = new Game.WeaponHudStats();
                     Game.GetWeaponHudStats(weapon.Hash, ref stats);
-                    var weaponItem = new UIMenuItem(weapon.Name, $"Open the options for ~y~{weapon.Name}~s~.")
+                    UIMenuItem weaponItem = new UIMenuItem(weapon.Name, $"Open the options for ~y~{weapon.Name}~s~.")
                     {
                         ItemData = stats
                     };
-                    var pan = new UIMenuStatisticsPanel();
+                    UIMenuStatisticsPanel pan = new UIMenuStatisticsPanel();
                     pan.AddStatistics("Damage", stats.hudDamage / 100f);
                     pan.AddStatistics("Speed", stats.hudSpeed / 100f);
                     pan.AddStatistics("Accuracy", stats.hudAccuracy / 100f);
@@ -354,7 +352,7 @@ namespace vMenuClient.menus
 
                     weaponInfo.Add(weaponMenu, weapon);
 
-                    var getOrRemoveWeapon = new UIMenuItem("Equip/Remove Weapon", "Add or remove this weapon to/form your inventory.");
+                    UIMenuItem getOrRemoveWeapon = new UIMenuItem("Equip/Remove Weapon", "Add or remove this weapon to/form your inventory.");
                     getOrRemoveWeapon.SetLeftBadge(BadgeIcon.GUN);
                     weaponMenu.AddItem(getOrRemoveWeapon);
                     if (!IsAllowed(Permission.WPSpawn))
@@ -364,27 +362,27 @@ namespace vMenuClient.menus
                         getOrRemoveWeapon.SetLeftBadge(BadgeIcon.LOCK);
                     }
 
-                    var fillAmmo = new UIMenuItem("Re-fill Ammo", "Get max ammo for this weapon.");
+                    UIMenuItem fillAmmo = new UIMenuItem("Re-fill Ammo", "Get max ammo for this weapon.");
                     fillAmmo.SetLeftBadge(BadgeIcon.AMMO);
                     weaponMenu.AddItem(fillAmmo);
 
-                    var tints = new List<dynamic>();
+                    List<dynamic> tints = new List<dynamic>();
                     if (weapon.Name.Contains(" Mk II"))
                     {
-                        foreach (var tint in ValidWeapons.WeaponTintsMkII)
+                        foreach (KeyValuePair<string, int> tint in ValidWeapons.WeaponTintsMkII)
                         {
                             tints.Add(tint.Key);
                         }
                     }
                     else
                     {
-                        foreach (var tint in ValidWeapons.WeaponTints)
+                        foreach (KeyValuePair<string, int> tint in ValidWeapons.WeaponTints)
                         {
                             tints.Add(tint.Key);
                         }
                     }
 
-                    var weaponTints = new UIMenuListItem("Tints", tints, 0, "Select a tint for your weapon.");
+                    UIMenuListItem weaponTints = new UIMenuListItem("Tints", tints, 0, "Select a tint for your weapon.");
                     weaponMenu.AddItem(weaponTints);
                     #endregion
 
@@ -408,8 +406,8 @@ namespace vMenuClient.menus
                     #region Handle weapon specific button presses
                     weaponMenu.OnItemSelect += (sender, item, index) =>
                     {
-                        var info = weaponInfo[sender];
-                        var hash = info.Hash;
+                        ValidWeapon info = weaponInfo[sender];
+                        uint hash = info.Hash;
 
                         SetCurrentPedWeapon(Game.PlayerPed.Handle, hash, true);
 
@@ -422,7 +420,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                var ammo = 255;
+                                int ammo = 255;
                                 GetMaxAmmo(Game.PlayerPed.Handle, hash, ref ammo);
                                 GiveWeaponToPed(Game.PlayerPed.Handle, hash, ammo, false, true);
                                 Subtitle.Custom("Weapon added.");
@@ -432,7 +430,7 @@ namespace vMenuClient.menus
                         {
                             if (HasPedGotWeapon(Game.PlayerPed.Handle, hash, false))
                             {
-                                var ammo = 900;
+                                int ammo = 900;
                                 GetMaxAmmo(Game.PlayerPed.Handle, hash, ref ammo);
                                 SetPedAmmo(Game.PlayerPed.Handle, hash, ammo);
                             }
@@ -449,10 +447,10 @@ namespace vMenuClient.menus
                     {
                         if (weapon.Components.Count > 0)
                         {
-                            foreach (var comp in weapon.Components)
+                            foreach (KeyValuePair<string, uint> comp in weapon.Components)
                             {
                                 //Log($"{weapon.Name} : {comp.Key}");
-                                var compItem = new UIMenuItem(comp.Key, "Click to equip or remove this component.");
+                                UIMenuItem compItem = new UIMenuItem(comp.Key, "Click to equip or remove this component.");
                                 weaponComponents.Add(compItem, comp.Key);
                                 weaponMenu.AddItem(compItem);
 
@@ -461,8 +459,8 @@ namespace vMenuClient.menus
                                 {
                                     if (item == compItem)
                                     {
-                                        var Weapon = weaponInfo[sender];
-                                        var componentHash = Weapon.Components[weaponComponents[item]];
+                                        ValidWeapon Weapon = weaponInfo[sender];
+                                        uint componentHash = Weapon.Components[weaponComponents[item]];
                                         if (HasPedGotWeapon(Game.PlayerPed.Handle, Weapon.Hash, false))
                                         {
                                             SetCurrentPedWeapon(Game.PlayerPed.Handle, Weapon.Hash, true);
@@ -474,9 +472,9 @@ namespace vMenuClient.menus
                                             }
                                             else
                                             {
-                                                var ammo = GetAmmoInPedWeapon(Game.PlayerPed.Handle, Weapon.Hash);
+                                                int ammo = GetAmmoInPedWeapon(Game.PlayerPed.Handle, Weapon.Hash);
 
-                                                var clipAmmo = GetMaxAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, false);
+                                                int clipAmmo = GetMaxAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, false);
                                                 GetAmmoInClip(Game.PlayerPed.Handle, Weapon.Hash, ref clipAmmo);
 
                                                 GiveWeaponComponentToPed(Game.PlayerPed.Handle, Weapon.Hash, componentHash);
@@ -591,18 +589,18 @@ namespace vMenuClient.menus
             #region Handle button presses
             menu.OnItemSelect += (sender, item, index) =>
             {
-                var ped = new Ped(Game.PlayerPed.Handle);
+                Ped ped = new Ped(Game.PlayerPed.Handle);
                 if (item == getAllWeapons)
                 {
-                    foreach (var vw in ValidWeapons.WeaponList)
+                    foreach (ValidWeapon vw in ValidWeapons.WeaponList)
                     {
                         if (IsAllowed(vw.Perm))
                         {
                             GiveWeaponToPed(Game.PlayerPed.Handle, vw.Hash, vw.GetMaxAmmo, false, true);
 
-                            var ammoInClip = GetMaxAmmoInClip(Game.PlayerPed.Handle, vw.Hash, false);
+                            int ammoInClip = GetMaxAmmoInClip(Game.PlayerPed.Handle, vw.Hash, false);
                             SetAmmoInClip(Game.PlayerPed.Handle, vw.Hash, ammoInClip);
-                            var ammo = 0;
+                            int ammo = 0;
                             GetMaxAmmo(Game.PlayerPed.Handle, vw.Hash, ref ammo);
                             SetPedAmmo(Game.PlayerPed.Handle, vw.Hash, ammo);
                         }
@@ -620,13 +618,13 @@ namespace vMenuClient.menus
                 }
                 else if (item == refillMaxAmmo)
                 {
-                    foreach (var vw in ValidWeapons.WeaponList)
+                    foreach (ValidWeapon vw in ValidWeapons.WeaponList)
                     {
                         if (HasPedGotWeapon(Game.PlayerPed.Handle, vw.Hash, false))
                         {
-                            var ammoInClip = GetMaxAmmoInClip(Game.PlayerPed.Handle, vw.Hash, false);
+                            int ammoInClip = GetMaxAmmoInClip(Game.PlayerPed.Handle, vw.Hash, false);
                             SetAmmoInClip(Game.PlayerPed.Handle, vw.Hash, ammoInClip);
-                            var ammo = 0;
+                            int ammo = 0;
                             GetMaxAmmo(Game.PlayerPed.Handle, vw.Hash, ref ammo);
                             SetPedAmmo(Game.PlayerPed.Handle, vw.Hash, ammo);
                         }

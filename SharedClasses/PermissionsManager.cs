@@ -1,9 +1,7 @@
-﻿using System;
+﻿using CitizenFX.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using CitizenFX.Core;
-
 using static CitizenFX.Core.Native.API;
 
 namespace vMenuShared
@@ -396,7 +394,7 @@ namespace vMenuShared
         {
             if (ArePermissionsSetup || checkAnyway)
             {
-                var staffPermissionAllowed = (
+                bool staffPermissionAllowed = (
                     Permissions.ContainsKey(Permission.Staff) && Permissions[Permission.Staff]
                 ) || (
                     Permissions.ContainsKey(Permission.Everything) && Permissions[Permission.Everything]
@@ -417,7 +415,7 @@ namespace vMenuShared
                 }
 
                 // Get a list of all permissions that are (parents) of the current permission, including the current permission.
-                var permissionsToCheck = GetPermissionAndParentPermissions(permission);
+                List<Permission> permissionsToCheck = GetPermissionAndParentPermissions(permission);
 
                 // Check if any of those permissions is allowed, if so, return true.
                 if (permissionsToCheck.Any(p => Permissions.ContainsKey(p) && Permissions[p]))
@@ -466,8 +464,8 @@ namespace vMenuShared
             }
             else
             {
-                var list = new List<Permission>() { Permission.Everything, permission };
-                var permStr = permission.ToString();
+                List<Permission> list = new List<Permission>() { Permission.Everything, permission };
+                string permStr = permission.ToString();
 
                 // if the first 2 characters are both uppercase
                 if (permStr.Substring(0, 2).ToUpper() == permStr.Substring(0, 2))

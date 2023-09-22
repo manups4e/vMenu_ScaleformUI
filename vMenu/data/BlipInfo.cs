@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 
-using static CitizenFX.Core.Native.API;
-
 namespace vMenuClient.data
 {
     public static class BlipInfo
     {
         public static int GetBlipSpriteForVehicle(int vehicle)
         {
-            var model = (uint)GetEntityModel(vehicle);
-            var sprites = new Dictionary<uint, int>()
+            uint model = (uint)GetEntityModel(vehicle);
+            Dictionary<uint, int> sprites = new Dictionary<uint, int>()
             {
                 { (uint)GetHashKey("taxi"), 56 },
                 //
