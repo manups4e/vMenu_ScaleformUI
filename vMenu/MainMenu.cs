@@ -445,9 +445,6 @@ namespace vMenuClient
             UIMenuItem PlayerSubmenuItem = new UIMenuItem("Player Related Options");
             UIMenuItem VehicleSubmenuItem = new UIMenuItem("Vehicle Related Options");
             UIMenuItem WorldSubmenuItem = new UIMenuItem("World Options");
-            AddMenu(Menu, PlayerSubmenu, PlayerSubmenuItem);
-            AddMenu(Menu, VehicleSubmenu, VehicleSubmenuItem);
-            AddMenu(Menu, WorldSubmenu, WorldSubmenuItem);
 
             // Create all (sub)menus.
             CreateSubmenus();
@@ -572,7 +569,7 @@ namespace vMenuClient
         /// <param name="menuButton"></param>
         private static void AddMenu(UIMenu parentMenu, UIMenu submenu, UIMenuItem menuButton)
         {
-            menuButton.Activated += async (a, b) => await parentMenu.SwitchTo(submenu, 0, true);
+            menuButton.Activated += async (a, b) => await a.SwitchTo(submenu, 0, true);
             parentMenu.AddItem(menuButton);
         }
         #endregion
