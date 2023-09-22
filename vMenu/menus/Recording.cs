@@ -15,11 +15,11 @@ namespace vMenuClient.menus
             // Create the menu.
             menu = new UIMenu("Recording", "Recording Options");
 
-            var takePic = new UIMenuItem("Take Photo", "Takes a photo and saves it to the Pause Menu gallery.");
-            var openPmGallery = new UIMenuItem("Open Gallery", "Opens the Pause Menu gallery.");
-            var startRec = new UIMenuItem("Start Recording", "Start a new game recording using GTA V's built in recording.");
-            var stopRec = new UIMenuItem("Stop Recording", "Stop and save your current recording.");
-            var openEditor = new UIMenuItem("Rockstar Editor", "Open the rockstar editor, note you might want to quit the session first before doing this to prevent some issues.");
+            UIMenuItem takePic = new UIMenuItem("Take Photo", "Takes a photo and saves it to the Pause Menu gallery.");
+            UIMenuItem openPmGallery = new UIMenuItem("Open Gallery", "Opens the Pause Menu gallery.");
+            UIMenuItem startRec = new UIMenuItem("Start Recording", "Start a new game recording using GTA V's built in recording.");
+            UIMenuItem stopRec = new UIMenuItem("Stop Recording", "Stop and save your current recording.");
+            UIMenuItem openEditor = new UIMenuItem("Rockstar Editor", "Open the rockstar editor, note you might want to quit the session first before doing this to prevent some issues.");
 
             menu.AddItem(takePic);
             menu.AddItem(openPmGallery);

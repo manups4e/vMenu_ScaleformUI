@@ -1,8 +1,6 @@
+using ScaleformUI.Menu;
 using System.Collections.Generic;
 using System.Linq;
-
-using ScaleformUI.Menu;
-
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -24,9 +22,9 @@ namespace vMenuClient.menus
             menu = new UIMenu(Game.Player.Name, "Vehicle Spawner");
 
             // Create the buttons and checkboxes.
-            var spawnByName = new UIMenuItem("Spawn Vehicle By Model Name", "Enter the name of a vehicle to spawn.");
-            var spawnInVeh = new UIMenuCheckboxItem("Spawn Inside Vehicle", SpawnInVehicle, "This will teleport you into the vehicle when you spawn it.");
-            var replacePrev = new UIMenuCheckboxItem("Replace Previous Vehicle", ReplaceVehicle, "This will automatically delete your previously spawned vehicle when you spawn a new vehicle.");
+            UIMenuItem spawnByName = new UIMenuItem("Spawn Vehicle By Model Name", "Enter the name of a vehicle to spawn.");
+            UIMenuCheckboxItem spawnInVeh = new UIMenuCheckboxItem("Spawn Inside Vehicle", SpawnInVehicle, "This will teleport you into the vehicle when you spawn it.");
+            UIMenuCheckboxItem replacePrev = new UIMenuCheckboxItem("Replace Previous Vehicle", ReplaceVehicle, "This will automatically delete your previously spawned vehicle when you spawn a new vehicle.");
 
             // Add the items to the menu.
             if (IsAllowed(Permission.VSSpawnByName))
@@ -39,8 +37,8 @@ namespace vMenuClient.menus
 
             #region addon cars menu
             // Vehicle Addons List
-            var addonCarsMenu = new UIMenu("Addon Vehicles", "Spawn An Addon Vehicle");
-            var addonCarsBtn = new UIMenuItem("Addon Vehicles", "A list of addon vehicles available on this server.");
+            UIMenu addonCarsMenu = new UIMenu("Addon Vehicles", "Spawn An Addon Vehicle");
+            UIMenuItem addonCarsBtn = new UIMenuItem("Addon Vehicles", "A list of addon vehicles available on this server.");
             addonCarsBtn.SetRightLabel("→→→");
 
             menu.AddItem(addonCarsBtn);
@@ -52,14 +50,14 @@ namespace vMenuClient.menus
                     if (AddonVehicles.Count > 0)
                     {
                         addonCarsBtn.Activated += async (a, b) => await a.SwitchTo(addonCarsMenu, 0, true);
-                        var unavailableCars = new UIMenu("Addon Spawner", "Unavailable Vehicles");
-                        var unavailableCarsBtn = new UIMenuItem("Unavailable Vehicles", "These addon vehicles are not currently being streamed (correctly) and are not able to be spawned.");
+                        UIMenu unavailableCars = new UIMenu("Addon Spawner", "Unavailable Vehicles");
+                        UIMenuItem unavailableCarsBtn = new UIMenuItem("Unavailable Vehicles", "These addon vehicles are not currently being streamed (correctly) and are not able to be spawned.");
                         unavailableCarsBtn.SetRightLabel("→→→");
 
-                        for (var cat = 0; cat < 23; cat++)
+                        for (int cat = 0; cat < 23; cat++)
                         {
-                            var categoryMenu = new UIMenu("Addon Spawner", GetLabelText($"VEH_CLASS_{cat}"));
-                            var categoryBtn = new UIMenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Spawn an addon vehicle from the {GetLabelText($"VEH_CLASS_{cat}")} class.");
+                            UIMenu categoryMenu = new UIMenu("Addon Spawner", GetLabelText($"VEH_CLASS_{cat}"));
+                            UIMenuItem categoryBtn = new UIMenuItem(GetLabelText($"VEH_CLASS_{cat}"), $"Spawn an addon vehicle from the {GetLabelText($"VEH_CLASS_{cat}")} class.");
                             categoryBtn.SetRightLabel("→→→");
 
                             addonCarsMenu.AddItem(categoryBtn);
@@ -74,14 +72,14 @@ namespace vMenuClient.menus
                             }
 
                             // Loop through all addon vehicles in this class.
-                            foreach (var veh in AddonVehicles.Where(v => GetVehicleClassFromName(v.Value) == cat))
+                            foreach (KeyValuePair<string, uint> veh in AddonVehicles.Where(v => GetVehicleClassFromName(v.Value) == cat))
                             {
-                                var localizedName = GetLabelText(GetDisplayNameFromVehicleModel(veh.Value));
+                                string localizedName = GetLabelText(GetDisplayNameFromVehicleModel(veh.Value));
 
-                                var name = localizedName != "NULL" ? localizedName : GetDisplayNameFromVehicleModel(veh.Value);
+                                string name = localizedName != "NULL" ? localizedName : GetDisplayNameFromVehicleModel(veh.Value);
                                 name = name != "CARNOTFOUND" ? name : veh.Key;
 
-                                var carBtn = new UIMenuItem(name, $"Click to spawn {name}.")
+                                UIMenuItem carBtn = new UIMenuItem(name, $"Click to spawn {name}.")
                                 {
                                     Label = $"({veh.Key})",
                                     ItemData = veh.Key // store the model name in the button data.
@@ -149,7 +147,7 @@ namespace vMenuClient.menus
             #endregion
 
             // These are the max speed, acceleration, braking and traction values per vehicle class.
-            var speedValues = new float[23]
+            float[] speedValues = new float[23]
             {
                 44.9374657f,
                 50.0000038f,
@@ -175,7 +173,7 @@ namespace vMenuClient.menus
                 26.66667f,
                 53.0537224f
             };
-            var accelerationValues = new float[23]
+            float[] accelerationValues = new float[23]
             {
                 0.34f,
                 0.29f,
@@ -201,7 +199,7 @@ namespace vMenuClient.menus
                 0.2f,
                 0.76f
             };
-            var brakingValues = new float[23]
+            float[] brakingValues = new float[23]
             {
                 0.72f,
                 0.95f,
@@ -227,7 +225,7 @@ namespace vMenuClient.menus
                 5.0f,
                 1.3f
             };
-            var tractionValues = new float[23]
+            float[] tractionValues = new float[23]
             {
                 2.3f,
                 2.55f,
@@ -256,16 +254,16 @@ namespace vMenuClient.menus
 
             #region vehicle classes submenus
             // Loop through all the vehicle classes.
-            for (var vehClass = 0; vehClass < 23; vehClass++)
+            for (int vehClass = 0; vehClass < 23; vehClass++)
             {
                 // Get the class name.
-                var className = GetLabelText($"VEH_CLASS_{vehClass}");
+                string className = GetLabelText($"VEH_CLASS_{vehClass}");
 
                 // Create a button & a menu for it, add the menu to the menu pool and add & bind the button to the menu.
-                var btn = new UIMenuItem(className, $"Spawn a vehicle from the ~o~{className} ~s~class.");
+                UIMenuItem btn = new UIMenuItem(className, $"Spawn a vehicle from the ~o~{className} ~s~class.");
                 btn.SetRightLabel("→→→");
 
-                var vehicleClassMenu = new UIMenu("Vehicle Spawner", className);
+                UIMenu vehicleClassMenu = new UIMenu("Vehicle Spawner", className);
 
                 menu.AddItem(btn);
 
@@ -281,28 +279,28 @@ namespace vMenuClient.menus
                 }
 
                 // Create a dictionary for the duplicate vehicle names (in this vehicle class).
-                var duplicateVehNames = new Dictionary<string, int>();
+                Dictionary<string, int> duplicateVehNames = new Dictionary<string, int>();
 
                 #region Add vehicles per class
                 // Loop through all the vehicles in the vehicle class.
-                foreach (var veh in VehicleData.Vehicles.VehicleClasses[className])
+                foreach (string veh in VehicleData.Vehicles.VehicleClasses[className])
                 {
                     // Convert the model name to start with a Capital letter, converting the other characters to lowercase. 
-                    var properCasedModelName = veh[0].ToString().ToUpper() + veh.ToLower().Substring(1);
+                    string properCasedModelName = veh[0].ToString().ToUpper() + veh.ToLower().Substring(1);
 
                     // Get the localized vehicle name, if it's "NULL" (no label found) then use the "properCasedModelName" created above.
-                    var vehName = GetVehDisplayNameFromModel(veh) != "NULL" ? GetVehDisplayNameFromModel(veh) : properCasedModelName;
-                    var vehModelName = veh;
-                    var model = (uint)GetHashKey(vehModelName);
+                    string vehName = GetVehDisplayNameFromModel(veh) != "NULL" ? GetVehDisplayNameFromModel(veh) : properCasedModelName;
+                    string vehModelName = veh;
+                    uint model = (uint)GetHashKey(vehModelName);
 
-                    var topSpeed = Map(GetVehicleModelEstimatedMaxSpeed(model), 0f, speedValues[vehClass], 0f, 1f);
-                    var acceleration = Map(GetVehicleModelAcceleration(model), 0f, accelerationValues[vehClass], 0f, 1f);
-                    var maxBraking = Map(GetVehicleModelMaxBraking(model), 0f, brakingValues[vehClass], 0f, 1f);
-                    var maxTraction = Map(GetVehicleModelMaxTraction(model), 0f, tractionValues[vehClass], 0f, 1f);
+                    float topSpeed = Map(GetVehicleModelEstimatedMaxSpeed(model), 0f, speedValues[vehClass], 0f, 1f);
+                    float acceleration = Map(GetVehicleModelAcceleration(model), 0f, accelerationValues[vehClass], 0f, 1f);
+                    float maxBraking = Map(GetVehicleModelMaxBraking(model), 0f, brakingValues[vehClass], 0f, 1f);
+                    float maxTraction = Map(GetVehicleModelMaxTraction(model), 0f, tractionValues[vehClass], 0f, 1f);
 
                     // Loop through all the menu items and check each item's title/text and see if it matches the current vehicle (display) name.
-                    var duplicate = false;
-                    for (var itemIndex = 0; itemIndex < vehicleClassMenu.Size; itemIndex++)
+                    bool duplicate = false;
+                    for (int itemIndex = 0; itemIndex < vehicleClassMenu.Size; itemIndex++)
                     {
                         // If it matches...
                         if (vehicleClassMenu.MenuItems[itemIndex].Label.ToString() == vehName)
@@ -328,7 +326,7 @@ namespace vMenuClient.menus
 
                             if (DoesModelExist(veh))
                             {
-                                var vehBtn = new UIMenuItem(vehName)
+                                UIMenuItem vehBtn = new UIMenuItem(vehName)
                                 {
                                     Enabled = true,
                                     ItemData = new float[4] { topSpeed, acceleration, maxBraking, maxTraction }
@@ -338,7 +336,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                var vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
+                                UIMenuItem vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
                                 {
                                     Enabled = false,
                                     ItemData = new float[4] { 0f, 0f, 0f, 0f }
@@ -359,13 +357,13 @@ namespace vMenuClient.menus
                     {
                         if (DoesModelExist(veh))
                         {
-                            var vehBtn = new UIMenuItem(vehName)
+                            UIMenuItem vehBtn = new UIMenuItem(vehName)
                             {
                                 Enabled = true,
                                 ItemData = new float[4] { topSpeed, acceleration, maxBraking, maxTraction, }
                             };
                             vehBtn.SetRightLabel($"({vehModelName.ToLower()})");
-                            var pan = new UIMenuStatisticsPanel();
+                            UIMenuStatisticsPanel pan = new UIMenuStatisticsPanel();
                             pan.AddStatistics("Speed", topSpeed);
                             pan.AddStatistics("Accel.", acceleration);
                             pan.AddStatistics("Breaking", maxBraking);
@@ -375,7 +373,7 @@ namespace vMenuClient.menus
                         }
                         else
                         {
-                            var vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
+                            UIMenuItem vehBtn = new UIMenuItem(vehName, "This vehicle is not available because the model could not be found in your game files. If this is a DLC vehicle, make sure the server is streaming it.")
                             {
                                 Enabled = false,
                                 ItemData = new float[4] { 0f, 0f, 0f, 0f }

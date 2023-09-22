@@ -1,10 +1,8 @@
+using ScaleformUI.Menu;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-
-using ScaleformUI.Menu;
-
 using vMenuClient.data;
 
 namespace vMenuClient.menus
@@ -78,27 +76,27 @@ namespace vMenuClient.menus
             entitySpawnerMenu = new UIMenu(Game.Player.Name, "Entity Spawner");
 
             // teleport menu
-            var teleportMenu = new UIMenu(Game.Player.Name, "Teleport Locations");
-            var teleportMenuBtn = new UIMenuItem("Teleport Locations", "Teleport to pre-configured locations, added by the server owner.");
+            UIMenu teleportMenu = new UIMenu(Game.Player.Name, "Teleport Locations");
+            UIMenuItem teleportMenuBtn = new UIMenuItem("Teleport Locations", "Teleport to pre-configured locations, added by the server owner.");
             teleportMenuBtn.Activated += async (a, b) => await a.SwitchTo(teleportMenu, 0, true);
 
             // keybind settings menu
-            var keybindMenu = new UIMenu(Game.Player.Name, "Keybind Settings");
-            var keybindMenuBtn = new UIMenuItem("Keybind Settings", "Enable or disable keybinds for some options.");
+            UIMenu keybindMenu = new UIMenu(Game.Player.Name, "Keybind Settings");
+            UIMenuItem keybindMenuBtn = new UIMenuItem("Keybind Settings", "Enable or disable keybinds for some options.");
             keybindMenuBtn.Activated += async (a, b) => await a.SwitchTo(keybindMenu, 0, true);
 
             // keybind settings menu items
-            var kbTpToWaypoint = new UIMenuCheckboxItem("Teleport To Waypoint", UIMenuCheckboxStyle.Tick, KbTpToWaypoint, "Teleport to your waypoint when pressing the keybind. By default, this keybind is set to ~r~F7~s~, server owners are able to change this however so ask them if you don't know what it is.");
-            var kbDriftMode = new UIMenuCheckboxItem("Drift Mode", UIMenuCheckboxStyle.Tick, KbDriftMode, "Makes your vehicle have almost no traction while holding left shift on keyboard, or X on controller.");
-            var kbRecordKeys = new UIMenuCheckboxItem("Recording Controls", UIMenuCheckboxStyle.Tick, KbRecordKeys, "Enables or disables the recording (gameplay recording for the Rockstar editor) hotkeys on both keyboard and controller.");
-            var kbRadarKeys = new UIMenuCheckboxItem("Minimap Controls", UIMenuCheckboxStyle.Tick, KbRadarKeys, "Press the Multiplayer Info (z on keyboard, down arrow on controller) key to switch between expanded radar and normal radar.");
-            var kbPointKeysCheckbox = new UIMenuCheckboxItem("Finger Point Controls", UIMenuCheckboxStyle.Tick, KbPointKeys, "Enables the finger point toggle key. The default QWERTY keyboard mapping for this is 'B', or for controller quickly double tap the right analog stick.");
-            var backBtn = new UIMenuItem("Back");
+            UIMenuCheckboxItem kbTpToWaypoint = new UIMenuCheckboxItem("Teleport To Waypoint", UIMenuCheckboxStyle.Tick, KbTpToWaypoint, "Teleport to your waypoint when pressing the keybind. By default, this keybind is set to ~r~F7~s~, server owners are able to change this however so ask them if you don't know what it is.");
+            UIMenuCheckboxItem kbDriftMode = new UIMenuCheckboxItem("Drift Mode", UIMenuCheckboxStyle.Tick, KbDriftMode, "Makes your vehicle have almost no traction while holding left shift on keyboard, or X on controller.");
+            UIMenuCheckboxItem kbRecordKeys = new UIMenuCheckboxItem("Recording Controls", UIMenuCheckboxStyle.Tick, KbRecordKeys, "Enables or disables the recording (gameplay recording for the Rockstar editor) hotkeys on both keyboard and controller.");
+            UIMenuCheckboxItem kbRadarKeys = new UIMenuCheckboxItem("Minimap Controls", UIMenuCheckboxStyle.Tick, KbRadarKeys, "Press the Multiplayer Info (z on keyboard, down arrow on controller) key to switch between expanded radar and normal radar.");
+            UIMenuCheckboxItem kbPointKeysCheckbox = new UIMenuCheckboxItem("Finger Point Controls", UIMenuCheckboxStyle.Tick, KbPointKeys, "Enables the finger point toggle key. The default QWERTY keyboard mapping for this is 'B', or for controller quickly double tap the right analog stick.");
+            UIMenuItem backBtn = new UIMenuItem("Back");
 
             // Create the menu items.
-            var AlignMenuX = new UIMenuDynamicListItem("Menu X position", "This option will be saved immediately. You don't need to click save preferences.", MiscMenuPosition.X.ToString(), async (sender, direction) =>
+            UIMenuDynamicListItem AlignMenuX = new UIMenuDynamicListItem("Menu X position", "This option will be saved immediately. You don't need to click save preferences.", MiscMenuPosition.X.ToString(), async (sender, direction) =>
             {
-                var pos = MiscMenuPosition.X;
+                float pos = MiscMenuPosition.X;
                 if (direction == UIMenuDynamicListItem.ChangeDirection.Left)
                 {
                     pos--;
@@ -113,9 +111,9 @@ namespace vMenuClient.menus
                 UserDefaults.MiscMenuPosition = MiscMenuPosition = new PointF(pos, MiscMenuPosition.Y);
                 return pos.ToString();
             });
-            var AlignMenuY = new UIMenuDynamicListItem("Menu Y position", "This option will be saved immediately. You don't need to click save preferences.", MiscMenuPosition.Y.ToString(), async (sender, direction) =>
+            UIMenuDynamicListItem AlignMenuY = new UIMenuDynamicListItem("Menu Y position", "This option will be saved immediately. You don't need to click save preferences.", MiscMenuPosition.Y.ToString(), async (sender, direction) =>
             {
-                var pos = MiscMenuPosition.Y;
+                float pos = MiscMenuPosition.Y;
                 if (direction == UIMenuDynamicListItem.ChangeDirection.Left)
                 {
                     pos--;
@@ -130,69 +128,69 @@ namespace vMenuClient.menus
                 UserDefaults.MiscMenuPosition = MiscMenuPosition = new PointF(MiscMenuPosition.X, pos);
                 return pos.ToString();
             });
-            var disablePms = new UIMenuCheckboxItem("Disable Private Messages", UIMenuCheckboxStyle.Tick, MiscDisablePrivateMessages, "Prevent others from sending you a private message via the Online Players menu. This also prevents you from sending messages to other players.");
-            var disableControllerKey = new UIMenuCheckboxItem("Disable Controller Support", UIMenuCheckboxStyle.Tick, MiscDisableControllerSupport, "This disables the controller menu toggle key. This does NOT disable the navigation buttons.");
-            var speedKmh = new UIMenuCheckboxItem("Show Speed KM/H", UIMenuCheckboxStyle.Tick, ShowSpeedoKmh, "Show a speedometer on your screen indicating your speed in KM/h.");
-            var speedMph = new UIMenuCheckboxItem("Show Speed MPH", UIMenuCheckboxStyle.Tick, ShowSpeedoMph, "Show a speedometer on your screen indicating your speed in MPH.");
-            var coords = new UIMenuCheckboxItem("Show Coordinates", UIMenuCheckboxStyle.Tick, ShowCoordinates, "Show your current coordinates at the top of your screen.");
-            var hideRadar = new UIMenuCheckboxItem("Hide Radar", UIMenuCheckboxStyle.Tick, HideRadar, "Hide the radar/minimap.");
-            var hideHud = new UIMenuCheckboxItem("Hide Hud", UIMenuCheckboxStyle.Tick, HideHud, "Hide all hud elements.");
-            var showLocation = new UIMenuCheckboxItem("Location Display", UIMenuCheckboxStyle.Tick, ShowLocation, "Shows your current location and heading, as well as the nearest cross road. Similar like PLD. ~r~Warning: This feature (can) take(s) up to -4.6 FPS when running at 60 Hz.");
+            UIMenuCheckboxItem disablePms = new UIMenuCheckboxItem("Disable Private Messages", UIMenuCheckboxStyle.Tick, MiscDisablePrivateMessages, "Prevent others from sending you a private message via the Online Players menu. This also prevents you from sending messages to other players.");
+            UIMenuCheckboxItem disableControllerKey = new UIMenuCheckboxItem("Disable Controller Support", UIMenuCheckboxStyle.Tick, MiscDisableControllerSupport, "This disables the controller menu toggle key. This does NOT disable the navigation buttons.");
+            UIMenuCheckboxItem speedKmh = new UIMenuCheckboxItem("Show Speed KM/H", UIMenuCheckboxStyle.Tick, ShowSpeedoKmh, "Show a speedometer on your screen indicating your speed in KM/h.");
+            UIMenuCheckboxItem speedMph = new UIMenuCheckboxItem("Show Speed MPH", UIMenuCheckboxStyle.Tick, ShowSpeedoMph, "Show a speedometer on your screen indicating your speed in MPH.");
+            UIMenuCheckboxItem coords = new UIMenuCheckboxItem("Show Coordinates", UIMenuCheckboxStyle.Tick, ShowCoordinates, "Show your current coordinates at the top of your screen.");
+            UIMenuCheckboxItem hideRadar = new UIMenuCheckboxItem("Hide Radar", UIMenuCheckboxStyle.Tick, HideRadar, "Hide the radar/minimap.");
+            UIMenuCheckboxItem hideHud = new UIMenuCheckboxItem("Hide Hud", UIMenuCheckboxStyle.Tick, HideHud, "Hide all hud elements.");
+            UIMenuCheckboxItem showLocation = new UIMenuCheckboxItem("Location Display", UIMenuCheckboxStyle.Tick, ShowLocation, "Shows your current location and heading, as well as the nearest cross road. Similar like PLD. ~r~Warning: This feature (can) take(s) up to -4.6 FPS when running at 60 Hz.");
             showLocation.SetLeftBadge(BadgeIcon.WARNING);
-            var drawTime = new UIMenuCheckboxItem("Show Time On Screen", UIMenuCheckboxStyle.Tick, DrawTimeOnScreen, "Shows you the current time on screen.");
-            var saveSettings = new UIMenuItem("Save Personal Settings", "Save your current settings. All saving is done on the client side, if you re-install windows you will lose your settings. Settings are shared across all servers using vMenu.");
+            UIMenuCheckboxItem drawTime = new UIMenuCheckboxItem("Show Time On Screen", UIMenuCheckboxStyle.Tick, DrawTimeOnScreen, "Shows you the current time on screen.");
+            UIMenuItem saveSettings = new UIMenuItem("Save Personal Settings", "Save your current settings. All saving is done on the client side, if you re-install windows you will lose your settings. Settings are shared across all servers using vMenu.");
             saveSettings.SetRightBadge(BadgeIcon.TICK);
 
-            var exportData = new UIMenuItem("Export/Import Data", "Coming soon (TM): the ability to import and export your saved data.");
-            var joinQuitNotifs = new UIMenuCheckboxItem("Join / Quit Notifications", UIMenuCheckboxStyle.Tick, JoinQuitNotifications, "Receive notifications when someone joins or leaves the server.");
-            var deathNotifs = new UIMenuCheckboxItem("Death Notifications", UIMenuCheckboxStyle.Tick, DeathNotifications, "Receive notifications when someone dies or gets killed.");
-            var nightVision = new UIMenuCheckboxItem("Toggle Night Vision", UIMenuCheckboxStyle.Tick, false, "Enable or disable night vision.");
-            var thermalVision = new UIMenuCheckboxItem("Toggle Thermal Vision", UIMenuCheckboxStyle.Tick, false, "Enable or disable thermal vision.");
-            var vehModelDimensions = new UIMenuCheckboxItem("Show Vehicle Dimensions", UIMenuCheckboxStyle.Tick, ShowVehicleModelDimensions, "Draws the model outlines for every vehicle that's currently close to you.");
-            var propModelDimensions = new UIMenuCheckboxItem("Show Prop Dimensions", UIMenuCheckboxStyle.Tick, ShowPropModelDimensions, "Draws the model outlines for every prop that's currently close to you.");
-            var pedModelDimensions = new UIMenuCheckboxItem("Show Ped Dimensions", UIMenuCheckboxStyle.Tick, ShowPedModelDimensions, "Draws the model outlines for every ped that's currently close to you.");
-            var showEntityHandles = new UIMenuCheckboxItem("Show Entity Handles", UIMenuCheckboxStyle.Tick, ShowEntityHandles, "Draws the the entity handles for all close entities (you must enable the outline functions above for this to work).");
-            var showEntityModels = new UIMenuCheckboxItem("Show Entity Models", UIMenuCheckboxStyle.Tick, ShowEntityModels, "Draws the the entity models for all close entities (you must enable the outline functions above for this to work).");
-            var showEntityNetOwners = new UIMenuCheckboxItem("Show Network Owners", UIMenuCheckboxStyle.Tick, ShowEntityNetOwners, "Draws the the entity net owner for all close entities (you must enable the outline functions above for this to work).");
-            var dimensionsDistanceSlider = new UIMenuSliderItem("Show Dimensions Radius", "Show entity model/handle/dimension draw range.", 0, 20, 20, false);
+            UIMenuItem exportData = new UIMenuItem("Export/Import Data", "Coming soon (TM): the ability to import and export your saved data.");
+            UIMenuCheckboxItem joinQuitNotifs = new UIMenuCheckboxItem("Join / Quit Notifications", UIMenuCheckboxStyle.Tick, JoinQuitNotifications, "Receive notifications when someone joins or leaves the server.");
+            UIMenuCheckboxItem deathNotifs = new UIMenuCheckboxItem("Death Notifications", UIMenuCheckboxStyle.Tick, DeathNotifications, "Receive notifications when someone dies or gets killed.");
+            UIMenuCheckboxItem nightVision = new UIMenuCheckboxItem("Toggle Night Vision", UIMenuCheckboxStyle.Tick, false, "Enable or disable night vision.");
+            UIMenuCheckboxItem thermalVision = new UIMenuCheckboxItem("Toggle Thermal Vision", UIMenuCheckboxStyle.Tick, false, "Enable or disable thermal vision.");
+            UIMenuCheckboxItem vehModelDimensions = new UIMenuCheckboxItem("Show Vehicle Dimensions", UIMenuCheckboxStyle.Tick, ShowVehicleModelDimensions, "Draws the model outlines for every vehicle that's currently close to you.");
+            UIMenuCheckboxItem propModelDimensions = new UIMenuCheckboxItem("Show Prop Dimensions", UIMenuCheckboxStyle.Tick, ShowPropModelDimensions, "Draws the model outlines for every prop that's currently close to you.");
+            UIMenuCheckboxItem pedModelDimensions = new UIMenuCheckboxItem("Show Ped Dimensions", UIMenuCheckboxStyle.Tick, ShowPedModelDimensions, "Draws the model outlines for every ped that's currently close to you.");
+            UIMenuCheckboxItem showEntityHandles = new UIMenuCheckboxItem("Show Entity Handles", UIMenuCheckboxStyle.Tick, ShowEntityHandles, "Draws the the entity handles for all close entities (you must enable the outline functions above for this to work).");
+            UIMenuCheckboxItem showEntityModels = new UIMenuCheckboxItem("Show Entity Models", UIMenuCheckboxStyle.Tick, ShowEntityModels, "Draws the the entity models for all close entities (you must enable the outline functions above for this to work).");
+            UIMenuCheckboxItem showEntityNetOwners = new UIMenuCheckboxItem("Show Network Owners", UIMenuCheckboxStyle.Tick, ShowEntityNetOwners, "Draws the the entity net owner for all close entities (you must enable the outline functions above for this to work).");
+            UIMenuSliderItem dimensionsDistanceSlider = new UIMenuSliderItem("Show Dimensions Radius", "Show entity model/handle/dimension draw range.", 0, 20, 20, false);
 
-            var clearArea = new UIMenuItem("Clear Area", "Clears the area around your player (100 meters). Damage, dirt, peds, props, vehicles, etc. Everything gets cleaned up, fixed and reset to the default world state.");
-            var lockCamX = new UIMenuCheckboxItem("Lock Camera Horizontal Rotation", UIMenuCheckboxStyle.Tick, false, "Locks your camera horizontal rotation. Could be useful in helicopters I guess.");
-            var lockCamY = new UIMenuCheckboxItem("Lock Camera Vertical Rotation", UIMenuCheckboxStyle.Tick, false, "Locks your camera vertical rotation. Could be useful in helicopters I guess.");
+            UIMenuItem clearArea = new UIMenuItem("Clear Area", "Clears the area around your player (100 meters). Damage, dirt, peds, props, vehicles, etc. Everything gets cleaned up, fixed and reset to the default world state.");
+            UIMenuCheckboxItem lockCamX = new UIMenuCheckboxItem("Lock Camera Horizontal Rotation", UIMenuCheckboxStyle.Tick, false, "Locks your camera horizontal rotation. Could be useful in helicopters I guess.");
+            UIMenuCheckboxItem lockCamY = new UIMenuCheckboxItem("Lock Camera Vertical Rotation", UIMenuCheckboxStyle.Tick, false, "Locks your camera vertical rotation. Could be useful in helicopters I guess.");
 
             // Entity spawner
-            var spawnNewEntity = new UIMenuItem("Spawn New Entity", "Spawns entity into the world and lets you set its position and rotation");
-            var confirmEntityPosition = new UIMenuItem("Confirm Entity Position", "Stops placing entity and sets it at it current location.");
-            var cancelEntity = new UIMenuItem("Cancel", "Deletes current entity and cancels its placement");
-            var confirmAndDuplicate = new UIMenuItem("Confirm Entity Position And Duplicate", "Stops placing entity and sets it at it current location and creates new one to place.");
+            UIMenuItem spawnNewEntity = new UIMenuItem("Spawn New Entity", "Spawns entity into the world and lets you set its position and rotation");
+            UIMenuItem confirmEntityPosition = new UIMenuItem("Confirm Entity Position", "Stops placing entity and sets it at it current location.");
+            UIMenuItem cancelEntity = new UIMenuItem("Cancel", "Deletes current entity and cancels its placement");
+            UIMenuItem confirmAndDuplicate = new UIMenuItem("Confirm Entity Position And Duplicate", "Stops placing entity and sets it at it current location and creates new one to place.");
 
-            var connectionSubmenu = new UIMenu(Game.Player.Name, "Connection Options");
-            var connectionSubmenuBtn = new UIMenuItem("Connection Options", "Server connection/game quit options.");
+            UIMenu connectionSubmenu = new UIMenu(Game.Player.Name, "Connection Options");
+            UIMenuItem connectionSubmenuBtn = new UIMenuItem("Connection Options", "Server connection/game quit options.");
 
-            var quitSession = new UIMenuItem("Quit Session", "Leaves you connected to the server, but quits the network session. ~r~Can not be used when you are the host.");
-            var rejoinSession = new UIMenuItem("Re-join Session", "This may not work in all cases, but you can try to use this if you want to re-join the previous session after clicking 'Quit Session'.");
-            var quitGame = new UIMenuItem("Quit Game", "Exits the game after 5 seconds.");
-            var disconnectFromServer = new UIMenuItem("Disconnect From Server", "Disconnects you from the server and returns you to the serverlist. ~r~This feature is not recommended, quit the game completely instead and restart it for a better experience.");
+            UIMenuItem quitSession = new UIMenuItem("Quit Session", "Leaves you connected to the server, but quits the network session. ~r~Can not be used when you are the host.");
+            UIMenuItem rejoinSession = new UIMenuItem("Re-join Session", "This may not work in all cases, but you can try to use this if you want to re-join the previous session after clicking 'Quit Session'.");
+            UIMenuItem quitGame = new UIMenuItem("Quit Game", "Exits the game after 5 seconds.");
+            UIMenuItem disconnectFromServer = new UIMenuItem("Disconnect From Server", "Disconnects you from the server and returns you to the serverlist. ~r~This feature is not recommended, quit the game completely instead and restart it for a better experience.");
             connectionSubmenu.AddItem(quitSession);
             connectionSubmenu.AddItem(rejoinSession);
             connectionSubmenu.AddItem(quitGame);
             connectionSubmenu.AddItem(disconnectFromServer);
 
-            var enableTimeCycle = new UIMenuCheckboxItem("Enable Timecycle Modifier", TimecycleEnabled, "Enable or disable the timecycle modifier from the list below.");
-            var timeCycleModifiersListData = TimeCycles.Timecycles.Cast<dynamic>().ToList();
-            for (var i = 0; i < timeCycleModifiersListData.Count; i++)
+            UIMenuCheckboxItem enableTimeCycle = new UIMenuCheckboxItem("Enable Timecycle Modifier", TimecycleEnabled, "Enable or disable the timecycle modifier from the list below.");
+            List<dynamic> timeCycleModifiersListData = TimeCycles.Timecycles.Cast<dynamic>().ToList();
+            for (int i = 0; i < timeCycleModifiersListData.Count; i++)
             {
                 timeCycleModifiersListData[i] += $" ({i + 1}/{timeCycleModifiersListData.Count})";
             }
-            var timeCycles = new UIMenuListItem("TM", timeCycleModifiersListData, MathUtil.Clamp(LastTimeCycleModifierIndex, 0, Math.Max(0, timeCycleModifiersListData.Count - 1)), "Select a timecycle modifier and enable the checkbox above.");
-            var timeCycleIntensity = new UIMenuSliderItem("Timecycle Modifier Intensity", "Set the timecycle modifier intensity.", 0, 20, LastTimeCycleModifierStrength, true);
+            UIMenuListItem timeCycles = new UIMenuListItem("TM", timeCycleModifiersListData, MathUtil.Clamp(LastTimeCycleModifierIndex, 0, Math.Max(0, timeCycleModifiersListData.Count - 1)), "Select a timecycle modifier and enable the checkbox above.");
+            UIMenuSliderItem timeCycleIntensity = new UIMenuSliderItem("Timecycle Modifier Intensity", "Set the timecycle modifier intensity.", 0, 20, LastTimeCycleModifierStrength, true);
 
-            var locationBlips = new UIMenuCheckboxItem("Location Blips", UIMenuCheckboxStyle.Tick, ShowLocationBlips, "Shows blips on the map for some common locations.");
-            var playerBlips = new UIMenuCheckboxItem("Show Player Blips", UIMenuCheckboxStyle.Tick, ShowPlayerBlips, "Shows blips on the map for all players. ~y~Note for when the server is using OneSync Infinity: this won't work for players that are too far away.");
-            var playerNames = new UIMenuCheckboxItem("Show Player Names", UIMenuCheckboxStyle.Tick, MiscShowOverheadNames, "Enables or disables player overhead names.");
-            var respawnDefaultCharacter = new UIMenuCheckboxItem("Respawn As Default MP", UIMenuCheckboxStyle.Tick, MiscRespawnDefaultCharacter, "If you enable this, then you will (re)spawn as your default saved MP character. Note the server owner can globally disable this option. To set your default character, go to one of your saved MP Characters and click the 'Set As Default Character' button.");
-            var restorePlayerAppearance = new UIMenuCheckboxItem("Restore Player Appearance", UIMenuCheckboxStyle.Tick, RestorePlayerAppearance, "Restore your player's skin whenever you respawn after being dead. Re-joining a server will not restore your previous skin.");
-            var restorePlayerWeapons = new UIMenuCheckboxItem("Restore Player Weapons", UIMenuCheckboxStyle.Tick, RestorePlayerWeapons, "Restore your weapons whenever you respawn after being dead. Re-joining a server will not restore your previous weapons.");
+            UIMenuCheckboxItem locationBlips = new UIMenuCheckboxItem("Location Blips", UIMenuCheckboxStyle.Tick, ShowLocationBlips, "Shows blips on the map for some common locations.");
+            UIMenuCheckboxItem playerBlips = new UIMenuCheckboxItem("Show Player Blips", UIMenuCheckboxStyle.Tick, ShowPlayerBlips, "Shows blips on the map for all players. ~y~Note for when the server is using OneSync Infinity: this won't work for players that are too far away.");
+            UIMenuCheckboxItem playerNames = new UIMenuCheckboxItem("Show Player Names", UIMenuCheckboxStyle.Tick, MiscShowOverheadNames, "Enables or disables player overhead names.");
+            UIMenuCheckboxItem respawnDefaultCharacter = new UIMenuCheckboxItem("Respawn As Default MP", UIMenuCheckboxStyle.Tick, MiscRespawnDefaultCharacter, "If you enable this, then you will (re)spawn as your default saved MP character. Note the server owner can globally disable this option. To set your default character, go to one of your saved MP Characters and click the 'Set As Default Character' button.");
+            UIMenuCheckboxItem restorePlayerAppearance = new UIMenuCheckboxItem("Restore Player Appearance", UIMenuCheckboxStyle.Tick, RestorePlayerAppearance, "Restore your player's skin whenever you respawn after being dead. Re-joining a server will not restore your previous skin.");
+            UIMenuCheckboxItem restorePlayerWeapons = new UIMenuCheckboxItem("Restore Player Weapons", UIMenuCheckboxStyle.Tick, RestorePlayerWeapons, "Restore your weapons whenever you respawn after being dead. Re-joining a server will not restore your previous weapons.");
 
             connectionSubmenuBtn.Activated += async (a, b) => await a.SwitchTo(connectionSubmenu, 0, true);
 
@@ -274,14 +272,14 @@ namespace vMenuClient.menus
             // Teleportation options
             if (IsAllowed(Permission.MSTeleportToWp) || IsAllowed(Permission.MSTeleportLocations) || IsAllowed(Permission.MSTeleportToCoord))
             {
-                var teleportOptionsMenuBtn = new UIMenuItem("Teleport Options", "Various teleport options.");
+                UIMenuItem teleportOptionsMenuBtn = new UIMenuItem("Teleport Options", "Various teleport options.");
                 teleportOptionsMenuBtn.SetRightLabel("→→→");
                 menu.AddItem(teleportOptionsMenuBtn);
                 teleportOptionsMenuBtn.Activated += async (a, b) => await a.SwitchTo(teleportOptionsMenu, 0, true);
 
-                var tptowp = new UIMenuItem("Teleport To Waypoint", "Teleport to the waypoint on your map.");
-                var tpToCoord = new UIMenuItem("Teleport To Coords", "Enter x, y, z coordinates and you will be teleported to that location.");
-                var saveLocationBtn = new UIMenuItem("Save Teleport Location", "Adds your current location to the teleport locations menu and saves it on the server.");
+                UIMenuItem tptowp = new UIMenuItem("Teleport To Waypoint", "Teleport to the waypoint on your map.");
+                UIMenuItem tpToCoord = new UIMenuItem("Teleport To Coords", "Enter x, y, z coordinates and you will be teleported to that location.");
+                UIMenuItem saveLocationBtn = new UIMenuItem("Save Teleport Location", "Adds your current location to the teleport locations menu and saves it on the server.");
                 teleportOptionsMenu.OnItemSelect += async (sender, item, index) =>
                 {
                     // Teleport to waypoint.
@@ -291,19 +289,19 @@ namespace vMenuClient.menus
                     }
                     else if (item == tpToCoord)
                     {
-                        var x = await GetUserInput("Enter X coordinate.");
+                        string x = await GetUserInput("Enter X coordinate.");
                         if (string.IsNullOrEmpty(x))
                         {
                             Notify.Error(CommonErrors.InvalidInput);
                             return;
                         }
-                        var y = await GetUserInput("Enter Y coordinate.");
+                        string y = await GetUserInput("Enter Y coordinate.");
                         if (string.IsNullOrEmpty(y))
                         {
                             Notify.Error(CommonErrors.InvalidInput);
                             return;
                         }
-                        var z = await GetUserInput("Enter Z coordinate.");
+                        string z = await GetUserInput("Enter Z coordinate.");
                         if (string.IsNullOrEmpty(z))
                         {
                             Notify.Error(CommonErrors.InvalidInput);
@@ -311,9 +309,9 @@ namespace vMenuClient.menus
                         }
 
 
-                        if (!float.TryParse(x, out var posX))
+                        if (!float.TryParse(x, out float posX))
                         {
-                            if (int.TryParse(x, out var intX))
+                            if (int.TryParse(x, out int intX))
                             {
                                 posX = intX;
                             }
@@ -323,9 +321,9 @@ namespace vMenuClient.menus
                                 return;
                             }
                         }
-                        if (!float.TryParse(y, out var posY))
+                        if (!float.TryParse(y, out float posY))
                         {
-                            if (int.TryParse(y, out var intY))
+                            if (int.TryParse(y, out int intY))
                             {
                                 posY = intY;
                             }
@@ -335,9 +333,9 @@ namespace vMenuClient.menus
                                 return;
                             }
                         }
-                        if (!float.TryParse(z, out var posZ))
+                        if (!float.TryParse(z, out float posZ))
                         {
-                            if (int.TryParse(z, out var intZ))
+                            if (int.TryParse(z, out int intZ))
                             {
                                 posZ = intZ;
                             }
@@ -376,13 +374,13 @@ namespace vMenuClient.menus
                         if (teleportMenu.Size != TpLocations.Count())
                         {
                             teleportMenu.Clear();
-                            foreach (var location in TpLocations)
+                            foreach (TeleportLocation location in TpLocations)
                             {
-                                var x = Math.Round(location.coordinates.X, 2);
-                                var y = Math.Round(location.coordinates.Y, 2);
-                                var z = Math.Round(location.coordinates.Z, 2);
-                                var heading = Math.Round(location.heading, 2);
-                                var tpBtn = new UIMenuItem(location.name, $"Teleport to ~y~{location.name}~n~~s~x: ~y~{x}~n~~s~y: ~y~{y}~n~~s~z: ~y~{z}~n~~s~heading: ~y~{heading}") { ItemData = location };
+                                double x = Math.Round(location.coordinates.X, 2);
+                                double y = Math.Round(location.coordinates.Y, 2);
+                                double z = Math.Round(location.coordinates.Z, 2);
+                                double heading = Math.Round(location.heading, 2);
+                                UIMenuItem tpBtn = new UIMenuItem(location.name, $"Teleport to ~y~{location.name}~n~~s~x: ~y~{x}~n~~s~y: ~y~{y}~n~~s~z: ~y~{z}~n~~s~heading: ~y~{heading}") { ItemData = location };
                                 teleportMenu.AddItem(tpBtn);
                             }
                         }
@@ -408,7 +406,7 @@ namespace vMenuClient.menus
 
             #region dev tools menu
 
-            var devToolsBtn = new UIMenuItem("Developer Tools", "Various development/debug tools.");
+            UIMenuItem devToolsBtn = new UIMenuItem("Developer Tools", "Various development/debug tools.");
             devToolsBtn.SetRightLabel("→→→");
             menu.AddItem(devToolsBtn);
             devToolsBtn.Activated += async (a, b) => await a.SwitchTo(developerToolsMenu, 0, true);
@@ -449,7 +447,7 @@ namespace vMenuClient.menus
                     if (TimecycleEnabled)
                     {
                         SetTimecycleModifier(TimeCycles.Timecycles[sender.MenuItems.IndexOf(timeCycles)]);
-                        var intensity = value / 20f;
+                        float intensity = value / 20f;
                         SetTimecycleModifierStrength(intensity);
                     }
                     UserDefaults.MiscLastTimeCycleModifierIndex = sender.MenuItems.IndexOf(timeCycles);
@@ -469,7 +467,7 @@ namespace vMenuClient.menus
                     if (TimecycleEnabled)
                     {
                         SetTimecycleModifier(TimeCycles.Timecycles[sender.MenuItems.IndexOf(timeCycles)]);
-                        var intensity = timeCycleIntensity.Value / 20f;
+                        float intensity = timeCycleIntensity.Value / 20f;
                         SetTimecycleModifierStrength(intensity);
                     }
                     UserDefaults.MiscLastTimeCycleModifierIndex = sender.MenuItems.IndexOf(timeCycles);
@@ -481,7 +479,7 @@ namespace vMenuClient.menus
             {
                 if (item == clearArea)
                 {
-                    var pos = Game.PlayerPed.Position;
+                    Vector3 pos = Game.PlayerPed.Position;
                     BaseScript.TriggerServerEvent("vMenu:ClearArea", pos.X, pos.Y, pos.Z);
                 }
             };
@@ -519,7 +517,7 @@ namespace vMenuClient.menus
                     if (TimecycleEnabled)
                     {
                         SetTimecycleModifier(TimeCycles.Timecycles[sender.MenuItems.IndexOf(timeCycles)]);
-                        var intensity = timeCycleIntensity.Value / 20f;
+                        float intensity = timeCycleIntensity.Value / 20f;
                         SetTimecycleModifierStrength(intensity);
                     }
                 }
@@ -531,7 +529,7 @@ namespace vMenuClient.menus
 
             if (IsAllowed(Permission.MSEntitySpawner))
             {
-                var entSpawnerMenuBtn = new UIMenuItem("Entity Spawner", "Spawn and move entities");
+                UIMenuItem entSpawnerMenuBtn = new UIMenuItem("Entity Spawner", "Spawn and move entities");
                 entSpawnerMenuBtn.SetRightLabel("→→→");
                 developerToolsMenu.AddItem(entSpawnerMenuBtn);
                 entSpawnerMenuBtn.Activated += async (a, b) => await a.SwitchTo(entitySpawnerMenu, 0, true);
@@ -551,7 +549,7 @@ namespace vMenuClient.menus
                             return;
                         }
 
-                        var result = await GetUserInput(windowTitle: "Enter model name");
+                        string result = await GetUserInput(windowTitle: "Enter model name");
 
                         if (string.IsNullOrEmpty(result))
                         {
@@ -769,11 +767,11 @@ namespace vMenuClient.menus
                 if (item == exportData)
                 {
                     MenuHandler.CloseAndClearHistory();
-                    var vehicles = GetSavedVehicles();
-                    var normalPeds = StorageManager.GetSavedPeds();
-                    var mpPeds = StorageManager.GetSavedMpPeds();
-                    var weaponLoadouts = WeaponLoadouts.GetSavedWeapons();
-                    var data = JsonConvert.SerializeObject(new
+                    Dictionary<string, VehicleInfo> vehicles = GetSavedVehicles();
+                    Dictionary<string, PedInfo> normalPeds = StorageManager.GetSavedPeds();
+                    List<MpPedDataManager.MultiplayerPedData> mpPeds = StorageManager.GetSavedMpPeds();
+                    Dictionary<string, List<ValidWeapon>> weaponLoadouts = WeaponLoadouts.GetSavedWeapons();
+                    string data = JsonConvert.SerializeObject(new
                     {
                         saved_vehicles = vehicles,
                         normal_peds = normalPeds,
@@ -835,9 +833,9 @@ namespace vMenuClient.menus
             {
                 try
                 {
-                    foreach (var bl in vMenuShared.ConfigManager.GetLocationBlipsData())
+                    foreach (LocationBlip bl in vMenuShared.ConfigManager.GetLocationBlipsData())
                     {
-                        var blipID = AddBlipForCoord(bl.coordinates.X, bl.coordinates.Y, bl.coordinates.Z);
+                        int blipID = AddBlipForCoord(bl.coordinates.X, bl.coordinates.Y, bl.coordinates.Z);
                         SetBlipSprite(blipID, bl.spriteID);
                         BeginTextCommandSetBlipName("STRING");
                         AddTextComponentSubstringPlayerName(bl.name);
@@ -845,7 +843,7 @@ namespace vMenuClient.menus
                         SetBlipColour(blipID, bl.color);
                         SetBlipAsShortRange(blipID, true);
 
-                        var b = new Blip(bl.coordinates, bl.spriteID, bl.name, bl.color, blipID);
+                        Blip b = new Blip(bl.coordinates, bl.spriteID, bl.name, bl.color, blipID);
                         blips.Add(b);
                     }
                 }
@@ -858,9 +856,9 @@ namespace vMenuClient.menus
             {
                 if (blips.Count > 0)
                 {
-                    foreach (var blip in blips)
+                    foreach (Blip blip in blips)
                     {
-                        var id = blip.blipID;
+                        int id = blip.blipID;
                         if (DoesBlipExist(id))
                         {
                             RemoveBlip(ref id);
