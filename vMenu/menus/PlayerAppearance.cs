@@ -247,6 +247,12 @@ namespace vMenuClient.menus
                     savedPedsBtn.SetRightLabel(""); // Looked weird with the lock and the arrow.
                     return;
                 }
+
+                // Reset the button to it's default state if it was previously disabled.
+                savedPedsBtn.Enabled = true;
+                savedPedsBtn.SetRightBadge(BadgeIcon.NONE);
+                savedPedsBtn.Description = "Edit, rename, clone, spawn or delete saved peds.";
+                savedPedsBtn.SetRightLabel("→→→");
                 foreach (KeyValuePair<string, PedInfo> ped in savedPeds)
                 {
                     if (size < 1 || !savedPedsMenu.MenuItems.Any(e => ped.Key == e.ItemData.Key))
