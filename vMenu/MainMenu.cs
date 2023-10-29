@@ -286,11 +286,10 @@ namespace vMenuClient
             
             RegisterCommand("vmenu", new Action(OpenMenu), false);
             RegisterKeyMapping("vmenu", "Open vMenu", "keyboard", GetSettingsString(Setting.vmenu_menu_toggle_key) ?? "M");
-            if (IsAllowed(Permission.NoClip))
-            {
-                RegisterCommand("vmenu_noclip", new Action(ToggleNoclip), false);
-                RegisterKeyMapping("vmenu_noclip", "Toggle NoClip", "keyboard", GetSettingsString(Setting.vmenu_noclip_toggle_key) ?? "F2");
-            }
+            
+            RegisterCommand("vmenu_noclip", new Action(ToggleNoclip), false);
+            RegisterKeyMapping("vmenu_noclip", "Toggle NoClip", "keyboard", GetSettingsString(Setting.vmenu_noclip_toggle_key) ?? "F2");
+            
         }
 
         private void OpenMenu()
