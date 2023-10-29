@@ -618,7 +618,7 @@ namespace vMenuClient
 
             UIMenuItem playerSubmenuBtn = new UIMenuItem("Player Related Options", "Open this submenu for player related subcategories.");
             playerSubmenuBtn.SetRightLabel("→→→");
-            Menu.AddItem(playerSubmenuBtn);
+            AddMenu(Menu, PlayerSubmenu, playerSubmenuBtn);
 
             // Add the player options menu.
             if (IsAllowed(Permission.POMenu))
@@ -632,7 +632,7 @@ namespace vMenuClient
 
             UIMenuItem vehicleSubmenuBtn = new UIMenuItem("Vehicle Related Options", "Open this submenu for vehicle related subcategories.");
             vehicleSubmenuBtn.SetRightLabel("→→→");
-            Menu.AddItem(vehicleSubmenuBtn);
+            AddMenu(Menu, VehicleSubmenu, vehicleSubmenuBtn);
             // Add the vehicle options Menu.
             if (IsAllowed(Permission.VOMenu))
             {
