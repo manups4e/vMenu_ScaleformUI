@@ -283,8 +283,6 @@ namespace vMenuClient
 
             // Request server state from the server.
             TriggerServerEvent("vMenu:RequestServerState");
-            RegisterCommand("vmenu", new Action(OpenMenu), false);
-            RegisterKeyMapping("vmenu", "Open vMenu", "keyboard", "F6");
         }
 
         private void OpenMenu()
@@ -523,6 +521,11 @@ namespace vMenuClient
                         MpPedCustomization.DisableBackButton = false;
                         MpPedCustomization.DontCloseMenus = false;
                     }
+                }
+                
+                if (Game.IsControlJustPressed(0, Control.InteractionMenu))
+                {
+                    Menu.Visible = true;
                 }
 
                 if (Game.IsDisabledControlJustReleased(0, Control.PhoneCancel) && MpPedCustomization.DisableBackButton)
