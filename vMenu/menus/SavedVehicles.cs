@@ -325,7 +325,7 @@ namespace vMenuClient.menus
 
                     UIMenuItem savedVehicleBtn = new UIMenuItem(sv.Key.Substring(4), $"Manage this saved vehicle.")
                     {
-                        Label = $"({sv.Value.name}) →→→"
+                        Label = $"{sv.Key.Substring(4)} ({sv.Value.name}) →→→"
                     };
                     menu.AddItem(savedVehicleBtn);
 
