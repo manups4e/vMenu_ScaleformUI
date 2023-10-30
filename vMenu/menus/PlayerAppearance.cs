@@ -40,7 +40,6 @@ namespace vMenuClient.menus
             spawnPedsMenu = new UIMenu(Game.Player.Name, "Spawn Ped");
             addonPedsMenu = new UIMenu(Game.Player.Name, "Addon Peds");
 
-
             // Add the (submenus) to the menu pool.
             /* no pool in ScaleformUI each menu is on its own
             MenuController.AddSubmenu(menu, pedCustomizationMenu);
@@ -84,7 +83,6 @@ namespace vMenuClient.menus
 
             List<dynamic> clothingGlowAnimations = new List<dynamic>() { "On", "Off", "Fade", "Flash" };
             UIMenuListItem clothingGlowType = new UIMenuListItem("Illuminated Clothing Style", clothingGlowAnimations, ClothingAnimationType, "Set the style of the animation used on your player's illuminated clothing items.");
-
             // Add items to the menu.
             if (IsAllowed(Permission.PACustomize))
                 menu.AddItem(pedCustomization);
@@ -241,7 +239,20 @@ namespace vMenuClient.menus
                 int size = savedPedsMenu.Size;
 
                 Dictionary<string, PedInfo> savedPeds = StorageManager.GetSavedPeds();
+                if (savedPeds.Count == 0)
+                {
+                    savedPedsBtn.Enabled = false;
+                    savedPedsBtn.SetRightBadge(BadgeIcon.LOCK);
+                    savedPedsBtn.Description = "You have no saved peds yet. Save your current ped to add one.";
+                    savedPedsBtn.SetRightLabel(""); // Looked weird with the lock and the arrow.
+                    return;
+                }
 
+                // Reset the button to it's default state if it was previously disabled.
+                savedPedsBtn.Enabled = true;
+                savedPedsBtn.SetRightBadge(BadgeIcon.NONE);
+                savedPedsBtn.Description = "Edit, rename, clone, spawn or delete saved peds.";
+                savedPedsBtn.SetRightLabel("→→→");
                 foreach (KeyValuePair<string, PedInfo> ped in savedPeds)
                 {
                     if (size < 1 || !savedPedsMenu.MenuItems.Any(e => ped.Key == e.ItemData.Key))
@@ -280,7 +291,7 @@ namespace vMenuClient.menus
                 }
             }
 
-            savedPedsMenu.OnMenuOpen += (_, _) =>
+            menu.OnMenuOpen += (_, _) =>
             {
                 UpdateSavedPedsMenu();
             };
@@ -519,6 +530,7 @@ namespace vMenuClient.menus
                 {
                     if (await SavePed())
                     {
+                        UpdateSavedPedsMenu();
                         Notify.Success("Successfully saved your new ped.");
                     }
                     else

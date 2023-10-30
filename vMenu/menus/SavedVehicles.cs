@@ -252,8 +252,9 @@ namespace vMenuClient.menus
         /// Updates the selected vehicle.
         /// </summary>
         /// <param name="selectedItem"></param>
+        /// <param name="parentMenu"></param>
         /// <returns>A bool, true if successfull, false if unsuccessfull</returns>
-        private bool UpdateSelectedVehicleMenu(UIMenuItem selectedItem, UIMenu parentMenu = null)
+        private bool UpdateSelectedVehicleMenu(UIMenuItem selectedItem, UIMenu parentMenu)
         {
             if (!svMenuItems.ContainsKey(selectedItem))
             {
@@ -263,8 +264,7 @@ namespace vMenuClient.menus
             KeyValuePair<string, VehicleInfo> vehInfo = svMenuItems[selectedItem];
             selectedVehicleMenu.Subtitle = $"{vehInfo.Key.Substring(4)} ({vehInfo.Value.name})";
             currentlySelectedVehicle = vehInfo;
-            MenuHandler.CloseAndClearHistory();
-            selectedVehicleMenu.Visible = true;
+            parentMenu.SwitchTo(selectedVehicleMenu);
             return true;
         }
 
@@ -325,7 +325,7 @@ namespace vMenuClient.menus
 
                     UIMenuItem savedVehicleBtn = new UIMenuItem(sv.Key.Substring(4), $"Manage this saved vehicle.")
                     {
-                        Label = $"({sv.Value.name}) →→→"
+                        Label = $"{sv.Key.Substring(4)} ({sv.Value.name}) →→→"
                     };
                     menu.AddItem(savedVehicleBtn);
 
