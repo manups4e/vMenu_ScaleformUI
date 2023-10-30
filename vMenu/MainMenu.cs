@@ -283,6 +283,44 @@ namespace vMenuClient
 
             // Request server state from the server.
             TriggerServerEvent("vMenu:RequestServerState");
+            
+            RegisterCommand("vmenu", new Action(OpenMenu), false);
+            RegisterKeyMapping("vmenu", "Open vMenu", "keyboard", GetSettingsString(Setting.vmenu_menu_toggle_key) ?? "M");
+            
+            RegisterCommand("vmenu_noclip", new Action(ToggleNoclip), false);
+            RegisterKeyMapping("vmenu_noclip", "Toggle NoClip", "keyboard", GetSettingsString(Setting.vmenu_noclip_toggle_key) ?? "F2");
+            
+        }
+
+        private void OpenMenu()
+        {
+            Menu.Visible = !Menu.Visible;
+        }
+
+        private void ToggleNoclip()
+        {
+            if (!IsAllowed(Permission.NoClip))
+            {
+                return;
+            }
+
+            if (Game.PlayerPed.IsInVehicle())
+            {
+                Vehicle veh = GetVehicle();
+                if (veh != null && veh.Exists() && veh.Driver == Game.PlayerPed)
+                {
+                    NoClipEnabled = !NoClipEnabled;
+                }
+                else
+                {
+                    NoClipEnabled = false;
+                    Notify.Error("This vehicle does not exist (somehow) or you need to be the driver of this vehicle to enable noclip!");
+                }
+            }
+            else
+            {
+                NoClipEnabled = !NoClipEnabled;
+            }
         }
 
 
@@ -518,39 +556,10 @@ namespace vMenuClient
                     }
                 }
 
-                if (Game.IsControlJustPressed(0, Control.InteractionMenu))
-                {
-                    Menu.Visible = true;
-                }
-
                 if (Game.IsDisabledControlJustReleased(0, Control.PhoneCancel) && MpPedCustomization.DisableBackButton)
                 {
                     await Delay(0);
                     Notify.Alert("You must save your ped first before exiting, or click the ~r~Exit Without Saving~s~ button.");
-                }
-
-                if (Game.CurrentInputMode == InputMode.MouseAndKeyboard)
-                {
-                    if (Game.IsControlJustPressed(0, (Control)NoClipKey) && IsAllowed(Permission.NoClip) && UpdateOnscreenKeyboard() != 0)
-                    {
-                        if (Game.PlayerPed.IsInVehicle())
-                        {
-                            Vehicle veh = GetVehicle();
-                            if (veh != null && veh.Exists() && veh.Driver == Game.PlayerPed)
-                            {
-                                NoClipEnabled = !NoClipEnabled;
-                            }
-                            else
-                            {
-                                NoClipEnabled = false;
-                                Notify.Error("This vehicle does not exist (somehow) or you need to be the driver of this vehicle to enable noclip!");
-                            }
-                        }
-                        else
-                        {
-                            NoClipEnabled = !NoClipEnabled;
-                        }
-                    }
                 }
 
                 #endregion
@@ -616,7 +625,7 @@ namespace vMenuClient
 
             UIMenuItem playerSubmenuBtn = new UIMenuItem("Player Related Options", "Open this submenu for player related subcategories.");
             playerSubmenuBtn.SetRightLabel("→→→");
-            Menu.AddItem(playerSubmenuBtn);
+            AddMenu(Menu, PlayerSubmenu, playerSubmenuBtn);
 
             // Add the player options menu.
             if (IsAllowed(Permission.POMenu))
@@ -630,7 +639,7 @@ namespace vMenuClient
 
             UIMenuItem vehicleSubmenuBtn = new UIMenuItem("Vehicle Related Options", "Open this submenu for vehicle related subcategories.");
             vehicleSubmenuBtn.SetRightLabel("→→→");
-            Menu.AddItem(vehicleSubmenuBtn);
+            AddMenu(Menu, VehicleSubmenu, vehicleSubmenuBtn);
             // Add the vehicle options Menu.
             if (IsAllowed(Permission.VOMenu))
             {
