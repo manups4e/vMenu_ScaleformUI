@@ -813,7 +813,7 @@ namespace vMenuClient.menus
             menu.AddItem(createFemaleBtn);
             createFemaleBtn.Activated += async (sender, args) => await sender.SwitchTo(createCharacterMenu, 0, true);
             menu.AddItem(savedCharacters);
-            createFemaleBtn.Activated += async (sender, args) => await sender.SwitchTo(savedCharactersMenu, 0, true);
+            savedCharacters.Activated += async (sender, args) => await sender.SwitchTo(savedCharactersMenu, 0, true);
 
             createCharacterMenu.InstructionalButtons.Add(new(Control.MoveLeftRight, "Turn Head"));
             inheritanceMenu.InstructionalButtons.Add(new(Control.MoveLeftRight, "Turn Head"));
