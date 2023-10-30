@@ -323,6 +323,11 @@ namespace vMenuClient
             }
         }
 
+        private void OpenMenu()
+        {
+            Menu.Visible = !Menu.Visible;
+        }
+
 
         #region Infinity bits
         [EventHandler("vMenu:SetServerState")]
@@ -555,6 +560,7 @@ namespace vMenuClient
                         MpPedCustomization.DontCloseMenus = false;
                     }
                 }
+
 
                 if (Game.IsDisabledControlJustReleased(0, Control.PhoneCancel) && MpPedCustomization.DisableBackButton)
                 {
