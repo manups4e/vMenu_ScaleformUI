@@ -304,27 +304,59 @@ namespace vMenuClient.menus
 
             #region Setup weapon category buttons and submenus.
             handGunsBtn.SetRightLabel("→→→");
+            handGunsBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(handGuns);
+            };
             menu.AddItem(handGunsBtn);
 
             riflesBtn.SetRightLabel("→→→");
+            riflesBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(rifles);
+            };
             menu.AddItem(riflesBtn);
 
             shotgunsBtn.SetRightLabel("→→→");
+            shotgunsBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(shotguns);
+            };
             menu.AddItem(shotgunsBtn);
 
             smgsBtn.SetRightLabel("→→→");
+            smgsBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(smgs);
+            };
             menu.AddItem(smgsBtn);
 
             throwablesBtn.SetRightLabel("→→→");
+            throwablesBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(throwables);
+            };
             menu.AddItem(throwablesBtn);
 
             meleeBtn.SetRightLabel("→→→");
+            meleeBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(melee);
+            };
             menu.AddItem(meleeBtn);
 
             heavyBtn.SetRightLabel("→→→");
+            heavyBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(heavy);
+            };
             menu.AddItem(heavyBtn);
 
             snipersBtn.SetRightLabel("→→→");
+            snipersBtn.Activated += (sender, _) =>
+            {
+                sender.SwitchTo(snipers);
+            };
             menu.AddItem(snipersBtn);
             #endregion
 
@@ -342,6 +374,10 @@ namespace vMenuClient.menus
                     UIMenuItem weaponItem = new UIMenuItem(weapon.Name, $"Open the options for ~y~{weapon.Name}~s~.")
                     {
                         ItemData = stats
+                    };
+                    weaponItem.Activated += (sender, _) =>
+                    {
+                        sender.SwitchTo(weaponMenu);
                     };
                     UIMenuStatisticsPanel pan = new UIMenuStatisticsPanel();
                     pan.AddStatistics("Damage", stats.hudDamage / 100f);
